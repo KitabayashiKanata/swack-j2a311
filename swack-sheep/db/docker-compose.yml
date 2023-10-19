@@ -1,0 +1,53 @@
+# ----------------------------------------
+# 1.コンテナを起動
+# docker-compose up -d --build
+# ----------------------------------------
+# 2.ブラウザでpgadminにアクセスし、ログイン
+# http://localhost:5400/
+# ・email : example@example.com
+# ・pass : passw0rd
+# ----------------------------------------
+# 3.dbサーバを追加し、接続する
+# 「Servers」を右クリック→「Register」→「Server」
+# ・Name : db
+# ・Host name/address : db
+# ・port : 5432
+# ・Maintenance database : appdb
+# ・Username : postgres
+# ・Password : postgres
+# ※JavaアプリなどからDBに直接接続する場合は 5401 ポートで接続する
+# ----------------------------------------
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15.2
+    container_name: container_postgres
+    ports:
+      - "5501:5432"
+    volumes:
+      - volume_postgres:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: appdb
+
+  viewer:
+    image: dpage/pgadmin4:6.20
+    container_name: container_pgadmin
+    ports:
+      - "5500:80"
+    volumes:
+      - volume_pgadmin:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: example@example.com
+      PGADMIN_DEFAULT_PASSWORD: passw0rd
+    depends_on:
+      - db
+
+volumes:
+  volume_postgres:
+    name: v-pg-swack
+  volume_pgadmin:
+    name: v-pgadmin-swack

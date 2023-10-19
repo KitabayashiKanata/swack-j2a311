@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.container {
+	width: 90%;
+	max-width: 500px;
+	height: 100%;
+	margin: auto;
+}
+
+.container h1, h2 {
+	margin-top: 30px;
+	text-align: center;
+}
+
+.card {
+	width: 90%;
+	margin: 30px auto; /* 上下左右 */
+	padding: 20px;
+	background-color: #efefefef;
+	border-radius: 5px;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); /* 水平方向,垂直方向,ぼかし*/
+	text-align: center;
+}
+.card .error {
+	background-color: pink;
+	color: red;
+}
+
+.card input {
+	margin: 5px auto;
+	padding: 5px;
+	width: 100%;
+	border: none;
+}
+
+.card input[type="submit"] {
+	margin-top: 20px;
+	background-color: purple;
+	color: white;
+}

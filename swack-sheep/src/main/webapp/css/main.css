@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+.container {
+	width: 100%;
+	height: 100%;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 40px;
+	background-color: black;
+	color: white;
+	padding: 0 10px;
+}
+
+.main {
+	display: flex;
+	width: 100%;
+	height: calc(100% - 40px);
+}
+
+.left {
+	width: 180px;
+	height: 100%;
+	background-color: #3e313c;
+	color: white;
+}
+
+.left h2, details {
+	padding-left: 5px;
+}
+.left details {
+	margin-top: 10px;
+}
+
+.left .list-name {
+	margin-left: 15px;
+	color: white;
+	text-decoration: none;
+}
+
+.contents {
+	flex: 1;
+	height: 100%;
+}
+
+.contents-header {
+	width: 100%;
+	height: 40px;
+}
+.contents-header h2 {
+	padding-left: 5px;
+}
+
+.contents-area {
+	overflow: auto;
+	width: 100%;
+	height: calc(100% - 100px);
+	padding-right: 10px;
+}
+.contents-area::-webkit-scrollbar {
+    display:none;
+}
+
+.contents-area .log-box {
+	width: 100%;
+	margin: 5px;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: #efefef;
+}
+.contents-area .log-name {
+	font-size: 0.9rem;
+	font-weight: bold;
+}
+.contents-area .log-time {
+	font-size: 0.7rem;
+}
+
+.contents-footer {
+	width: 100%;
+	height: 60px;
+}
+
+.contents-footer .form-wrap {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px;
+}
+
+.contents-footer .form-wrap input[type="text"] {
+	flex: 1;
+	padding: 10px 5px;
+}
+
+.contents-footer .form-wrap input[type="submit"] {
+	width: 50px;
+}

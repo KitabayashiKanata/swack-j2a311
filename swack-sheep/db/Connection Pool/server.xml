@@ -1,0 +1,9 @@
+      <Context docBase="swack-j2a299" path="/swack-j2a299" reloadable="true" source="org.eclipse.jst.jee.server:swack-j2a299">
+        <!-- ここからコネクションプールの設定 -->
+        <Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="10" maxIdel="5" maxWait="10000" name="jdbc/postgres" type="javax.sql.DataSource"
+        	url="jdbc:postgresql://localhost:5501/appdb"
+        	username="postgres"
+        	password="postgres"
+        />
+        <!-- ここまで -->
+      </Context>
