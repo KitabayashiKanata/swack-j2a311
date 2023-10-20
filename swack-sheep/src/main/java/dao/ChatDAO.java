@@ -1,9 +1,7 @@
 package dao;
 
-import static parameter.DAOParameters.DB_ENDPOINT;
-import static parameter.DAOParameters.DB_PASSWORD;
-import static parameter.DAOParameters.DB_USERID;
-import static parameter.Messages.ERR_DB_PROCESS;
+import static parameter.DAOParameters.*;
+import static parameter.Messages.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -161,9 +159,41 @@ public class ChatDAO {
 		return chatLogList;
 	}
 
-	public void saveChatlog(String roomId, String userId, String message) {
+	public void saveChatlog(String roomId, String userId, String message) throws SwackException {
 		// TODO
-
+//		int chatLogId = 0;
+//		SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+//		Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+//		String time = dtf.format(createdAt);
+//		System.out.println(time);
+//		
+//		
+//		String sql1 = "SELECT MAX(CHATLOGID) FROM CHATLOG";
+//
+//		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+//			PreparedStatement pStmt = conn.prepareStatement(sql1);
+//			
+//			ResultSet rs = pStmt.executeQuery();
+//			chatLogId = rs.getInt("CHATLOGID");
+//		}catch (SQLException e) {
+//			throw new SwackException(ERR_DB_PROCESS, e);
+//		}
+//		System.out.println(chatLogId);
+//		String sql2 = "INSERT INTO CHATLOG VALUES(?,?,?,?,?)";
+//		
+//		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+//			PreparedStatement pStmt = conn.prepareStatement(sql2);
+//			pStmt.setInt(1, chatLogId + 1);
+//			pStmt.setString(2, roomId);
+//			pStmt.setString(3, userId);
+//			pStmt.setString(4, message);
+//			pStmt.setString(5, time);
+//
+//			pStmt.executeQuery();
+//		}catch (SQLException e) {
+//			throw new SwackException(ERR_DB_PROCESS, e);
+//		}
+		
 	}
 
 }
