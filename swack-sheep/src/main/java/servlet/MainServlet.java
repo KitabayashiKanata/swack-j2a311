@@ -56,11 +56,11 @@ public class MainServlet extends LoginCheckServlet {
 			List<Room> directList = chatModel.getDirectList(user.getUserId());
 			List<ChatLog> chatLogList = chatModel.getChatlogList(roomId);
 			Workspace workspace = (Workspace) session.getAttribute("workspace");
-			if (workspace == null) {
-				request.setAttribute("errorMsg", ERR_SYSTEM);
-				request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
-				return;
-			}
+//			if (workspace == null) {
+//				request.setAttribute("errorMsg", ERR_SYSTEM);
+//				request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+//				return;
+//			}
 
 			// JSPに値を渡す
 			request.setAttribute("nowUser", user);
