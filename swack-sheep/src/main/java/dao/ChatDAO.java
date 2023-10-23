@@ -174,7 +174,7 @@ public class ChatDAO {
 //			PreparedStatement pStmt = conn.prepareStatement(sql1);
 //			
 //			ResultSet rs = pStmt.executeQuery();
-//			chatLogId = rs.getInt("CHATLOGID");
+//			chatLogId = rs.getInt("CHATLOGID"); //ここでエラー
 //		}catch (SQLException e) {
 //			throw new SwackException(ERR_DB_PROCESS, e);
 //		}
