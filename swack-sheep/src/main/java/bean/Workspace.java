@@ -8,29 +8,23 @@ import java.io.Serializable;
 public class Workspace implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	/** ユーザーID **/
+	private String userID;
 	/** ユーザ名 */
-	private String userName;
-	/** メールアドレス */
-	private String mailAddress;
-	/** パスワード */
-	private String password;
+	private String workspaceID;
 	
 	public Workspace() {
 	}
 	
-	public Workspace(String userName, String mailAddress, String password) {
-		this.userName = userName;
-		this.mailAddress = mailAddress;
-		this.password = password;
+	public Workspace(String workspaceID, String userID) {
+		this.workspaceID = workspaceID;
+		this.userID = userID;
 	}
 	
-	public String getUserName() {
-		return userName;
+	public String getWorkspaceID() {
+		return workspaceID;
 	}
-	public String getMailAddress() {
-		return mailAddress;
-	}
-	public String getPassword() {
-		return password;
+	public String getUserID() {
+		return userID;
 	}
 }

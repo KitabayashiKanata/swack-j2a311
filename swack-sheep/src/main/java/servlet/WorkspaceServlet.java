@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import bean.Workspace;
 import exception.SwackException;
@@ -31,7 +30,7 @@ public class WorkspaceServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("/WEB-INF/jsp/worckspece.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -55,7 +54,7 @@ public class WorkspaceServlet extends HttpServlet {
 		if (errorMsg.length() > 0) {
 			// エラー
 			request.setAttribute("errorMsg", errorMsg.toString());
-			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/jsp/worckspece.jsp").forward(request, response);
 			return;
 		}
 		
@@ -66,19 +65,19 @@ public class WorkspaceServlet extends HttpServlet {
 			if (workspace == null) {
 				// 認証失敗
 				request.setAttribute("errorMsg", ERR_LOGIN_PARAM_MISTAKE);
-				request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/jsp/worckspece.jsp").forward(request, response);
 				return;
-			} else {
-				// 認証成功(ログイン情報をセッションに保持)
-				HttpSession session = request.getSession();
-				session.setAttribute("workspace", workspace);
+			}else {
+				request.setAttribute("workspace", workspace);
 				return;
 			}
+			
+
 
 		} catch (SwackException e) {
 			e.printStackTrace();
 			request.setAttribute("errorMsg", ERR_SYSTEM);
-			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/jsp/worckspece.jsp").forward(request, response);
 			return;
 		}
 	}

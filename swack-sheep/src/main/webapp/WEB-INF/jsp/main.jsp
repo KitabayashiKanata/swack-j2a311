@@ -52,6 +52,8 @@
 					<br>
 					</c:forEach>
 				</details>
+				<!-- 仮設置です -->
+				<a href="WorkspaceServlet">ワークスペースに参加</a>
 			</div>
 			<div class="contents">
 				<div class="contents-header">

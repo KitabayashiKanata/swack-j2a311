@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import bean.ChatLog;
 import bean.Room;
 import bean.User;
+import bean.Workspace;
 import exception.SwackException;
 import model.ChatModel;
 
@@ -54,6 +55,12 @@ public class MainServlet extends LoginCheckServlet {
 			List<Room> roomList = chatModel.getRoomList(user.getUserId());
 			List<Room> directList = chatModel.getDirectList(user.getUserId());
 			List<ChatLog> chatLogList = chatModel.getChatlogList(roomId);
+			Workspace workspace = (Workspace) session.getAttribute("workspace");
+			if (workspace == null) {
+				request.setAttribute("errorMsg", ERR_SYSTEM);
+				request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+				return;
+			}
 
 			// JSPに値を渡す
 			request.setAttribute("nowUser", user);
