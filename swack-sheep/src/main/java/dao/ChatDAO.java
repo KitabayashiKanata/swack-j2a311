@@ -160,39 +160,46 @@ public class ChatDAO {
 	}
 
 	public void saveChatlog(String roomId, String userId, String message) throws SwackException {
-		// TODO
-//		int chatLogId = 0;
-//		SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-//		Timestamp createdAt = new Timestamp(System.currentTimeMillis());
-//		String time = dtf.format(createdAt);
-//		System.out.println(time);
-//		
-//		
-//		String sql1 = "SELECT MAX(CHATLOGID) FROM CHATLOG";
-//
-//		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
-//			PreparedStatement pStmt = conn.prepareStatement(sql1);
-//			
-//			ResultSet rs = pStmt.executeQuery();
-//			chatLogId = rs.getInt("CHATLOGID"); //ここでエラー
-//		}catch (SQLException e) {
-//			throw new SwackException(ERR_DB_PROCESS, e);
-//		}
-//		System.out.println(chatLogId);
-//		String sql2 = "INSERT INTO CHATLOG VALUES(?,?,?,?,?)";
-//		
-//		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
-//			PreparedStatement pStmt = conn.prepareStatement(sql2);
-//			pStmt.setInt(1, chatLogId + 1);
-//			pStmt.setString(2, roomId);
-//			pStmt.setString(3, userId);
-//			pStmt.setString(4, message);
-//			pStmt.setString(5, time);
-//
-//			pStmt.executeQuery();
-//		}catch (SQLException e) {
-//			throw new SwackException(ERR_DB_PROCESS, e);
-//		}
+		// TODO		
+		int chatLogId = 0;
+		
+		String sql1 = "SELECT MAX(CHATLOGID) AS CHATLOGID FROM CHATLOG";
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD);
+			PreparedStatement pStmt = conn.prepareStatement(sql1);
+			
+			ResultSet rs = pStmt.executeQuery()){ 
+			if(rs.next()) {
+				chatLogId = rs.getInt("CHATLOGID"); 
+			}
+		}catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		
+		
+		Timestamp createdAt = new Timestamp(System.currentTimeMillis());
+		// TODO タイムスタンプのミリ秒を6桁にしたい
+//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.ssssss");
+//		String datetime = df.format(createdAt);
+//		Timestamp timestamp = Timestamp.valueOf(datetime);
+//		System.out.println(createdAt);
+//		System.out.println(timestamp);
+		// テスト用に登録したデータを削除するSQL
+//		delete from chatlog where chatlogid >= 5;
+		
+		
+		String sql2 = "INSERT INTO CHATLOG VALUES(?,?,?,?,?)";
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			PreparedStatement pStmt = conn.prepareStatement(sql2);
+			pStmt.setInt(1, chatLogId + 1);
+			pStmt.setString(2, roomId);
+			pStmt.setString(3, userId);
+			pStmt.setString(4, message);
+			pStmt.setTimestamp(5, createdAt); //タイムスタンプのミリ秒が3桁までになっている
+
+			pStmt.executeUpdate();
+		}catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
 		
 	}
 
