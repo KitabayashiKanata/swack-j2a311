@@ -30,7 +30,7 @@ public class WorkspaceServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/WEB-INF/jsp/workspece.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/workspace.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
