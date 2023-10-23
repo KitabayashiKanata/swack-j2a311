@@ -58,7 +58,7 @@ public class MainServlet extends LoginCheckServlet {
 			Workspace workspace = (Workspace) session.getAttribute("workspace");
 //			if (workspace == null) {
 //				request.setAttribute("errorMsg", ERR_SYSTEM);
-//				request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+//				request.getRequestDispatcher("/WEB-INF/jsp/workspace.jsp").forward(request, response);
 //				return;
 //			}
 

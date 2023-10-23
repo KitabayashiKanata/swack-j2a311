@@ -21,9 +21,11 @@
 		<h2>ワークスペースにサインインする</h2>
 
 		<div class="card">
-			<form action="LoginServlet" method="post">
-			    <input type="username" name="name" placeholder="ユーザー名"><br>
-				<input type="email" name="mailaddress" placeholder="メールアドレス"><br>
+			<p class="error">${errorMsg}</p>
+			
+			<form action="WorkspaceServlet" method="post">
+			    <input type="username" name="userName" placeholder="ユーザー名"><br>
+				<input type="email" name="mailAddress" placeholder="メールアドレス"><br>
 				<input type="password" name="password" placeholder="パスワード"><br>
 				<input type="submit" value="ワークスペースに参加">
 			</form>

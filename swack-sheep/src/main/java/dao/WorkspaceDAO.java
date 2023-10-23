@@ -60,7 +60,7 @@ public class WorkspaceDAO {
 	
 	public String checkWorkspace(String userID) throws SwackException{
 		// TODO SQL
-		String sql = "SELECT WORKSPECEID FROM USERS WHERE USERID = ?";
+		String sql = "SELECT WORKSPECEID FROM JOINWORKSPACE WHERE USERID = ?";
 
 		String workspaceID = null;
 		try {

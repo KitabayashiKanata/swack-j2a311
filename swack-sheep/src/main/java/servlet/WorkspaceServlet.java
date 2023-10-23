@@ -54,7 +54,7 @@ public class WorkspaceServlet extends HttpServlet {
 		if (errorMsg.length() > 0) {
 			// エラー
 			request.setAttribute("errorMsg", errorMsg.toString());
-			request.getRequestDispatcher("/WEB-INF/jsp/worckspece.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/jsp/workspace.jsp").forward(request, response);
 			return;
 		}
 		
@@ -65,7 +65,7 @@ public class WorkspaceServlet extends HttpServlet {
 			if (workspace == null) {
 				// 認証失敗
 				request.setAttribute("errorMsg", ERR_LOGIN_PARAM_MISTAKE);
-				request.getRequestDispatcher("/WEB-INF/jsp/worckspece.jsp").forward(request, response);
+				request.getRequestDispatcher("/WEB-INF/jsp/workspace.jsp").forward(request, response);
 				return;
 			}else {
 				request.setAttribute("workspace", workspace);
@@ -77,7 +77,7 @@ public class WorkspaceServlet extends HttpServlet {
 		} catch (SwackException e) {
 			e.printStackTrace();
 			request.setAttribute("errorMsg", ERR_SYSTEM);
-			request.getRequestDispatcher("/WEB-INF/jsp/worckspece.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/jsp/workspace.jsp").forward(request, response);
 			return;
 		}
 	}
