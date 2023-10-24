@@ -16,7 +16,6 @@
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/main.css">
-
 </head>
 <body>
 
@@ -40,7 +39,32 @@
 					</a>
 					<br>
 					</c:forEach>
+					
 				</details>
+				
+				<!-- モーダルウィンドウ -->
+				<center>
+					<a href="#modal-01" class="modal-button">ルーム作成</a>
+				</center>
+				<div class="modal-wrapper" id="modal-01">
+				  <a href="#!" class="modal-overlay"></a>
+				  
+				  <div class="modal-window">
+				    <div class="modal-content">
+				    <a href="#!" class="modal-close">✕</a>
+				      <p class="modal_title">Create a channel</p>
+				      <a class="modal_body">名前</a>
+				      <form  action="CreateRoomServlet" method="post">
+				      	<input type="text" name="roomName" placeholder="# 例:計画-予算">
+				      	<p class="radio">パブリック</p>
+				      	<input type="radio" name="privated" value="パブリック">
+				      	<p class="radio">プライベート</p>
+				      	<input type="radio" name="privated" value="プライベート">
+				      	<input type="submit" value="次へ">
+				      </form>
+				    </div>
+				  </div>
+				</div>
 
 				<details open>
 					<summary>ダイレクト</summary>

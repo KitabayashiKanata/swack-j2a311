@@ -99,3 +99,139 @@
 .contents-footer .form-wrap input[type="submit"] {
 	width: 50px;
 }
+
+a {
+	text-decoration: none;
+	color: white;
+}
+
+/*========= モーダル表示のためのCSS ===============*/
+
+.modal-wrapper {
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 40px 10px;
+  text-align: center;
+}
+
+/*ラベルホバー時*/
+.modal-button:hover {
+  color: #FFFFFF;
+  background-color: #4f96f6;
+  transition: .6s;
+}
+
+.modal-wrapper:not(:target) {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .2s, visibility .2s;
+}
+
+.modal-wrapper:target {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .2s, visibility .2s;
+}
+
+.modal-wrapper::after {
+  display: inline-block;
+  height: 100%;
+  margin-left: -.05em;
+  vertical-align: middle;
+  content: ""
+}
+
+.modal-wrapper .modal-window {
+  box-sizing: border-box;
+  display: inline-block;
+  z-index: 20;
+  position: relative;
+  width: 70%;
+  max-width: 600px;
+  padding: 10px 30px 25px;
+  border-radius: 2px;
+  background: #fff;
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+  vertical-align: middle
+}
+
+.modal-wrapper .modal-window .modal-content {
+  max-height: 80vh;
+  overflow-y: auto;
+  text-align: left
+}
+
+.modal_title {
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.modal_body {
+  color: black;
+  font-size: 15px;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.modal-content p {
+  margin: 10px 0 0 0;
+}
+
+/* モーダルウィンドウを画面外のクリックで閉じる */
+.modal-overlay {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .5)
+}
+
+/* モーダルウィンドウを×印で閉じる */
+.modal-close{
+  color: black;
+  position: absolute;
+  font-size: 20px;
+  top: 5px;
+  right: 10px;
+  text-decoration: none;
+}
+
+input {
+  font-size: 15px;
+  margin: 5px auto;
+  padding: 5px;
+  width: 100%;
+  border: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+input[type="text"] {
+  border:1px solid black;
+}
+
+.radio {
+	color: black;
+}
+
+input[type="submit"] {
+  margin-top: 20px;
+  width: 50px;
+  margin-left: 85%;
+  background-color: #ccc;
+  color: black;
+}
