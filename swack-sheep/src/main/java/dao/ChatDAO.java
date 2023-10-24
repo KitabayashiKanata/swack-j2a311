@@ -161,19 +161,7 @@ public class ChatDAO {
 
 	public void saveChatlog(String roomId, String userId, String message) throws SwackException {
 		// TODO		
-		int chatLogId = 0;
-		
-		String sql1 = "SELECT MAX(CHATLOGID) AS CHATLOGID FROM CHATLOG";
-		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD);
-			PreparedStatement pStmt = conn.prepareStatement(sql1);
-			
-			ResultSet rs = pStmt.executeQuery()){ 
-			if(rs.next()) {
-				chatLogId = rs.getInt("CHATLOGID"); 
-			}
-		}catch (SQLException e) {
-			throw new SwackException(ERR_DB_PROCESS, e);
-		}
+		int maxChatLogId = getMaxChatLogId();
 		
 		
 		Timestamp createdAt = new Timestamp(System.currentTimeMillis());
@@ -190,7 +178,7 @@ public class ChatDAO {
 		String sql2 = "INSERT INTO CHATLOG VALUES(?,?,?,?,?)";
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
 			PreparedStatement pStmt = conn.prepareStatement(sql2);
-			pStmt.setInt(1, chatLogId + 1);
+			pStmt.setInt(1, maxChatLogId);
 			pStmt.setString(2, roomId);
 			pStmt.setString(3, userId);
 			pStmt.setString(4, message);
@@ -201,6 +189,24 @@ public class ChatDAO {
 			throw new SwackException(ERR_DB_PROCESS, e);
 		}
 		
+	}
+	
+	public int getMaxChatLogId() throws SwackException {
+		int chatLogId = 0;
+		
+		String sql1 = "SELECT MAX(CHATLOGID) AS CHATLOGID FROM CHATLOG";
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD);
+			PreparedStatement pStmt = conn.prepareStatement(sql1);
+			
+			ResultSet rs = pStmt.executeQuery()){ 
+			if(rs.next()) {
+				chatLogId = rs.getInt("CHATLOGID"); 
+			}
+		}catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		chatLogId += 1;
+		return chatLogId;
 	}
 
 }
