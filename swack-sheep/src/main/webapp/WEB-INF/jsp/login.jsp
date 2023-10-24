@@ -33,7 +33,7 @@
 			</form>
 		</div>
 
-		<a href="signup.html">新規登録画面へ</a>
+		<a href="signup.jsp">新規登録画面へ</a>
 	</div>
 </body>
 </html>
