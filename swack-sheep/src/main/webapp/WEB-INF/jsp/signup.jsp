@@ -25,10 +25,10 @@
 			<p class="error">${errorMsg}</p>
 
 			<form action="LoginServlet" method="post">
-				<input type="username" name="userName" placeholder="ユーザー名"><br>
+				<input type="text" name="userName" placeholder="ユーザー名"><br>
 				<input type="email" name="mailAddress" placeholder="メールアドレス"><br>
 				<input type="password" name="password" placeholder="パスワード"><br>
-				<input type="password" name="password" placeholder="パスワード再確認"><br>
+				<input type="password" name="password2" placeholder="パスワード再確認"><br>
 				<input type="submit" value="ログイン">
 			</form>
 		</div>
