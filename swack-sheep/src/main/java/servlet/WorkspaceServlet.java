@@ -43,7 +43,7 @@ public class WorkspaceServlet extends HttpServlet {
 		// パラメータチェック
 		StringBuilder errorMsg = new StringBuilder();
 		if (userName == null || userName.length() == 0) {
-			errorMsg.append("氏名が入っていません<br>");
+			errorMsg.append("ユーザー名が入っていません<br>");
 		}
 		if (mailAddress == null || mailAddress.length() == 0) {	
 			errorMsg.append("メールアドレスが入っていません<br>");
