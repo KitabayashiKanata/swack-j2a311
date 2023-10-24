@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import exception.SwackException;
 
 public class RoomDAO {
+	
 	public String createRoom(String roomName,String createdUserId,boolean directed, boolean privated)throws SwackException{
 		String roomId = getMaxRoomId();
 		
@@ -31,6 +32,7 @@ public class RoomDAO {
 			throw new SwackException(ERR_DB_PROCESS, e);
 		}
 		
+		insertJoinRoom(roomId,createdUserId);
 		return roomId;
 	}
 	
@@ -52,14 +54,27 @@ public class RoomDAO {
 		// roomIdを+１する
 		String[] list = maxRoomId.split("");
 		String strId = "";
-		for (int i = 1; i < list.length;i++){
-			strId.concat(list[i]);
-		}
+		strId = list[1] + list[2] + list[3] + list[4];
 		int intId = Integer.valueOf(strId);
 		intId += 1;
-		maxRoomId = list[0] + String.valueOf(intId);
-		
+		strId = String.format("%04d", intId);
+		maxRoomId = list[0] + strId;
 		
 		return maxRoomId;
+	}
+	
+	public void insertJoinRoom(String roomId, String userId) throws SwackException {
+		
+		String sql = "INSERT INTO JOINROOM VALUES(?,?)";
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, roomId);
+			pStmt.setString(2, userId);
+
+			pStmt.executeUpdate();
+		}catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		
 	}
 }
