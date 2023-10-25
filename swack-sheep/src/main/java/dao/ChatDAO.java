@@ -130,6 +130,77 @@ public class ChatDAO {
 		return roomlist;
 
 	}
+	
+	//TODO workspaceIdを追加
+	public ArrayList<Room> getRoomList(String userId,String workspaceId) throws SwackException {
+		// SQL
+		String sql = "SELECT R.ROOMID, R.ROOMNAME FROM JOINROOM J JOIN ROOMS2 R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = FALSE AND R.WORKSPACEID = ?";
+
+		ArrayList<Room> roomlist = new ArrayList<Room>();
+
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			pStmt.setString(2, workspaceId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			while (rs.next()) {
+				String roomId = rs.getString("ROOMID");
+				String roomName = rs.getString("ROOMNAME");
+
+				Room room = new Room(roomId, roomName,workspaceId);
+				roomlist.add(room);
+			}
+
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+
+		return roomlist;
+
+	}
+		
+	//TODO workspaceIdを追加
+	public ArrayList<Room> getDirectList(String userId,String workspaceId) throws SwackException {
+		// TODO SQL
+		String sql = "SELECT R.ROOMID, U.USERNAME AS ROOMNAME FROM JOINROOM R JOIN USERS U ON R.USERID = U.USERID WHERE R.USERID <> ? AND ROOMID IN (SELECT R.ROOMID FROM JOINROOM J JOIN ROOMS2 R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = TRUE AND R.WORKSPACEID = ?) ORDER BY R.USERID";
+
+		ArrayList<Room> roomlist = new ArrayList<Room>();
+
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			pStmt.setString(2, userId);
+			pStmt.setString(3, workspaceId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			while (rs.next()) {
+				String roomId = rs.getString("ROOMID");
+				String roomName = rs.getString("ROOMNAME");
+
+				Room room = new Room(roomId, roomName,workspaceId);
+				roomlist.add(room);
+			}
+
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+
+		return roomlist;
+
+	}
 
 	public List<ChatLog> getChatlogList(String roomId) throws SwackException {
 		String sql = "SELECT CHATLOGID, U.USERID AS USERID, U.USERNAME AS USERNAME, MESSAGE, CREATED_AT FROM CHATLOG C JOIN USERS U ON C.USERID = U.USERID WHERE ROOMID = ? ORDER BY CREATED_AT ASC";

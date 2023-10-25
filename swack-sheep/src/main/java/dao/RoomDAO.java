@@ -36,6 +36,31 @@ public class RoomDAO {
 		return roomId;
 	}
 	
+	//workspaceid追加
+	public String createRoom(String roomName,String createdUserId,boolean directed, boolean privated,String workspaceId)throws SwackException{
+		String roomId = getMaxRoomId();
+		
+		
+		String sql = "INSERT INTO ROOMS2 VALUES(?,?,?,?,?,?)";
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, roomId);
+			pStmt.setString(2, roomName);
+			pStmt.setString(3, createdUserId);
+			pStmt.setBoolean(4, directed);
+			pStmt.setBoolean(5, privated);
+			pStmt.setString(5, workspaceId);
+			
+
+			pStmt.executeUpdate();
+		}catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		
+		insertJoinRoom(roomId,createdUserId);
+		return roomId;
+	}
+	
 	public String getMaxRoomId() throws SwackException {
 		String maxRoomId = "";
 		
