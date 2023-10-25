@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import bean.User;
 import exception.SwackException;
@@ -87,6 +88,38 @@ public class UsersDAO {
 		// TODO Access DB
 
 		return true;
+
+	}
+	
+	public ArrayList<User> getUserList(String workspaceId) throws SwackException {
+		// SQL
+		String sql = "SELECT R.ROOMID, R.ROOMNAME FROM JOINROOM J JOIN ROOMS R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = FALSE";
+
+		ArrayList<User> userlist = new ArrayList<User>();
+
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, workspaceId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			while (rs.next()) {
+				String userName = rs.getString("USERNAME");
+
+				User user = new User(userName);
+				userlist.add(user);
+			}
+
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+
+		return userlist;
 
 	}
 
