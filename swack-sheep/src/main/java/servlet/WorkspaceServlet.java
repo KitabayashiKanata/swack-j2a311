@@ -3,6 +3,7 @@ package servlet;
 import static parameter.Messages.*;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bean.User;
 import bean.Workspace;
+import dao.WorkspaceDAO;
 import exception.SwackException;
+import model.LoginModel;
 import model.WorkspaceModel;
 
 /**
@@ -69,7 +73,29 @@ public class WorkspaceServlet extends HttpServlet {
 				return;
 			}else {
 				request.setAttribute("workspace", workspace);
-				return;
+				User user = (User) new LoginModel().checkLogin(mailAddress, password);
+				if (!user.getUserName().equals(userName)) {
+					// エラー
+					errorMsg.append("ユーザー名が異なっています。");
+					request.setAttribute("errorMsg", errorMsg.toString());
+					request.getRequestDispatcher("/WEB-INF/jsp/workspace.jsp").forward(request, response);
+					return;
+				} else if(user.getUserName() == null || user.getUserName().length() < 1) {
+					// エラー
+					errorMsg.append("このユーザー名は登録されていません。");
+					request.setAttribute("errorMsg", errorMsg.toString());
+					request.getRequestDispatcher("/WEB-INF/jsp/workspace.jsp").forward(request, response);
+					return;
+				}
+				request.setAttribute("nowUser", user);
+				
+				WorkspaceDAO workspaceDAO = new WorkspaceDAO();
+				List<String> workspaceList = workspaceDAO.list(workspace.getUserID());
+				request.setAttribute("workspaceList", workspaceList);
+				
+				System.out.println(workspaceList);
+				
+				request.getRequestDispatcher("/WEB-INF/jsp/workspaceList.jsp").forward(request, response);
 			}
 			
 
@@ -80,6 +106,11 @@ public class WorkspaceServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/jsp/workspace.jsp").forward(request, response);
 			return;
 		}
+	}
+
+	private void elif() {
+		// TODO 自動生成されたメソッド・スタブ
+		
 	}
 
 }

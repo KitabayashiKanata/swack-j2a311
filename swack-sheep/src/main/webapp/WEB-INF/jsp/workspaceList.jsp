@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,7 @@
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/workspaceList.css">
-
+<script src="js/workspaceList.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -20,16 +21,20 @@
 		<h1>Swack</h1>
 		<h2>ワークスペースにサインインする</h2>
 		<table class="sample">
-			<tr><td><p>〇〇〇〇〇〇〇〇〇〇 のワークスペース</p></td></tr>
-			<tr><td><a href="https://allabout.co.jp/gm/gc/406307/" class="hover4">ITシステム　　　　　　　　　　　　　→</a></td></tr>
-		    <tr><td><a href="https://allabout.co.jp/gm/gc/23770/" class="hover4">システムエンジニア　　　　　　　　　→</a></td></tr>
-		    <tr><td><a href="https://allabout.co.jp/gm/gc/402551/" class="hover4">ゲームクリエイタ　　　　　　　　　　→</a></td></tr>
-		    <tr><td><a href="https://allabout.co.jp/gm/gc/31800/" class="hover4">ゲームWeb　　　　　　　　　　　　　→</a></td></tr>
-		    <tr><td><a href="https://allabout.co.jp/gm/gc/23917/" class="hover4">大学併修　　　　　　　　　　　　　　→</a></td></tr>
-		    <tr><td><a href="https://allabout.co.jp/gm/gc/406310/"class="hover4">情報システム　　　　　　　　　　　　→</a></td></tr>
+			<tr><td><p>${nowUser.userName}のワークスペース</p></td></tr>
+			<c:forEach var="item" items="${workspaceList}">
+				<tr><td>
+					<c:
+					<a onclick="clickWorkspace(${item})" class="hover4">
+						<c:out value="${item}" />
+						<div class="right">→</div>
+					</a>
+				</td></tr>
+				<br>
+			</c:forEach>
         </table>
 
 	</div>
-	
+
 </body>
 </html>

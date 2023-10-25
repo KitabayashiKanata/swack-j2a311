@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import bean.Workspace;
@@ -100,7 +101,7 @@ public class WorkspaceDAO {
 		// TODO SQL
 		String sql = "SELECT WORKSPACENAME FROM WORKSPACE WHERE WORKSPACEID IN (SELECT WORKSPACEID FROM JOINWORKSPACE WHERE USERID = ?)";
 		
-		List<String> workspaceList = null;
+		List<String> workspaceList = new ArrayList<>();
 		try {
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e1) {
@@ -120,7 +121,7 @@ public class WorkspaceDAO {
 
 			// 結果を詰め替え
 			while (rs.next()) {
-				String workspace = rs.getString("WORKSPACEID");
+				String workspace = rs.getString("WORKSPACENAME");
 				workspaceList.add(workspace);
 			}
 

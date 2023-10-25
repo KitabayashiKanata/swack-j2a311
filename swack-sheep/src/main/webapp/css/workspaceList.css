@@ -71,3 +71,9 @@ table.sample td a {
 
 a.widelink { display: block;
 }
+
+.right {
+	margin-left: 380px;
+	display: inline-block; 
+	display: inline;
+}
