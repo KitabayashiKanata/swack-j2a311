@@ -77,6 +77,7 @@
 					</c:forEach>
 				</details>
 				<!-- 仮設置です -->
+				<a href="UserListServlet">ダイレクトチャット開始</a>
 				<a href="WorkspaceServlet">ワークスペースに参加</a>
 			</div>
 			<div class="contents">

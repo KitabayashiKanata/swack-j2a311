@@ -27,6 +27,10 @@ public class User implements Serializable {
 		this.mailAddress = mailAddress;
 		this.password = password;
 	}
+	
+	public User(String userName) {
+		this.userName = userName;
+	}
 
 	public String getUserId() {
 		return userId;
