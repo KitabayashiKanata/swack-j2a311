@@ -16,7 +16,9 @@ public class Room implements Serializable {
 	private int memberCount;
 	/** ダイレクトチャットか */
 	private boolean directed;
-
+	/** ワークスペースID（追加）*/
+	private String workspaceId;
+	
 	public Room() {
 		// for JSP
 	}
@@ -35,6 +37,16 @@ public class Room implements Serializable {
 		this.memberCount = 0;
 		this.directed = false;
 	}
+	
+	//workspaceId追加
+	public Room(String roomId, String roomName,String workspaceId) {
+		this.roomId = roomId;
+		this.roomName = roomName;
+		// 一覧表示用の場合は0人, falseで固定とする
+		this.memberCount = 0;
+		this.directed = false;
+		this.workspaceId = workspaceId;
+	}
 
 	public String getRoomId() {
 		return roomId;
@@ -50,6 +62,10 @@ public class Room implements Serializable {
 
 	public boolean isDirected() {
 		return directed;
+	}
+
+	public String getWorkspaceId() {
+		return workspaceId;
 	}
 
 	@Override
