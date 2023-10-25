@@ -40,35 +40,3 @@
 }
 
 
-
-
-/* ▼テーブル全体の装飾 */
-table.sample {
-   border-collapse: collapse;  /* テーブルの罫線を重ねて1本に見せる */
-   border: 2px solid black;    /* テーブルの外側の枠線(2pxの実線) */
-   text-align: center;
-}
-/* ▼セル共通の装飾 */
-table.sample th,
-table.sample td {
-   border: 1px solid black;  /* テーブルの内側の罫線(1pxの実線) */
-}
-/* ▼見出しセルの装飾 */
-table.sample th {
-   background-color: white;  /* 背景色 */
-   padding: 0.3em;             /* 内側の余白(0.3文字分) */
-}
-/* ▼リンクの上にマウスが載った際の装飾(背景色だけ指定) */
-a:hover { background-color: lightgray;
-}
-
-table.sample td a {
-   display: block;       /* リンクをブロックレベル化して表示 */
-   padding: 1.3em 1em;   /* 内側の余白量を上下に0.6文字分＆左右に1文字分にする */
-   color: black;
-   text-decoration: none;
-   width: 30em;
-}
-
-a.widelink { display: block;
-}
