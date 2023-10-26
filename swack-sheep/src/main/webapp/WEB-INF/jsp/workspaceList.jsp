@@ -13,7 +13,7 @@
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/workspaceList.css">
-<script src="js/workspaceList.js"></script>
+<script src="js/list.js"></script>
 </head>
 <body>
 	<div class="container">
