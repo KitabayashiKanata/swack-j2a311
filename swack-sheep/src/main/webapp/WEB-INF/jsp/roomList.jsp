@@ -13,6 +13,7 @@
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/workspaceList.css">
+<script src="js/list.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -22,7 +23,8 @@
 		<table class="sample">
 			<c:forEach var="item" items="${roomList}">
 				<tr><td>
-					<a onclick="clickWorkspace('${item.roomName}")" class="hover4">
+				
+					<a href="#modal" onclick="clickRoom('${item.roomName}', '${item.roomId}')" class="hover">
 						<c:out value="${item.roomName}" />
 						<div class="right">→</div>
 					</a>
@@ -30,6 +32,26 @@
 				<br>
 			</c:forEach>
         </table>
+        
+        <div class="modal" id="modal">
+		    <a href="#!" class="overlay"></a>
+		    <div class="modal-wrapper">
+				<div class="modal-contents">
+		        	<a href="#!" class="modal-close">✕</a>
+					<div class="modal-content">
+						<p><span id="rSpan2"></span><br>
+						<span id="rSpan1"></span></p>
+						
+						<form action="MainServlet" method="get">
+							<input type="hidden" id="roomID" />
+						 	<input type="hidden" id="roomName" />
+						 	<input type="submit" value="決定" />
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</div>
 
