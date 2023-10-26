@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.Workspace;
+import bean.WorkspaceList;
 import exception.SwackException;
 
 /**
@@ -97,11 +98,11 @@ public class WorkspaceDAO {
 		return workspaceID;
 	}
 	
-	public List<String> list(String userID) throws SwackException{
+	public List<WorkspaceList> list(String userID) throws SwackException{
 		// TODO SQL
-		String sql = "SELECT WORKSPACENAME FROM WORKSPACE WHERE WORKSPACEID IN (SELECT WORKSPACEID FROM JOINWORKSPACE WHERE USERID = ?)";
+		String sql = "SELECT WORKSPACEID, WORKSPACENAME FROM WORKSPACE WHERE WORKSPACEID IN (SELECT WORKSPACEID FROM JOINWORKSPACE WHERE USERID = ?)";
 		
-		List<String> workspaceList = new ArrayList<>();
+		List<WorkspaceList> workspace = new ArrayList<>();
 		try {
 			Class.forName("org.postgresql.Driver");
 		} catch (ClassNotFoundException e1) {
@@ -121,8 +122,10 @@ public class WorkspaceDAO {
 
 			// 結果を詰め替え
 			while (rs.next()) {
-				String workspace = rs.getString("WORKSPACENAME");
-				workspaceList.add(workspace);
+				String workspaceID = rs.getString("WORKSPACEID");
+				String workspaceName = rs.getString("WORKSPACENAME");
+				WorkspaceList workspaceList = new WorkspaceList(workspaceID, workspaceName);
+				workspace.add(workspaceList);
 			}
 
 		} catch (SQLException e) {
@@ -131,6 +134,6 @@ public class WorkspaceDAO {
 		}
 
 		// 結果の返却（取得できなかった場合、nullが返される）
-		return workspaceList;
+		return workspace;
 	}
 }
