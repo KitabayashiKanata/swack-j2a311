@@ -25,7 +25,7 @@
 			<c:forEach var="item" items="${workspaceList}">
 				<tr><td>
 				<div class="modal-open">
-					<a href="#modal" onclick="clickWorkspace('${item.workspaceName}','${item.workspaceID}')" class="hover">
+					<a href="#modal" onclick="clickWorkspace('${item.workspaceName}','${item.workspaceID}')" class="btn_design">
 						<c:out value="${item.workspaceName}" />
 						<div class="right">→</div>
 					</a>

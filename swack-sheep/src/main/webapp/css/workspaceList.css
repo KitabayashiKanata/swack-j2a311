@@ -57,9 +57,6 @@ table.sample th {
    background-color: white;  /* 背景色 */
    padding: 0.3em;             /* 内側の余白(0.3文字分) */
 }
-/* ▼リンクの上にマウスが載った際の装飾(背景色だけ指定) */
-.hover:hover { background-color: lightgray;
-}
 
 table.sample td a {
    display: block;       /* リンクをブロックレベル化して表示 */
@@ -73,7 +70,7 @@ a.widelink { display: block;
 }
 
 .right {
-	margin-left: 380px;
+	margin-left: 75%;
 	display: inline-block; 
 	display: inline;
 }
@@ -144,3 +141,25 @@ a.widelink { display: block;
   right: 10px;
   text-decoration: none;
 }
+
+
+.btn_design {
+    font-weight: bold;
+    padding: 10px 15px;
+    background-color: #ffffff;
+    color: #000000;
+    border: #000000 solid 0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    box-shadow: 0 0 6px 0 
+      rgba(0, 0, 0, 0.5);
+    transition: 0.2s;
+}
+  
+/* マウスオーバー時 */
+.btn_design:hover{
+      box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.5);
+      transform: translateY(-5px);
+      cursor: pointer;
+    }
