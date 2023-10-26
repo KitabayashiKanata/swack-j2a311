@@ -18,11 +18,11 @@
 <body>
 	<div class="container">
 
-		<h1>Swack</h1>
+		<h1><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</h1>
 		<h2>アカウントを作成してください</h2>
 
 		<div class="card">
-		
+
 			<form action="LoginServlet" method="post">
 				<input type="text" name="userName" placeholder="ユーザー名"><br>
 				<input type="email" name="mailAddress" placeholder="メールアドレス"><br>
@@ -30,8 +30,10 @@
 				<input type="password" name="password2" placeholder="パスワード再確認"><br>
 				<input type="submit" value="作成">
 			</form>
+			
 		</div>
-
+		
+		
 	</div>
 </body>
 </html>

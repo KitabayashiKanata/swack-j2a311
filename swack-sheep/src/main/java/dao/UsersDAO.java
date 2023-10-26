@@ -91,11 +91,11 @@ public class UsersDAO {
 
 	}
 	
-	public ArrayList<User> getUserList(String workspaceId) throws SwackException {
+	public ArrayList<String> getUserList(String workspaceId,String userId) throws SwackException {
 		// SQL
-		String sql = "SELECT R.ROOMID, R.ROOMNAME FROM JOINROOM J JOIN ROOMS R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = FALSE";
+		String sql = "SELECT USERNAME FROM USERS WHERE USERID IN (SELECT USERID FROM JOINWORKSPACE WHERE WORKSPACEID = ? AND USERID <> ?)";
 
-		ArrayList<User> userlist = new ArrayList<User>();
+		ArrayList<String> userlist = new ArrayList<String>();
 
 		// Access DB
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
@@ -103,6 +103,7 @@ public class UsersDAO {
 			// SQL作成
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, workspaceId);
+			pStmt.setString(2, userId);
 
 			// SQL実行
 			ResultSet rs = pStmt.executeQuery();
@@ -111,8 +112,7 @@ public class UsersDAO {
 			while (rs.next()) {
 				String userName = rs.getString("USERNAME");
 
-				User user = new User(userName);
-				userlist.add(user);
+				userlist.add(userName);
 			}
 
 		} catch (SQLException e) {

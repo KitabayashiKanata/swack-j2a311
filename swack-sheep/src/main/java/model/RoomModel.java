@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import bean.User;
 import dao.RoomDAO;
 import dao.UsersDAO;
 import exception.SwackException;
@@ -14,10 +13,10 @@ public class RoomModel {
 		return roomId;
 	}
 	
-	public ArrayList<User> getUserList(String workspaceId) throws SwackException {
+	public ArrayList<String> getUserList(String workspaceId,String userId) throws SwackException {
 		UsersDAO userDAO = new UsersDAO();
-		ArrayList<User> list
-			= userDAO.getUserList(workspaceId);
+		ArrayList<String> list
+			= userDAO.getUserList(workspaceId,userId);
 		return list;
 	}
 

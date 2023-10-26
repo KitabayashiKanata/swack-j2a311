@@ -18,7 +18,7 @@
 	<div class="container">
 
 		<h1>Swack</h1>
-		<h2>ワークスペースにサインインする</h2>
+		<h2>ダイレクトチャットを開始する</h2>
 		<table class="sample">
 			<c:forEach var="item" items="${userList}">
 				<tr><td>
