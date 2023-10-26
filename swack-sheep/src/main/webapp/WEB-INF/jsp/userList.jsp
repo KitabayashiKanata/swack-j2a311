@@ -22,10 +22,12 @@
 		<table class="sample">
 			<c:forEach var="item" items="${userList}">
 				<tr><td>
-					<a onclick="clickWorkspace('${item}")" class="hover4">
-						<c:out value="${item}" />
+				<div class="modal-open">
+					<a href="#modal" onclick="clickuser('${item.userName}','${item.userId}')" class="hover">
+						<c:out value="${item.userName}" />
 						<div class="right">→</div>
 					</a>
+					</div>
 				</td></tr>
 				<br>
 			</c:forEach>
