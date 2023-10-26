@@ -58,7 +58,7 @@ table.sample th {
    padding: 0.3em;             /* 内側の余白(0.3文字分) */
 }
 /* ▼リンクの上にマウスが載った際の装飾(背景色だけ指定) */
-a:hover { background-color: lightgray;
+.hover:hover { background-color: lightgray;
 }
 
 table.sample td a {
@@ -76,4 +76,71 @@ a.widelink { display: block;
 	margin-left: 380px;
 	display: inline-block; 
 	display: inline;
+}
+
+/* モーダルウィンドウ */
+.modal-open{
+  display: inline-block;
+  color: #fff;
+}
+	
+.modal-open a{
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+}
+.modal{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.modal:not(:target) {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+.modal:target{
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+.modal .overlay{
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #000;
+  opacity: 0.7;
+  top: 0;
+  left: 0;
+}
+.modal-wrapper{
+  width: 100%;
+  max-width: 400px;
+  min-width: 300px;
+  height: 100%;
+  max-height: 350px;
+  position: absolute;
+  background-color: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.modal-contents{
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+.modal-content{
+  margin: 25px;
+}
+.modal-close{
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  text-decoration: none;
 }

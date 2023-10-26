@@ -24,15 +24,36 @@
 			<tr><td><p>${nowUser.userName}のワークスペース</p></td></tr>
 			<c:forEach var="item" items="${workspaceList}">
 				<tr><td>
-					<c:
-					<a onclick="clickWorkspace(${item})" class="hover4">
-						<c:out value="${item}" />
+				<div class="modal-open">
+					<a href="#modal" onclick="clickWorkspace('${item.workspaceName}','${item.workspaceID}')" class="hover">
+						<c:out value="${item.workspaceName}" />
 						<div class="right">→</div>
 					</a>
+					</div>
 				</td></tr>
 				<br>
 			</c:forEach>
         </table>
+
+		<div class="modal" id="modal">
+		    <a href="#!" class="overlay"></a>
+		    <div class="modal-wrapper">
+				<div class="modal-contents">
+		        	<a href="#!" class="modal-close">✕</a>
+					<div class="modal-content">
+						<p><span id="wSpan2"></span><br>
+						<span id="wSpan1"></span></p>
+						
+						<form action="MainServlet" method="get">
+							<input type="hidden" id="workspaceID" />
+						 	<input type="hidden" id="workspaceName" />
+						 	<input type="submit" value="決定" />
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</div>
 

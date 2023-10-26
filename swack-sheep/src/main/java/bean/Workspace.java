@@ -10,7 +10,7 @@ public class Workspace implements Serializable{
 	
 	/** ユーザーID **/
 	private String userID;
-	/** ユーザ名 */
+	/** ワークスペースID */
 	private String workspaceID;
 	
 	public Workspace() {
@@ -27,4 +27,5 @@ public class Workspace implements Serializable{
 	public String getUserID() {
 		return userID;
 	}
+	
 }

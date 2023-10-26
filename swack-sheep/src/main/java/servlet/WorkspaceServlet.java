@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import bean.User;
 import bean.Workspace;
+import bean.WorkspaceList;
 import dao.WorkspaceDAO;
 import exception.SwackException;
 import model.LoginModel;
@@ -90,10 +91,8 @@ public class WorkspaceServlet extends HttpServlet {
 				request.setAttribute("nowUser", user);
 				
 				WorkspaceDAO workspaceDAO = new WorkspaceDAO();
-				List<String> workspaceList = workspaceDAO.list(workspace.getUserID());
+				List<WorkspaceList> workspaceList = workspaceDAO.list(workspace.getUserID());
 				request.setAttribute("workspaceList", workspaceList);
-				
-				System.out.println(workspaceList);
 				
 				request.getRequestDispatcher("/WEB-INF/jsp/workspaceList.jsp").forward(request, response);
 			}
