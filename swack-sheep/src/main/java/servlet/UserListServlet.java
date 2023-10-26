@@ -46,11 +46,14 @@ public class UserListServlet extends HttpServlet {
 		Workspace workspace = (Workspace) session.getAttribute("Workspace");
 
 //		String workspaceId = workspace.getWorkspaceID();
-		String workspaceId = "R0001";
+		String workspaceId = "W0001";
+		
+		User user = (User) session.getAttribute("user");
+		String userId = user.getUserId();
 		// 画面に必要な情報を準備する
 		try {
 			RoomModel roomModel = new RoomModel();
-			List<User> userList = roomModel.getUserList(workspaceId);
+			List<String> userList = roomModel.getUserList(workspaceId,userId);
 
 			// JSPに値を渡す
 			request.setAttribute("userList", userList);
