@@ -22,8 +22,8 @@
 		<table class="sample">
 			<c:forEach var="item" items="${roomList}">
 				<tr><td>
-					<a onclick="clickWorkspace('${item}")" class="hover4">
-						<c:out value="${item}" />
+					<a onclick="clickWorkspace('${item.roomName}")" class="hover4">
+						<c:out value="${item.roomName}" />
 						<div class="right">→</div>
 					</a>
 				</td></tr>
