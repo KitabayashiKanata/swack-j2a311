@@ -33,6 +33,21 @@ public class ChatModel {
 			= chatDAO.getDirectList(userId);
 		return list;
 	}
+	
+	//workspaceid追加
+	public ArrayList<Room> getRoomList(String userId,String workspaceId) throws SwackException {
+		ChatDAO chatDAO = new ChatDAO();
+		ArrayList<Room> list
+			= chatDAO.getRoomList(userId);
+		return list;
+	}
+
+	public ArrayList<Room> getDirectList(String userId,String workspaceId) throws SwackException {
+		ChatDAO chatDAO = new ChatDAO();
+		ArrayList<Room> list
+			= chatDAO.getDirectList(userId);
+		return list;
+	}
 
 	public List<ChatLog> getChatlogList(String roomId) throws SwackException {
 		ChatDAO chatDAO = new ChatDAO();

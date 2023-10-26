@@ -12,22 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bean.Room;
 import bean.User;
 import bean.Workspace;
 import exception.SwackException;
 import model.RoomModel;
 
 /**
- * Servlet implementation class UserListServlet
+ * Servlet implementation class RoomListServlet
  */
-@WebServlet("/UserListServlet")
-public class UserListServlet extends HttpServlet {
+@WebServlet("/RoomListServlet")
+public class RoomListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserListServlet() {
+    public RoomListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,11 +47,10 @@ public class UserListServlet extends HttpServlet {
 			User user = (User) session.getAttribute("user");
 			String userId = user.getUserId();
 			RoomModel roomModel = new RoomModel();
-			List<String> userList = roomModel.getUserList(workspaceId,userId);//データベースからユーザーIDを取得
+			List<Room> roomList = roomModel.getRoomList(workspaceId,userId);//データベースからユーザーIDを取得
 
 			// JSPに値を渡す
-			request.setAttribute("userList", userList);
-			request.setAttribute("nowUserId",userId);
+			request.setAttribute("roomList", roomList);
 
 		} catch (SwackException e) {
 			e.printStackTrace();
