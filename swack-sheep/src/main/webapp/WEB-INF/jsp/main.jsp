@@ -41,6 +41,7 @@
 					</c:forEach>
 					
 				</details>
+				<a href="RoomListServlet">ルーム一覧</a>
 				
 				<!-- モーダルウィンドウ -->
 				<center>
