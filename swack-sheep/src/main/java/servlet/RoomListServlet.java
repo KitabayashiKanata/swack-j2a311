@@ -60,7 +60,7 @@ public class RoomListServlet extends HttpServlet {
 
 		}
 
-		request.getRequestDispatcher("/WEB-INF/jsp/userList.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/roomList.jsp").forward(request, response);
 	}
 
 }
