@@ -30,6 +30,25 @@
 				<br>
 			</c:forEach>
         </table>
+        <div class="modal" id="modal">
+		    <a href="#!" class="overlay"></a>
+		    <div class="modal-wrapper">
+				<div class="modal-contents">
+		        	<a href="#!" class="modal-close">✕</a>
+					<div class="modal-content">
+						<p><span id="uSpan2"></span><br>
+						<span id="uSpan1"></span></p>
+						
+						<form action="MainServlet" method="get">
+							<input type="hidden" id="userID" />
+						 	<input type="hidden" id="workspaceName" />
+						 	<input type="submit" value="決定" />
+						</form>
+						
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</div>
 

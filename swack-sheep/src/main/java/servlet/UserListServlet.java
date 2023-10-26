@@ -46,11 +46,10 @@ public class UserListServlet extends HttpServlet {
 			User user = (User) session.getAttribute("user");
 			String userId = user.getUserId();
 			RoomModel roomModel = new RoomModel();
-			List<String> userList = roomModel.getUserList(workspaceId,userId);//データベースからユーザーIDを取得
+			List<User> userList = roomModel.getUserList(workspaceId,userId);//データベースからユーザーIDを取得
 
 			// JSPに値を渡す
 			request.setAttribute("userList", userList);
-			request.setAttribute("nowUserId",userId);
 
 		} catch (SwackException e) {
 			e.printStackTrace();

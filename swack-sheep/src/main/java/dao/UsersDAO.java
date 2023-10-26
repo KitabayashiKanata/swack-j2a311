@@ -91,11 +91,11 @@ public class UsersDAO {
 
 	}
 	
-	public ArrayList<String> getUserList(String workspaceId,String userId) throws SwackException {
+	public ArrayList<User> getUserList(String workspaceId,String userId) throws SwackException {
 		// SQL
 		String sql = "SELECT USERNAME FROM USERS WHERE USERID IN (SELECT USERID FROM JOINWORKSPACE WHERE WORKSPACEID = ? AND USERID <> ?)";
 
-		ArrayList<String> userlist = new ArrayList<String>();
+		ArrayList<User> userlist = new ArrayList<User>();
 
 		// Access DB
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
@@ -110,9 +110,11 @@ public class UsersDAO {
 
 			// 結果を詰め替え
 			while (rs.next()) {
+				String userIdRs = rs.getString("USERID");
 				String userName = rs.getString("USERNAME");
+				User user = new User(userIdRs,userName);
 
-				userlist.add(userName);
+				userlist.add(user);
 			}
 
 		} catch (SQLException e) {
