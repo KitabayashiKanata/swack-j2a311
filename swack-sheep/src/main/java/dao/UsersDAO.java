@@ -93,7 +93,7 @@ public class UsersDAO {
 	
 	public ArrayList<User> getUserList(String workspaceId,String userId) throws SwackException {
 		// SQL
-		String sql = "SELECT USERNAME FROM USERS WHERE USERID IN (SELECT USERID FROM JOINWORKSPACE WHERE WORKSPACEID = ? AND USERID <> ?)";
+		String sql = "SELECT USERID,USERNAME FROM USERS WHERE USERID IN (SELECT USERID FROM JOINWORKSPACE WHERE WORKSPACEID = ? AND USERID <> ?)";
 
 		ArrayList<User> userlist = new ArrayList<User>();
 
