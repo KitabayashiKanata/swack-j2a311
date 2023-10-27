@@ -35,7 +35,14 @@
 
 .card input[type="submit"] {
 	margin-top: 20px;
-	background-color: purple;
+	background-color: orangered;
+	color: white;
+}
+
+
+.a input[type="submit"] {
+	margin-top: 20px;
+	background-color: orangered;
 	color: white;
 }
 
