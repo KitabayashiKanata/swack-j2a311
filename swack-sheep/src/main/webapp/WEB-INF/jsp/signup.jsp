@@ -17,6 +17,12 @@
 <script src="js/count.js"></script>
 </head>
 <body>
+
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
+
+
 	<div class="container">
 
 		<h1><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</h1>

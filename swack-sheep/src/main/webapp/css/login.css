@@ -40,14 +40,6 @@
 }
 
 
-.a input[type="submit"] {
-	margin-top: 20px;
-	background-color: orangered;
-	color: white;
-}
-
-
-
 .bg {
   animation:slide 3s ease-in-out infinite alternate;
   background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
