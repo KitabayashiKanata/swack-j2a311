@@ -45,7 +45,7 @@
 						<span id="wSpan1"></span></p>
 						
 						<form action="MainServlet" method="get">
-							<input type="hidden" id="workspaceID" />
+							<input type="hidden" id="workspaceID" name="workspaceId" />
 						 	<input type="hidden" id="workspaceName" />
 						 	<input type="submit" value="決定" />
 						</form>

@@ -43,14 +43,20 @@ public class CreateRoomServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//	TODO ダイレクトチャットの選択
 		String roomName = request.getParameter("roomName");
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
 		String userId = user.getUserId();
-		boolean directed = false; //ダイレクトチャット選択実装時に変更
+		boolean directed = false; 
 		String privatedS = request.getParameter("privated");
 		String roomId = "";
+		
+		//ダイレクトチャットの場合
+		if(roomName == null) {
+			String directUser = request.getParameter("userId");
+			roomName = userId + "," + directUser;
+			directed = true;
+		}
 		
 		
 		// パラメータチェック
