@@ -16,8 +16,10 @@ import bean.ChatLog;
 import bean.Room;
 import bean.User;
 import bean.Workspace;
+import bean.WorkspaceList;
 import exception.SwackException;
 import model.ChatModel;
+import model.WorkspaceModel;
 
 /**
  * Servlet implementation class MainServlet
@@ -40,27 +42,51 @@ public class MainServlet extends LoginCheckServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		User user = (User) session.getAttribute("user");
-
-		String roomId = request.getParameter("roomId");
-		if (roomId == null) {
-			roomId = "R0000";
-		}
+		try {
+			HttpSession session = request.getSession();
+			
+			//ユーザーの取得
+			User user = (User) session.getAttribute("user");
+					
+			//ワークスペースの取得
+			String workspaceId = request.getParameter("workspaceId");
+			if(workspaceId == null) {
+				Workspace workspace = (Workspace) session.getAttribute("workspace");
+				if (workspace == null) {
+					request.setAttribute("errorMsg", ERR_SYSTEM);
+					request.setAttribute("nowUser", user);
+					WorkspaceModel workspaceModel = new WorkspaceModel();
+					List<WorkspaceList> workspaceList = workspaceModel.getWorkspaceList(user.getUserId());
+					request.setAttribute("workspaceList", workspaceList);
+					request.getRequestDispatcher("/WEB-INF/jsp/workspaceList.jsp").forward(request, response);
+					return;
+				}
+				workspaceId = workspace.getWorkspaceID();
+			}else {
+				//ワークスペースをセッションに保存
+				Workspace workspace = new Workspace(workspaceId,user.getUserId());
+				session.setAttribute("workspace",workspace);
+			}
+			
+			
+			
+			//ルームの取得
+			String roomId = request.getParameter("roomId");
+			//TODO ルームIDが保存されてない場合roomList.jspに遷移したい
+			if (roomId == null) {
+				request.getRequestDispatcher("/RoomListServlet").forward(request, response);
+//				response.sendRedirect("/RoomListServlet");
+				roomId = "R0000";
+			}
 
 		// 画面に必要な情報を準備する
-		try {
+		
 			ChatModel chatModel = new ChatModel();
 			Room room = chatModel.getRoom(roomId, user.getUserId());
-			List<Room> roomList = chatModel.getRoomList(user.getUserId());
-			List<Room> directList = chatModel.getDirectList(user.getUserId());
+			List<Room> roomList = chatModel.getRoomList(user.getUserId(),workspaceId); //workspaceIdを追加
+			List<Room> directList = chatModel.getDirectList(user.getUserId(),workspaceId); //workspaceIdを追加
 			List<ChatLog> chatLogList = chatModel.getChatlogList(roomId);
-			Workspace workspace = (Workspace) session.getAttribute("workspace");
-//			if (workspace == null) {
-//				request.setAttribute("errorMsg", ERR_SYSTEM);
-//				request.getRequestDispatcher("/WEB-INF/jsp/workspace.jsp").forward(request, response);
-//				return;
-//			}
+			
 
 			// JSPに値を渡す
 			request.setAttribute("nowUser", user);

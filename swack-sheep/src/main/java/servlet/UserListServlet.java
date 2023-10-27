@@ -38,7 +38,7 @@ public class UserListServlet extends HttpServlet {
 		// 画面に必要な情報を準備する
 		try {
 			HttpSession session = request.getSession();
-			Workspace workspace = (Workspace) session.getAttribute("Workspace");
+			Workspace workspace = (Workspace) session.getAttribute("workspace");
 
 //			String workspaceId = workspace.getWorkspaceID();
 			String workspaceId = "W0001";//仮

@@ -38,14 +38,15 @@ public class ChatModel {
 	public ArrayList<Room> getRoomList(String userId,String workspaceId) throws SwackException {
 		ChatDAO chatDAO = new ChatDAO();
 		ArrayList<Room> list
-			= chatDAO.getRoomList(userId);
+			= chatDAO.getRoomList(userId,workspaceId);
 		return list;
 	}
 
+	//workspaceid追加
 	public ArrayList<Room> getDirectList(String userId,String workspaceId) throws SwackException {
 		ChatDAO chatDAO = new ChatDAO();
 		ArrayList<Room> list
-			= chatDAO.getDirectList(userId);
+			= chatDAO.getDirectList(userId,workspaceId);
 		return list;
 	}
 
