@@ -19,11 +19,12 @@
 	<div class="container">
 
 		<h1><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</h1>
-		<h2>アカウントを作成してください</h2>
+		<h2>アカウントの作成</h2>
 
 		<div class="card">
-
-			<form action="LoginServlet" method="post">
+			<p class="error">${errorMsg}</p>
+			
+			<form action="CreateUserServlet" method="post">
 				<input type="text" name="userName" placeholder="ユーザー名"><br>
 				<input type="email" name="mailAddress" placeholder="メールアドレス"><br>
 				<input type="password" name="password" placeholder="パスワード"><br>
