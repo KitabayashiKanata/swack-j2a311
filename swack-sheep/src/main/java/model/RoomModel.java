@@ -15,6 +15,12 @@ public class RoomModel {
 		return roomId;
 	}
 	
+	public String createRoom(String roomName,String createdUserId,boolean directed, boolean privated, String workspaceId)throws SwackException {
+		RoomDAO roomDAO = new RoomDAO();
+		String roomId = roomDAO.createRoom(roomName, createdUserId,directed,privated,workspaceId);
+		return roomId;
+	}
+	
 	public ArrayList<User> getUserList(String workspaceId,String userId) throws SwackException {
 		UsersDAO userDAO = new UsersDAO();
 		ArrayList<User> list

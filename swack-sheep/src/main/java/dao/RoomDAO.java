@@ -40,8 +40,13 @@ public class RoomDAO {
 	
 	//workspaceid追加
 	public String createRoom(String roomName,String createdUserId,boolean directed, boolean privated,String workspaceId)throws SwackException{
-		String roomId = getMaxRoomId();
 		
+		if(compare(roomName,workspaceId)) {
+			// TODO　同名エラーの処理
+			return "R0000"; 
+		}
+		
+		String roomId = getMaxRoomId();
 		
 		String sql = "INSERT INTO ROOMS2 VALUES(?,?,?,?,?,?)";
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
@@ -51,7 +56,7 @@ public class RoomDAO {
 			pStmt.setString(3, createdUserId);
 			pStmt.setBoolean(4, directed);
 			pStmt.setBoolean(5, privated);
-			pStmt.setString(5, workspaceId);
+			pStmt.setString(6, workspaceId);
 			
 
 			pStmt.executeUpdate();
@@ -66,7 +71,7 @@ public class RoomDAO {
 	public String getMaxRoomId() throws SwackException {
 		String maxRoomId = "";
 		
-		String sql1 = "SELECT MAX(ROOMID) AS ROOMID FROM ROOMS";
+		String sql1 = "SELECT MAX(ROOMID) AS ROOMID FROM ROOMS2";
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD);
 			PreparedStatement pStmt = conn.prepareStatement(sql1);
 			
@@ -105,7 +110,7 @@ public class RoomDAO {
 		
 	}
 	
-	//workspaceid追加
+	//workspaceid追加 (これどこで使用してる?)
 	public ArrayList<Room> getRoomList(String workspaceId,String userId) throws SwackException {
 		// SQL
 		String sql = "SELECT ROOMID,ROOMNAME FROM ROOMS2 WHERE WORKSPACEID = ? AND ROOMID IN (SELECT ROOMID FROM JOINROOM WHERE USERID = ?)";
@@ -137,6 +142,47 @@ public class RoomDAO {
 		}
 
 		return roomlist;
+
+	}
+	
+	public boolean compare(String roomName,String workspaceId)throws SwackException {
+		// roomIdがすでに登録されていた場合の処理
+		ArrayList<String> roomNameList = getAllRoomList(workspaceId);
+		for(String name : roomNameList) {
+			if(name.compareTo(roomName) == 0) {
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	public ArrayList<String> getAllRoomList(String workspaceId) throws SwackException {
+		// SQL
+		String sql = "SELECT ROOMNAME FROM ROOMS2 WHERE WORKSPACEID = ?";
+
+		ArrayList<String> roomNameList = new ArrayList<String>();
+
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, workspaceId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			while (rs.next()) {
+				String roomName = rs.getString("ROOMNAME");
+				roomNameList.add(roomName);
+			}
+
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+
+		return roomNameList;
 
 	}
 }

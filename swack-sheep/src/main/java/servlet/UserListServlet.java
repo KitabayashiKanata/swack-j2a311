@@ -40,8 +40,7 @@ public class UserListServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			Workspace workspace = (Workspace) session.getAttribute("workspace");
 
-//			String workspaceId = workspace.getWorkspaceID();
-			String workspaceId = "W0001";//仮
+			String workspaceId = workspace.getWorkspaceID();
 			
 			User user = (User) session.getAttribute("user");
 			String userId = user.getUserId();
