@@ -78,6 +78,8 @@ public class MainServlet extends LoginCheckServlet {
 //				response.sendRedirect("/RoomListServlet");
 				roomId = "R0000";
 			}
+			
+			session.setAttribute("nowRoomID", roomId);
 
 		// 画面に必要な情報を準備する
 		

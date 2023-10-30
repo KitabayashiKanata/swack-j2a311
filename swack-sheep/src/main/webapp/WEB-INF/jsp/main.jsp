@@ -80,6 +80,7 @@
 				<!-- 仮設置です -->
 				<a href="UserListServlet">ダイレクトチャット開始</a>
 				<a href="WorkspaceServlet">ワークスペースに参加</a>
+				<a href="InvitationRoomServlet">ルーム招待</a>
 			</div>
 			<div class="contents">
 				<div class="contents-header">
