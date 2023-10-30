@@ -3,10 +3,27 @@
  */
 
  function count(cnt){
-	 if (cnt == null){
-		 cnt = -1;
-	 } else{
-		 cnt -= 1;
+	 cnt -= 1;
+	 
+	 sessionStorage.setItem('c', cnt);
+	 console.log(cnt);
+ }
+ 
+ function count2(cnt){
+	 cnt -= 2;
+	 
+	 sessionStorage.setItem('c', cnt);
+	 console.log(cnt);
+ }
+ 
+ function reCnt(){
+	 c = sessionStorage.getItem('c')
+	 if (c == null){
+		 c = -1
 	 }
-	 document.getElementById("backCnt").value = cnt;
+	 return c
+ }
+ 
+ function delSession(){
+	 sessionStorage.clear('c')
  }

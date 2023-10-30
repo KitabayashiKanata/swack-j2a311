@@ -44,7 +44,6 @@ public class WorkspaceServlet extends HttpServlet {
 		String mailAddress = request.getParameter("mailAddress");
 		String password = request.getParameter("password");
 		
-		
 		// パラメータチェック
 		StringBuilder errorMsg = new StringBuilder();
 		if (userName == null || userName.length() == 0) {
@@ -105,11 +104,6 @@ public class WorkspaceServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/jsp/workspace.jsp").forward(request, response);
 			return;
 		}
-	}
-
-	private void elif() {
-		// TODO 自動生成されたメソッド・スタブ
-		
 	}
 
 }
