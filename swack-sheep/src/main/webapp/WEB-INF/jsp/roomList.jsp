@@ -43,7 +43,7 @@
 						<span id="rSpan1"></span></p>
 						
 						<form action="MainServlet" method="get">
-							<input type="hidden" id="roomID" />
+							<input type="hidden" id="roomID" name="roomId" />
 						 	<input type="hidden" id="roomName" />
 						 	<input type="submit" value="決定" />
 						</form>

@@ -29,7 +29,7 @@
 .card input {
 	margin: 5px auto;
 	padding: 5px;
-	width: 10%;
+	width: 100%;
 	border: none;
 }
 
@@ -37,4 +37,20 @@
 	margin-top: 20px;
 	background-color: purple;
 	color: white;
+}
+
+
+.bg_pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffe9a7;
+  opacity: 0.4;
+  z-index: -1;
+}
+.Cross {
+  background: radial-gradient(circle, transparent 20%, #ffe9a7 20%, #ffe9a7 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, #ffe9a7 20%, #ffe9a7 80%, transparent 80%, transparent) 50px 50px, linear-gradient(#ffc107 4px, transparent 4px) 0 -2px, linear-gradient(90deg, #ffc107 4px, #ffe9a7 4px) -2px 0;
+background-size: 100px 100px, 100px 100px, 50px 50px, 50px 50px;
 }

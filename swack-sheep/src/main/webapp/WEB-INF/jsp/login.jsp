@@ -18,6 +18,11 @@
 
 </head>
 <body>
+
+ <div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
+
 	<div class="container">
 
 		<h1>Swack</h1>
@@ -27,13 +32,13 @@
 			<p class="error">${errorMsg}</p>
 
 			<form action="LoginServlet" method="post">
-				<input type="email" name="mailAddress" placeholder="xxxxxx@xxx.xxx"><br>
+				<input type="email" name="mailAddress" placeholder="メールアドレス"><br>
 				<input type="password" name="password" placeholder="パスワード"><br>
 				<input type="submit" value="ログイン">
 			</form>
 		</div>
 
-		<a href="signup.jsp">新規登録画面へ</a>
+		<a href="CreateUserServlet">新規登録画面へ</a>
 	</div>
 </body>
 </html>

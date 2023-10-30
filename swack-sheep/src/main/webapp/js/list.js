@@ -17,6 +17,7 @@ function clickRoom(num1, num2) {
 };
 
 function clickUser(num1, num2) {
+	console.log(num1,num2);
 	document.getElementById("userName").value = num1;
 	document.getElementById("userID").value = num2;
     document.getElementById("uSpan1").textContent  = document.getElementById("userName").value;

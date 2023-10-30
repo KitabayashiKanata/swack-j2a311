@@ -39,10 +39,8 @@ public class RoomListServlet extends HttpServlet {
 		// 画面に必要な情報を準備する
 		try {
 			HttpSession session = request.getSession();
-			Workspace workspace = (Workspace) session.getAttribute("Workspace");
-
-//			String workspaceId = workspace.getWorkspaceID();
-			String workspaceId = "W0001";//仮
+			Workspace workspace = (Workspace) session.getAttribute("workspace");
+			String workspaceId = workspace.getWorkspaceID();
 			
 			User user = (User) session.getAttribute("user");
 			String userId = user.getUserId();

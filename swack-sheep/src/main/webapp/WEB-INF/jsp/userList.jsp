@@ -13,6 +13,7 @@
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/workspaceList.css">
+<script src="js/list.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -23,7 +24,7 @@
 			<c:forEach var="item" items="${userList}">
 				<tr><td>
 				<div class="modal-open">
-					<a href="#modal" onclick="clickuser('${item.userName}','${item.userId}')" class="hover">
+					<a href="#modal" onclick="clickUser('${item.userName}','${item.userId}')" class="hover">
 						<c:out value="${item.userName}" />
 						<div class="right">→</div>
 					</a>
@@ -32,6 +33,7 @@
 				<br>
 			</c:forEach>
         </table>
+        
         <div class="modal" id="modal">
 		    <a href="#!" class="overlay"></a>
 		    <div class="modal-wrapper">
@@ -41,9 +43,9 @@
 						<p><span id="uSpan2"></span><br>
 						<span id="uSpan1"></span></p>
 						
-						<form action="MainServlet" method="get">
-							<input type="hidden" id="userID" />
-						 	<input type="hidden" id="workspaceName" />
+						<form action="CreateRoomServlet" method="post">
+							<input type="hidden" id="userID" name="userId" />
+						 	<input type="hidden" id="userName" />
 						 	<input type="submit" value="決定" />
 						</form>
 						

@@ -60,33 +60,107 @@ public class UsersDAO {
 	}
 
 	public boolean exists(String mailAddress) throws SwackException {
-		// TODO SQL
-		String sql = "********";
+		// SQL
+		String sql = "SELECT COUNT(*) AS CNT FROM USERS WHERE MAILADDRESS = ?";
 
-		// TODO Access DB
+		int cnt = 0;
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
 
-		return false;
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, mailAddress);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			if (rs.next()) {
+				cnt = rs.getInt("CNT");
+			}
+			
+			if (cnt == 1) {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		return true;
 
 	}
 
 	public String selectMaxUserId() throws SwackException {
-		// TODO SQL
-		String sql = "********";
+		// SQL
+		String sql = "SELECT MAX(USERID) AS USERID FROM USERS";
 
 		String maxUserId = null;
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}
 
-		// TODO Access DB
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
 
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			if (rs.next()) {
+				maxUserId = rs.getString("USERID");
+
+			}
+			
+			// userIdを+１する
+			String[] list = maxUserId.split("");
+			String strId = "";
+			strId = list[1] + list[2] + list[3] + list[4];
+			int intId = Integer.valueOf(strId);
+			intId += 1;
+			strId = String.format("%04d", intId);
+			maxUserId = list[0] + strId;
+
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		
 		return maxUserId;
 
 	}
 
 	public boolean insert(User user) throws SwackException {
-		// TODO SQL
-		String sql = "********";
+		// SQL
+		String sql = "INSERT INTO USERS VALUES(?,?,?,?)";
 
-		// TODO Access DB
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
 
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, user.getUserId());
+			pStmt.setString(2, user.getUserName());
+			pStmt.setString(3, user.getMailAddress());
+			pStmt.setString(4, user.getPassword());
+
+			// メールアドレスの重複確認
+			UsersDAO usersDAO = new UsersDAO();
+			boolean result = usersDAO.exists(user.getMailAddress());
+			if (result) {
+			// SQL実行
+				pStmt.executeUpdate();
+			}else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
 		return true;
 
 	}
