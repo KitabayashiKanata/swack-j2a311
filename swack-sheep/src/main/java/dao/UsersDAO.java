@@ -170,6 +170,7 @@ public class UsersDAO {
 		String sql = "SELECT USERID,USERNAME FROM USERS WHERE USERID IN (SELECT USERID FROM JOINWORKSPACE WHERE WORKSPACEID = ? AND USERID <> ?)";
 
 		ArrayList<User> userlist = new ArrayList<User>();
+		//test
 
 		// Access DB
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
