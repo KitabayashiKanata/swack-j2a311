@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.User;
+import bean.Workspace;
 import exception.SwackException;
 import model.RoomModel;
 
@@ -50,12 +51,15 @@ public class CreateRoomServlet extends HttpServlet {
 		boolean directed = false; 
 		String privatedS = request.getParameter("privated");
 		String roomId = "";
+		Workspace workspace = (Workspace) session.getAttribute("workspace");
+		String workspaceId = workspace.getWorkspaceID();
 		
 		//ダイレクトチャットの場合
 		if(roomName == null) {
 			String directUser = request.getParameter("userId");
-			roomName = userId + "," + directUser;
+			roomName = "P"+userId + "," + directUser;
 			directed = true;
+			privatedS = "private";
 		}
 		
 		
@@ -83,7 +87,7 @@ public class CreateRoomServlet extends HttpServlet {
 		try {
 			// Model → DAOにデータを私登録
 			RoomModel roomModel = new RoomModel();
-			roomId = roomModel.createRoom(roomName, userId,directed,privatedB);
+			roomId = roomModel.createRoom(roomName, userId,directed,privatedB,workspaceId);
 			
 		} catch (SwackException e) {
 			e.printStackTrace();
