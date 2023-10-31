@@ -167,10 +167,10 @@ public class UsersDAO {
 	
 	public ArrayList<User> getUserList(String workspaceId,String userId) throws SwackException {
 		// SQL
-		String sql = "SELECT USERID,USERNAME FROM USERS WHERE USERID IN (SELECT USERID FROM JOINWORKSPACE WHERE WORKSPACEID = ? AND USERID <> ?)";
+		String sql = "SELECT USERID,USERNAME FROM USERS "
+				+ "WHERE USERID IN (SELECT USERID FROM JOINWORKSPACE WHERE WORKSPACEID = ? AND USERID <> ?)";
 
 		ArrayList<User> userlist = new ArrayList<User>();
-		//test
 
 		// Access DB
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
@@ -192,6 +192,79 @@ public class UsersDAO {
 				userlist.add(user);
 			}
 
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+
+		return userlist;
+
+	}
+	
+	public ArrayList<User> getJoinUserList(String roomId,String userId) throws SwackException {
+		// SQL
+		String sql = "SELECT USERID,USERNAME FROM USERS "
+				+ "WHERE USERID NOT IN (SELECT USERID FROM JOINROOM WHERE ROOMID = ? AND USERID <> ?) AND USERID <> ?";
+
+		ArrayList<User> userlist = new ArrayList<User>();
+		//test
+
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, roomId);
+			pStmt.setString(2, userId);
+			pStmt.setString(3, userId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			while (rs.next()) {
+				String userIdRs = rs.getString("USERID");
+				String userName = rs.getString("USERNAME");
+				User user = new User(userIdRs,userName);
+
+				userlist.add(user);
+			}
+
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+
+		return userlist;
+	}
+	
+	public ArrayList<User> getUserList(String workspaceId,ArrayList<User> userList) throws SwackException {
+		// SQL
+		String sql = "SELECT USERID,USERNAME FROM USERS "
+				+ "WHERE USERID IN (SELECT USERID FROM JOINWORKSPACE WHERE WORKSPACEID = ? AND USERID = ?)";
+
+		ArrayList<User> userlist = new ArrayList<User>();
+
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			for (User u : userList) {
+				
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+				pStmt.setString(1, workspaceId);
+				pStmt.setString(2, u.getUserId());
+				
+				// SQL実行
+				ResultSet rs = pStmt.executeQuery();
+	
+				while (rs.next()) {
+					// 結果を詰め替え
+					String userIdRs = rs.getString("USERID");
+					String userName = rs.getString("USERNAME");
+					User user = new User(userIdRs,userName);
+	
+					userlist.add(user);
+				}
+			}
 		} catch (SQLException e) {
 			throw new SwackException(ERR_DB_PROCESS, e);
 		}
