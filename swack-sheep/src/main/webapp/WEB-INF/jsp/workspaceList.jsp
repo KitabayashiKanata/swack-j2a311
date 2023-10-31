@@ -23,8 +23,8 @@
 
 	<div class="container">
 
-		<h1><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</h1>
-		<h2>ワークスペースにサインインする</h2>
+		<h1><span class="back"><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</span></h1>
+		<h2><span class="marker-normal">　ワークスペースにサインインする　</span></h2>
 		<table class="sample">
 			<tr><td><p>${nowUser.userName}のワークスペース</p></td></tr>
 			<c:forEach var="item" items="${workspaceList}">
