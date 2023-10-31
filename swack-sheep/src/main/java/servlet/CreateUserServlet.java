@@ -33,9 +33,6 @@ public class CreateUserServlet extends HttpServlet {
 			String mailAddress = request.getParameter("mailAddress");
 			String password = request.getParameter("password");
 			String password2 = request.getParameter("password2");
-			String backCnt = request.getParameter("backCnt");
-			
-			request.setAttribute("cnt", backCnt);
 	
 			// パラメータチェック
 			StringBuilder errorMsg = new StringBuilder();
