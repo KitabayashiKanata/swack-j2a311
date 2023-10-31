@@ -12,12 +12,15 @@
 	text-align: center;
 }
 
-.container h1 {
+.back {
 	background:rgba(255,255,255,0.5);
 	border-radius: 70px;
 	padding: 0.2em;
 	display: inline-block;
-	transform: translateX(114%)
+}
+
+.marker-normal{
+	 background: linear-gradient(transparent 70%, yellow 99%);
 }
 
 .card {
@@ -55,6 +58,29 @@
 .card input[type="submit"]:hover {
 	background-color: darkorange;
 }
+
+.sample_link03 a{
+  display: inline-block;
+  color:#ee2d7b;
+  font-size:120%;
+  text-decoration:none;
+  transition: all .3s;
+  color: black;
+}
+.sample_link03 a:hover{
+  color: #fff;
+  background-color: #ee2d7b;
+}
+
+
+
+.container {
+	width: 90%;
+	max-width: 500px;
+	height: 100%;
+	margin: auto;
+}
+
 
 
 .bg {

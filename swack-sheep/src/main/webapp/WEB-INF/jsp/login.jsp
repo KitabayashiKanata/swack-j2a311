@@ -25,8 +25,8 @@
 
 	<div class="container">
 
-		<h1><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</h1>
-		<h2>ログイン</h2>
+		<h1><span class="back"><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</span></h1>
+		<h2><span class="marker-normal">　ログイン　</span></h2>
 
 		<div class="card">
 			<p class="error">${errorMsg}</p>
@@ -38,7 +38,7 @@
 			</form>
 		</div>
 
-		<a href="CreateUserServlet">新規登録画面へ</a>
+		<a  class="sample_link03" href="CreateUserServlet">新規登録画面へ</a>
 	</div>
 </body>
 </html>

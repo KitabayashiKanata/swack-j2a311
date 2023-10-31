@@ -25,8 +25,8 @@
 
 	<div class="container">
 
-		<h1><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</h1>
-		<h2>アカウントの作成</h2>
+		<h1><span class="back"><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</span></h1>
+		<h2><span class="marker-normal">　アカウントの作成　</span></h2>
 
 		<div class="card">
 			<p class="error">${errorMsg}</p>

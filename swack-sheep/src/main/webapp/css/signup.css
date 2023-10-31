@@ -12,12 +12,15 @@
 	text-align: center;
 }
 
-.container h1 {
+.back {
 	background:rgba(255,255,255,0.5);
 	border-radius: 70px;
 	padding: 0.2em;
 	display: inline-block;
-	transform: translateX(114%)
+}
+
+.marker-normal{
+	 background: linear-gradient(transparent 70%, yellow 99%);
 }
 
 .card {
