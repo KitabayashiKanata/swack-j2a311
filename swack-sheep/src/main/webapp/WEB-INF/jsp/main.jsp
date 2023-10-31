@@ -55,7 +55,7 @@
 				    <a href="#!" class="modal-close">✕</a>
 				      <p class="modal_title">Create a channel</p>
 				      <a class="modal_body">名前</a>
-				      <form  action="CreateRoomServlet" method="post">
+				      <form class="modal-form" action="CreateRoomServlet" method="post">
 				      	<input type="text" name="roomName" placeholder="# 例:計画-予算">
 				      	<p class="radio">パブリック</p>
 				      	<input type="radio" name="privated" value="パブリック">
