@@ -28,6 +28,13 @@ public class RoomModel {
 		return list;
 	}
 	
+	public ArrayList<User> getJoinUserList(String roomId,String userId, String workspaceId) throws SwackException {
+		UsersDAO userDAO = new UsersDAO();
+		ArrayList<User> list = userDAO.getJoinUserList(roomId,userId);
+		list = userDAO.getUserList(workspaceId, list);
+		return list;
+	}
+	
 	public ArrayList<Room> getRoomList(String workspaceId,String userId) throws SwackException{
 		RoomDAO userDAO = new RoomDAO();
 		ArrayList<Room> list

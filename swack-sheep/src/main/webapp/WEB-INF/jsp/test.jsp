@@ -17,6 +17,7 @@
 	<div class="container">
 
 		<h1>test</h1>
+		<p class="error">${errorMsg}</p>
 		<table class="sample">
 			<c:forEach var="item" items="${userList}">
 				<tr><td>
@@ -41,7 +42,7 @@
 						<span id="uSpan1"></span></p>
 						
 						<form action="InvitationRoomServlet" method="post">
-							<input type="hidden" id="userID" name="userId" />
+							<input type="hidden" id="userID" name="userID" />
 						 	<input type="hidden" id="userName" />
 						 	<input type="submit" value="決定" />
 						</form>
