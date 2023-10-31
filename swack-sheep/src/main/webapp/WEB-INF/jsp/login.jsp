@@ -38,7 +38,7 @@
 			</form>
 		</div>
 
-		<a  class="sample_link03" href="CreateUserServlet">新規登録画面へ</a>
+		<a href="CreateUserServlet">新規登録画面へ</a>
 	</div>
 </body>
 </html>
