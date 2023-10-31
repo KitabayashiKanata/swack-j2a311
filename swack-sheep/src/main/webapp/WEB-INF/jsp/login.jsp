@@ -25,7 +25,7 @@
 
 	<div class="container">
 
-		<h1>Swack</h1>
+		<h1><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</h1>
 		<h2>ログイン</h2>
 
 		<div class="card">

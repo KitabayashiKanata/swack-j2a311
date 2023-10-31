@@ -12,33 +12,13 @@
 	text-align: center;
 }
 
-.card {
-	width: 90%;
-	margin: 30px auto; /* 上下左右 */
-	padding: 20px;
-	background-color: #efefefef;
-	border-radius: 5px;
-	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3); /* 水平方向,垂直方向,ぼかし*/
-	text-align: center;
+.container h1 {
+	background:rgba(255,255,255,0.5);
+	border-radius: 70px;
+	padding: 0.2em;
+	display: inline-block;
+	transform: translateX(114%)
 }
-.card .error {
-	background-color: pink;
-	color: red;
-}
-
-.card input {
-	margin: 5px auto;
-	padding: 5px;
-	width: 100%;
-	border: none;
-}
-
-.card input[type="submit"] {
-	margin-top: 20px;
-	background-color: orangered;
-	color: white;
-}
-
 
 
 /* ▼テーブル全体の装飾 */
@@ -46,6 +26,7 @@ table.sample {
    border-collapse: collapse;  /* テーブルの罫線を重ねて1本に見せる */
    border: 2px solid black;    /* テーブルの外側の枠線(2pxの実線) */
    text-align: center;
+   background-color: whitesmoke;
 }
 /* ▼セル共通の装飾 */
 table.sample th,
@@ -146,7 +127,7 @@ a.widelink { display: block;
 .btn_design {
     font-weight: bold;
     padding: 10px 15px;
-    background-color: palegreen;
+    background-color: #efefefef;
     color: #000000;
     border: #000000 solid 0px;
     -webkit-box-sizing: border-box;
