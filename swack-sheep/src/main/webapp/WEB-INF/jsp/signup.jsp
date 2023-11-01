@@ -25,7 +25,16 @@
 
 	<div class="container">
 
-		<h1><span class="back"><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</span></h1>
+		<h1>
+		<div class="wave back">
+        <span><img src="images/favicon.ico" alt="Swack" style="width: 60px; height: 60px;"></span>
+        <span>S</span>
+        <span>w</span>
+        <span>a</span>
+        <span>c</span>
+        <span>k</span>
+        </div>
+        </h1>
 		<h2><span class="marker-normal">　アカウントの作成　</span></h2>
 
 		<div class="card">

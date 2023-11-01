@@ -19,6 +19,53 @@
 	display: inline-block;
 }
 
+@keyframes wave {
+  100% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+.wave {
+  display: block;
+  width: 400px;
+  margin: 40px auto 0;
+  text-align: center;
+  cursor: pointer;
+}
+
+.wave span {
+  display: inline-block;
+  color: #fff;
+  font-size: 2em;
+}
+
+.wave:hover span {
+  animation-name: wave;
+  animation-duration: .2s;
+  animation-direction: alternate;
+  animation-iteration-count: 2;
+}
+
+.wave:hover span:nth-child(2) {
+  animation-delay: .1s;
+}
+
+.wave:hover span:nth-child(3) {
+  animation-delay: .2s;
+}
+
+.wave:hover span:nth-child(4) {
+  animation-delay: .3s;
+}
+
+.wave:hover span:nth-child(5) {
+  animation-delay: .4s;
+}
+
+.wave:hover span:nth-child(6) {
+  animation-delay: .5s;
+}
+
 .marker-normal{
 	 background: linear-gradient(transparent 70%, yellow 99%);
 }
@@ -58,29 +105,6 @@
 .card input[type="submit"]:hover {
 	background-color: darkorange;
 }
-
-.sample_link03 a{
-  display: inline-block;
-  color:#ee2d7b;
-  font-size:120%;
-  text-decoration:none;
-  transition: all .3s;
-  color: black;
-}
-.sample_link03 a:hover{
-  color: #fff;
-  background-color: #ee2d7b;
-}
-
-
-
-.container {
-	width: 90%;
-	max-width: 500px;
-	height: 100%;
-	margin: auto;
-}
-
 
 
 .bg {
@@ -125,4 +149,45 @@
   100% {
     transform:translateX(25%);
   }
+}
+
+
+
+.sample_link12 a{
+  display: inline-block;
+  color:rgb(0, 0, 0);
+  font-size:120%;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  -webkit-perspective-origin: 50% 50%;
+  perspective-origin: 50% 50%;
+  vertical-align: bottom;
+  overflow: hidden;
+}
+.sample_link12 a span{
+  display: inline-block;
+  position: relative;
+  transition: .4s;
+  -webkit-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.sample_link12 a:hover span{
+  background-color: #2ecc71;
+  -webkit-transform: translate3d(0, 0, -30px) rotateX(90deg);
+  transform: translate3d(0, 0, -30px) rotateX(90deg);
+}
+.sample_link12 a span:after{
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: attr(data-text);
+  color: rgb(255, 255, 255);
+  background-color: orangered;
+  -webkit-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+  -webkit-transform: translate3d(0, 105%, 0) rotateX(-90deg);
+  transform: translate3d(0, 105%, 0) rotateX(-90deg);
 }
