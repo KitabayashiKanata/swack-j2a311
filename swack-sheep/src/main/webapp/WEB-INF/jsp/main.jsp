@@ -16,6 +16,9 @@
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/main.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modaal@0.4.4/dist/css/modaal.min.css">
+
 </head>
 <body>
 
@@ -55,6 +58,7 @@
 				    <a href="#!" class="modal-close">✕</a>
 				      <p class="modal_title">Create a channel</p>
 				      <a class="modal_body">名前</a>
+				      <p class="error" id="errorMsg">${errorMsg}</p>
 				      <form class="modal-form" action="CreateRoomServlet" method="post">
 				      	<input type="text" name="roomName" placeholder="# 例:計画-予算">
 				      	<p class="radio">パブリック</p>
@@ -113,7 +117,8 @@
 
 	</div>
 
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/modaal@0.4.4/dist/js/modaal.min.js"></script>
 <script src="js/main.js"></script>
 
 </body>

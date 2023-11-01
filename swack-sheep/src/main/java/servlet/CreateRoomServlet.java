@@ -73,8 +73,9 @@ public class CreateRoomServlet extends HttpServlet {
 		}
 		if (errorMsg.length() > 0) {
 			// エラー
-			request.setAttribute("errorMsg", errorMsg.toString());
-			request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);
+			String nowRoomId = (String) session.getAttribute("nowRoomID");
+			session.setAttribute("errorMsg", errorMsg.toString());
+			response.sendRedirect("MainServlet?roomId="+nowRoomId);
 			return;
 		}
 		
@@ -88,6 +89,17 @@ public class CreateRoomServlet extends HttpServlet {
 			// Model → DAOにデータを私登録
 			RoomModel roomModel = new RoomModel();
 			roomId = roomModel.createRoom(roomName, userId,directed,privatedB,workspaceId);
+			// TODO 同名エラー処理
+			if(roomId == "error") {
+				errorMsg = new StringBuilder();
+				errorMsg.append("ルーム名またはユーザーIDに重複があります<br>");
+				if (errorMsg.length() > 0) {
+				String nowRoomId = (String) session.getAttribute("nowRoomID");
+				session.setAttribute("errorMsg", errorMsg.toString());
+				response.sendRedirect("MainServlet?roomId="+nowRoomId);
+				return;
+				}
+			}
 			
 		} catch (SwackException e) {
 			e.printStackTrace();
