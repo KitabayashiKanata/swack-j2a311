@@ -79,6 +79,13 @@ public class MainServlet extends LoginCheckServlet {
 				roomId = "R0000";
 			}
 			
+			// errorMsg取得＆セット
+			String errorMsg = (String) session.getAttribute("errorMsg");
+			session.removeAttribute("errorMsg");
+			if (errorMsg != null) {
+				request.setAttribute("errorMsg", errorMsg);
+			}
+			
 			session.setAttribute("nowRoomID", roomId);
 
 		// 画面に必要な情報を準備する

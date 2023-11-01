@@ -43,7 +43,7 @@ public class RoomDAO {
 		
 		if(compare(roomName,workspaceId)) {
 			// TODO　同名エラーの処理
-			return "R0000"; 
+			return "error"; 
 		}
 		
 		String roomId = getMaxRoomId();
