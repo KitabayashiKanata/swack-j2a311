@@ -24,8 +24,17 @@
 
 	<div class="container">
 
-		<h1><img src="images/favicon.ico" alt="Swack" style="width: 30px; height: 30px;">Swack</h1>
-		<h2>ワークスペースにサインインする</h2>
+		<h1>
+		<div class="wave back">
+        <span><img src="images/favicon.ico" alt="Swack" style="width: 60px; height: 60px;"></span>
+        <span>S</span>
+        <span>w</span>
+        <span>a</span>
+        <span>c</span>
+        <span>k</span>
+        </div>
+        </h1>
+        <h2><span class="marker-normal">　ワークスペースにサインインする　</span></h2>
 
 		<div class="card">
 			<p class="error">${errorMsg}</p>

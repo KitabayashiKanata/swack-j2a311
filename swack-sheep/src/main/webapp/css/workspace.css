@@ -12,6 +12,65 @@
 	text-align: center;
 }
 
+.back {
+	background:rgba(255,255,255,0.5);
+	border-radius: 70px;
+	padding: 0.2em;
+	display: inline-block;
+}
+
+@keyframes wave {
+  100% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+.wave {
+  display: block;
+  width: 400px;
+  margin: 40px auto 0;
+  text-align: center;
+  cursor: pointer;
+}
+
+.wave span {
+  display: inline-block;
+  color: #fff;
+  font-size: 2em;
+}
+
+.wave:hover span {
+  animation-name: wave;
+  animation-duration: .2s;
+  animation-direction: alternate;
+  animation-iteration-count: 2;
+}
+
+.wave:hover span:nth-child(2) {
+  animation-delay: .1s;
+}
+
+.wave:hover span:nth-child(3) {
+  animation-delay: .2s;
+}
+
+.wave:hover span:nth-child(4) {
+  animation-delay: .3s;
+}
+
+.wave:hover span:nth-child(5) {
+  animation-delay: .4s;
+}
+
+.wave:hover span:nth-child(6) {
+  animation-delay: .5s;
+}
+
+.marker-normal{
+	 background: linear-gradient(transparent 70%, yellow 99%);
+}
+
+
 .card {
 	width: 90%;
 	margin: 30px auto; /* 上下左右 */
@@ -35,8 +94,12 @@
 
 .card input[type="submit"] {
 	margin-top: 20px;
-	background-color: purple;
+	background-color: orangered;
 	color: white;
+}
+
+.card input[type="submit"]:hover {
+	background-color: darkorange;
 }
 
 
@@ -53,4 +116,48 @@
 .Cross {
   background: radial-gradient(circle, transparent 20%, #ffe9a7 20%, #ffe9a7 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, #ffe9a7 20%, #ffe9a7 80%, transparent 80%, transparent) 50px 50px, linear-gradient(#ffc107 4px, transparent 4px) 0 -2px, linear-gradient(90deg, #ffc107 4px, #ffe9a7 4px) -2px 0;
 background-size: 100px 100px, 100px 100px, 50px 50px, 50px 50px;
+}
+
+.bg {
+  animation:slide 3s ease-in-out infinite alternate;
+  background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+  bottom:0;
+  left:-50%;
+  opacity:.5;
+  position:fixed;
+  right:-50%;
+  top:0;
+  z-index:-1;
+}
+
+.bg2 {
+  animation-direction:alternate-reverse;
+  animation-duration:4s;
+}
+
+.bg3 {
+  animation-duration:5s;
+}
+
+.content {
+  background-color:rgba(255,255,255,.8);
+  border-radius:.25em;
+  box-shadow:0 0 .25em rgba(0,0,0,.25);
+  box-sizing:border-box;
+  left:50%;
+  padding:10vmin;
+  position:fixed;
+  text-align:center;
+  top:50%;
+  transform:translate(-50%, -50%);
+}
+
+
+@keyframes slide {
+  0% {
+    transform:translateX(-25%);
+  }
+  100% {
+    transform:translateX(25%);
+  }
 }
