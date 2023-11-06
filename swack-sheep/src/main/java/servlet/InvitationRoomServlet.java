@@ -41,24 +41,22 @@ public class InvitationRoomServlet extends HttpServlet {
 			
 			// JSPに値を渡す
 			request.setAttribute("userList", userList);
+			
+			// 招待対象が存在するかの確認
+			StringBuilder errorMsg = new StringBuilder();
+			if (userList.size() == 0 || userList == null) {
+				errorMsg.append("招待できる人がいません");
+			}
+			request.setAttribute("errorMsg", errorMsg);
 
 		} catch (SwackException e) {
 			e.printStackTrace();
-			HttpSession session = request.getSession();
-			@SuppressWarnings("unchecked")
-			List<User> userList = (List<User>) session.getAttribute("userList");
-			StringBuilder errorMsg = new StringBuilder();
-			if (userList.size() == 0) {
-				errorMsg.append("招待できる人がいません");
-			} else {
-				errorMsg.append("結果を出力できませんでした");
-			}
 			request.setAttribute("errorMsg", ERR_SYSTEM);
-			request.getRequestDispatcher("/WEB-INF/jsp/test.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/jsp/invitationRoom.jsp").forward(request, response);
 			return;
 
 		}
-		request.getRequestDispatcher("/WEB-INF/jsp/test.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/jsp/invitationRoom.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -77,7 +75,7 @@ public class InvitationRoomServlet extends HttpServlet {
 			
 		} catch (SwackException e) {
 			e.printStackTrace();
-			request.getRequestDispatcher("/WEB-INF/jsp/test.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/jsp/invitationRoom.jsp").forward(request, response);
 			return;
 
 		}

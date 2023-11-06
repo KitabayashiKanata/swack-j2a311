@@ -1,35 +1,75 @@
 @charset "UTF-8";
-table.design11 {
- width: 25%;
+.design11 {
+ width: 80%;
  text-align: center;
  border-collapse: collapse;
  border-spacing: 0;
  border: solid 3px #778ca3;
  border-top-right-radius: 20px 10px;
- text-align: center;
+ text-align: left;
  font-size: 18px;
  font-weight: bolder;
 }
-.example{
-    text-align: center;
+
+.item{
+	width: 10%;
+	height: 3%;
 }
 
-
-table.design11 td {
- padding: 35px;
- border: solid 1px #778ca3;
- background: #e9faf9;
+.design11 td {
+	padding: 20px;
+	 border: solid 1px #778ca3;
+	 background: #e9faf9;
 }
 
-table {
+.title{
+	margin-right: 70%;
+}
+
+.design11 td a {
+   display: block;       /* リンクをブロックレベル化して表示 */
+   padding: 1.3em 1em;   /* 内側の余白量を上下に0.6文字分＆左右に1文字分にする */
+   color: black;
+   text-decoration: none;
+   width: 30em;
+}
+
+.design11 {
     margin-left: auto;
     margin-right: auto;
 }
-
-table.design11 th:hover{
+design11 th:hover{
 	background: gray;
 }
 
-table.design11 td:hover{
+.design11 td:hover{
 	background: darkgray;
-	}	
+}
+
+.search_box {
+  position: relative;    /* 基準値とする */
+}
+
+.flex{
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.flex .search_box{
+	padding: 0, 40%;
+}
+
+.search_box::before {
+  content: "";           /* 疑似要素に必須 */
+  width: 16px;           /* アイコンの横幅 */
+  height: 16px;          /* アイコンの高さ */
+  background: url(../images/icon.png) no-repeat center center / auto 100%; /* 背景にアイコン画像を配置 */
+  display: inline-block; /* 高さを持たせるためにインラインブロック要素にする */
+  position: absolute;    /* 相対位置に指定 */
+  top: 4px;              /* アイコンの位置。微調整してね */
+  left: 5px;             /* アイコンの位置。微調整してね */
+}
+
+.search_box input {
+  padding: 3px 0 3px 2em; /* アイコンを設置するため左の余白を多めに指定*/
+}
