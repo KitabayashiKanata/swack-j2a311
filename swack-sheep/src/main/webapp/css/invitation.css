@@ -1,6 +1,6 @@
 @charset "UTF-8";
 table.design11 {
- width: 25%;
+ width: 30%;
  text-align: center;
  border-collapse: collapse;
  border-spacing: 0;
@@ -16,7 +16,7 @@ table.design11 {
 
 
 table.design11 td {
- padding: 35px;
+ padding: 40px;
  border: solid 1px #778ca3;
  background: #e9faf9;
 }
