@@ -58,5 +58,10 @@ public class ChatModel {
 	public void saveChatLog(String roomId, String userId, String message) throws SwackException {
 		new ChatDAO().saveChatlog(roomId, userId, message);
 	}
+	
+	public void editMessage(int chatLogId,String newMessage,String userId) throws SwackException {
+		ChatDAO chatDAO = new ChatDAO();
+		chatDAO.editMessage(chatLogId,newMessage,userId);
+	}
 
 }

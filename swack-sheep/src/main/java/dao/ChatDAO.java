@@ -280,5 +280,47 @@ public class ChatDAO {
 		chatLogId += 1;
 		return chatLogId;
 	}
+	
+	// メッセージ編集
+	public void editMessage(int chatLogId,String newMessage,String userId) throws SwackException {
+		// ここの処理はJSP側でやる
+		//TODO ユーザの権限確認
+//		RoomDAO roomDAO = new RoomDAO();
+//		boolean admin = roomDAO.roomAdminCheck(userId);
+		
+//		if(!admin) {
+//			// TODO 管理者ではない場合chatLogIdのログがuserIdのユーザのものか調査
+//			String logUserId = "";
+//			String sql = "SELECT USERID FROM CHATLOG WHERE CHATLOGID = ?";
+//			try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)){
+//					PreparedStatement pStmt = conn.prepareStatement(sql);
+//					pStmt.setInt(1,chatLogId);
+//					
+//					ResultSet rs = pStmt.executeQuery();
+//					if(rs.next()) {
+//						logUserId = rs.getString("USERID"); 
+//					}
+//				}catch (SQLException e) {
+//					throw new SwackException(ERR_DB_PROCESS, e);
+//				}
+//			if(userId.compareTo(logUserId) != 0) {
+//				// メッセージ送信者と編集者が別の場合
+//				
+//			}
+//		}
+		
+		// 当該チャットログのメッセージを変更する
+		String sql = "UPDATE CHATLOG SET MESSAGE = ? WHERE CHATLOGID = ? AND USERID = ?";
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, newMessage);
+			pStmt.setInt(2, chatLogId);
+			pStmt.setString(3, userId);
+
+			pStmt.executeUpdate();
+		}catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
 
 }

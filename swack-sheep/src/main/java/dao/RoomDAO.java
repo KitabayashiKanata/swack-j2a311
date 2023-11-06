@@ -185,4 +185,35 @@ public class RoomDAO {
 		return roomNameList;
 
 	}
+	
+	// ルームの管理者かどうか調べる
+	public boolean roomAdminCheck(String userId) throws SwackException {
+		boolean admin = false;
+		//TODO roomadminテーブルを作成する必要あり
+		String sql = "SELECT COUNT(USERID) AS COUNT FROM ROOMADMIN　WHERE USERID = ?";
+		
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			int count = 0;
+			if (rs.next()) {
+				count = rs.getInt("COUNT");
+			}
+			
+			if(count > 0) {
+				admin = true;
+			}
+
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		return admin;
+	}
 }
