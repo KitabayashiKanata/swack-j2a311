@@ -1,4 +1,4 @@
-@charset "UTF-8";@charset "UTF-8";
+@charset "UTF-8";
 
 .container {
 	width: 90%;
@@ -12,6 +12,7 @@
 	text-align: center;
 }
 
+/*Swack文字の背景*/
 .back {
 	background:rgba(255,255,255,0.5);
 	border-radius: 70px;
@@ -19,6 +20,7 @@
 	display: inline-block;
 }
 
+/*Swack文字の動き*/
 @keyframes wave {
   100% {
     transform: translate3d(0, -10px, 0);
@@ -66,6 +68,7 @@
   animation-delay: .5s;
 }
 
+/*蛍光ペン下線*/
 .marker-normal{
 	 background: linear-gradient(transparent 70%, yellow 99%);
 }
@@ -90,7 +93,7 @@ table.sample th {
 
 table.sample td a {
    display: block;       /* リンクをブロックレベル化して表示 */
-   padding: 1.3em 1em;   /* 内側の余白量を上下に0.6文字分＆左右に1文字分にする */
+   padding: 1em 1em;   /* 内側の余白量を上下に0.6文字分＆左右に1文字分にする */
    color: black;
    text-decoration: none;
    width: 30em;
@@ -100,9 +103,8 @@ a.widelink { display: block;
 }
 
 .right {
-	margin-left: 75%;
-	display: inline-block; 
-	display: inline;
+ letter-spacing: 1px; /* 文字間の空白を調整（お好みで変更） */
+  text-align: right; /* テキストを右揃えにする */
 }
 
 /* モーダルウィンドウ */
@@ -191,10 +193,6 @@ a.widelink { display: block;
       transform: translateY(-5px);
       cursor: pointer;
 }
-
-
-
-
 
 /*背景カラー*/
 .bg {

@@ -32,12 +32,11 @@
         <span>k</span>
         </div>
         </h1>
-		<h2>ルームを選択</h2>
+		<h2><span class="marker-normal">　ルームを選択　</span></h2>
 		<table class="sample">
 			<c:forEach var="item" items="${roomList}">
 				<tr><td>
-				
-					<a href="#modal" onclick="clickRoom('${item.roomName}', '${item.roomId}')" class="hover">
+					<a href="#modal" onclick="clickRoom('${item.roomName}', '${item.roomId}')" class="btn_design">
 						<c:out value="${item.roomName}" />
 						<div class="right">→</div>
 					</a>
