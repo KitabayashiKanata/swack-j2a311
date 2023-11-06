@@ -12,13 +12,26 @@
 <link rel="shortcut icon" href="images/favicon.ico">
 
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/workspaceList.css">
+<link rel="stylesheet" href="css/roomList.css">
 <script src="js/list.js"></script>
 </head>
 <body>
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
+
 	<div class="container">
 
-		<h1>Swack</h1>
+		<h1>
+		<div class="wave back">
+        <span><img src="images/favicon.ico" alt="Swack" style="width: 60px; height: 60px;"></span>
+        <span>S</span>
+        <span>w</span>
+        <span>a</span>
+        <span>c</span>
+        <span>k</span>
+        </div>
+        </h1>
 		<h2>ルームを選択</h2>
 		<table class="sample">
 			<c:forEach var="item" items="${roomList}">

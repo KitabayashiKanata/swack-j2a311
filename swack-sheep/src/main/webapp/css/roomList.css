@@ -1,4 +1,4 @@
-@charset "UTF-8";
+@charset "UTF-8";@charset "UTF-8";
 
 .container {
 	width: 90%;
@@ -12,7 +12,6 @@
 	text-align: center;
 }
 
-/*Swack文字の背景*/
 .back {
 	background:rgba(255,255,255,0.5);
 	border-radius: 70px;
@@ -20,7 +19,6 @@
 	display: inline-block;
 }
 
-/*Swack文字の動き*/
 @keyframes wave {
   100% {
     transform: translate3d(0, -10px, 0);
@@ -68,7 +66,6 @@
   animation-delay: .5s;
 }
 
-/*蛍光ペン下線*/
 .marker-normal{
 	 background: linear-gradient(transparent 70%, yellow 99%);
 }
@@ -194,6 +191,10 @@ a.widelink { display: block;
       transform: translateY(-5px);
       cursor: pointer;
 }
+
+
+
+
 
 /*背景カラー*/
 .bg {

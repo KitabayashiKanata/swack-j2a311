@@ -12,6 +12,7 @@
 	text-align: center;
 }
 
+/*Swack文字の背景*/
 .back {
 	background:rgba(255,255,255,0.5);
 	border-radius: 70px;
@@ -19,6 +20,7 @@
 	display: inline-block;
 }
 
+/*Swack文字の動き*/
 @keyframes wave {
   100% {
     transform: translate3d(0, -10px, 0);
@@ -66,9 +68,11 @@
   animation-delay: .5s;
 }
 
+/*蛍光ペン下線*/
 .marker-normal{
 	 background: linear-gradient(transparent 70%, yellow 99%);
 }
+
 
 .card {
 	width: 90%;
@@ -101,12 +105,12 @@
 	color: white;
 }
 
-
+/*マウスホバー時カラー*/
 .card input[type="submit"]:hover {
 	background-color: darkorange;
 }
 
-
+/*背景カラー*/
 .bg {
   animation:slide 3s ease-in-out infinite alternate;
   background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
@@ -152,42 +156,40 @@
 }
 
 
-
+/*新規登録画面へのボタン*/
 .sample_link12 a{
   display: inline-block;
-  color:rgb(0, 0, 0);
-  font-size:120%;
-  -webkit-perspective: 1000px;
+  transition: .3s;
   perspective: 1000px;
-  -webkit-perspective-origin: 50% 50%;
   perspective-origin: 50% 50%;
   vertical-align: bottom;
   overflow: hidden;
 }
 .sample_link12 a span{
+  box-shadow: 0 0 5px 1px rgba(0,0,0,0.5);
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  background: #efefefef;
+  padding: 9px 15px;
   display: inline-block;
   position: relative;
-  transition: .4s;
-  -webkit-transform-origin: 50% 0%;
   transform-origin: 50% 0%;
-  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
+  transition: .4s;
 }
 .sample_link12 a:hover span{
-  background-color: #2ecc71;
-  -webkit-transform: translate3d(0, 0, -30px) rotateX(90deg);
-  transform: translate3d(0, 0, -30px) rotateX(90deg);
+ transform: translate3d(0, 0, -60px) rotateX(90deg);
 }
 .sample_link12 a span:after{
-  display: inline-block;
+  color: white;
   position: absolute;
   left: 0;
   top: 0;
   content: attr(data-text);
-  color: rgb(255, 255, 255);
+  padding: 9px 15px;
   background-color: orangered;
-  -webkit-transform-origin: 50% 0%;
+  display: inline-block;
   transform-origin: 50% 0%;
-  -webkit-transform: translate3d(0, 105%, 0) rotateX(-90deg);
-  transform: translate3d(0, 105%, 0) rotateX(-90deg);
+  transform: translate3d(0, 100%, 0) rotateX(-90deg);
 }

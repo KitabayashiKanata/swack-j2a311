@@ -12,6 +12,7 @@
 	text-align: center;
 }
 
+/*Swack文字の背景*/
 .back {
 	background:rgba(255,255,255,0.5);
 	border-radius: 70px;
@@ -19,6 +20,7 @@
 	display: inline-block;
 }
 
+/*Swack文字の動き*/
 @keyframes wave {
   100% {
     transform: translate3d(0, -10px, 0);
@@ -66,6 +68,7 @@
   animation-delay: .5s;
 }
 
+/*蛍光ペン下線*/
 .marker-normal{
 	 background: linear-gradient(transparent 70%, yellow 99%);
 }
@@ -101,7 +104,7 @@
 	color: white;
 }
 
-
+/*マウスホバー時カラー*/
 .card input[type="submit"]:hover {
 	background-color: darkorange;
 }
@@ -118,9 +121,7 @@ div.border-box a {
   color: black;
 }
 
-
-
-
+/*GoogleApple続行ボタン*/
 .btn_design {
     font-weight: bold;
     padding: 10px 15px;
@@ -143,7 +144,7 @@ div.border-box a {
       cursor: pointer;
 }
 
-
+/*背景カラー*/
 .bg {
   animation:slide 3s ease-in-out infinite alternate;
   background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
