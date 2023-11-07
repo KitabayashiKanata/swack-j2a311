@@ -37,8 +37,9 @@
 			<c:forEach var="item" items="${roomList}">
 				<tr><td>
 					<a href="#modal" onclick="clickRoom('${item.roomName}', '${item.roomId}')" class="btn_design">
+					<button href="">ホームで開く</button>
+					<button1 href="">参加する</button1>
 						<c:out value="${item.roomName}" />
-						<div class="right">→</div>
 					</a>
 				</td></tr>
 				<br>

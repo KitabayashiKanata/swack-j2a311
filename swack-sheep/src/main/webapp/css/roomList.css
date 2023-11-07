@@ -77,7 +77,6 @@
 table.sample {
    border-collapse: collapse;  /* テーブルの罫線を重ねて1本に見せる */
    border: 2px solid black;    /* テーブルの外側の枠線(2pxの実線) */
-   text-align: center;
    background-color: whitesmoke;
 }
 /* ▼セル共通の装飾 */
@@ -85,6 +84,44 @@ table.sample th,
 table.sample td {
    border: 1px solid black;  /* テーブルの内側の罫線(1pxの実線) */
 }
+
+table.sample td button {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+  padding: 7px 10px;
+  background-color: orangered;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+table.sample td:hover button {
+  display: inline-block;
+  background-color: darkorange;
+}
+
+table.sample td button1 {
+  display: none;
+  position: absolute;
+  white-space: nowrap;
+  top: 50%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  padding: 5px 10px;
+  background-color: orangered;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+table.sample td:hover button1 {
+  display: inline-block;
+  background-color: darkorange;
+}
+
 /* ▼見出しセルの装飾 */
 table.sample th {
    background-color: white;  /* 背景色 */
@@ -93,18 +130,13 @@ table.sample th {
 
 table.sample td a {
    display: block;       /* リンクをブロックレベル化して表示 */
-   padding: 1em 1em;   /* 内側の余白量を上下に0.6文字分＆左右に1文字分にする */
+   padding: 1.3em 1em;   /* 内側の余白量を上下に0.6文字分＆左右に1文字分にする */
    color: black;
    text-decoration: none;
    width: 30em;
 }
 
 a.widelink { display: block;
-}
-
-.right {
- letter-spacing: 1px; /* 文字間の空白を調整（お好みで変更） */
-  text-align: right; /* テキストを右揃えにする */
 }
 
 /* モーダルウィンドウ */
