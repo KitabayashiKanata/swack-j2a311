@@ -21,5 +21,4 @@ public class LoginModel {
 		User user = usersDAO.select(mailAddress, password);
 		return user;
 	}
-
 }

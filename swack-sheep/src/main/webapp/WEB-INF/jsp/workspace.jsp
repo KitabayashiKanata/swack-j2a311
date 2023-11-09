@@ -13,6 +13,7 @@
 
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/workspace.css">
+<link rel="stylesheet" href="css/invitation.css">
 <script src="js/count.js"></script>
 
 </head>
@@ -46,7 +47,14 @@
 				<input onclick="count(reCnt())" type="submit" value="ワークスペースに参加">
 			</form>
 		</div>
-		<button onclick="history.go(reCnt()), delSession()">戻る</button>
+		<div class="flex">
+			<button onclick="history.go(reCnt()), delSession()">戻る</button>
+			<div class="sample_link12">
+				<a href="PasswordUserServlet">
+					<span data-text="ここをクリック">パスワード変更</span>
+				</a>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

@@ -4,10 +4,12 @@ import static parameter.DAOParameters.*;
 import static parameter.Messages.*;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import bean.User;
@@ -57,6 +59,43 @@ public class UsersDAO {
 
 		// 結果の返却（取得できなかった場合、nullが返却される）
 		return user;
+	}
+	
+	// アカウントロック用ユーザーID取得
+	public String getUserId(String mailAddress) throws SwackException {
+		// TODO SQL
+		String sql = "SELECT USERID FROM USERS WHERE MAILADDRESS = ?";
+
+		String userId = null;
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, mailAddress);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			if (rs.next()) {
+				userId = rs.getString("USERID");
+			}
+
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+
+		// 結果の返却（取得できなかった場合、nullが返却される）
+		return userId;
 	}
 
 	public boolean exists(String mailAddress) throws SwackException {
@@ -152,7 +191,7 @@ public class UsersDAO {
 			UsersDAO usersDAO = new UsersDAO();
 			boolean result = usersDAO.exists(user.getMailAddress());
 			if (result) {
-			// SQL実行
+				// SQL実行
 				pStmt.executeUpdate();
 			}else {
 				return false;
@@ -272,5 +311,206 @@ public class UsersDAO {
 		return userlist;
 
 	}
+	
+	public void UpdatePassword(String userID, String newPassword) throws SwackException {
+		String sql = "UPDATE USERS SET PASSWORD = ? WHERE USERID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
 
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, newPassword);
+			pStmt.setString(2, userID);
+
+			// SQL実行
+			pStmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// アカウントロック操作
+	public void lockUser(String userId, Timestamp daytime) throws SwackException{
+		String sql = "INSERT INTO LOCKUSER VALUES(?, ?)";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			pStmt.setTimestamp(2, daytime);
+			
+			// SQL実行
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// アカウントロックの取得
+	public boolean getLockUser(String userId) throws SwackException{
+		String sql = "SELECT DAYTIME FROM LOCKUSER WHERE USERID = ?";
+		
+		Date daytime = null;
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				// 結果を詰め替え
+				daytime = rs.getDate("DAYTIME");
+			}
+			if (daytime == null) {
+				return false;
+			}
+			return true;
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// アカウントロックの解除
+	public void removeLockUser(String userId) throws SwackException{
+		String sql = "DELETE FROM LOCKUSER WHERE USERID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			
+			// SQL実行
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// 最終ログイン情報の保存
+	public void loginUser(String userId, Date day) throws SwackException{
+		String sql = "INSERT INTO LOGINUSER VALUES(?, ?)";
+		
+		// 既にあるログイン情報の削除
+		UsersDAO usersDAO = new UsersDAO();
+		usersDAO.removeloginUser(userId);
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			pStmt.setDate(2, day);
+			
+			// SQL実行
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// 既にあるログイン情報の削除
+	public void removeloginUser(String userId) throws SwackException{
+		String sql = "DELETE FROM LOGINUSER WHERE USERID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			
+			// SQL実行
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// 最終ログインの取得
+	public Date getLoginDay(String userId) throws SwackException{
+		String sql = "SELECT DAY FROM LOGINUSER WHERE USERID = ?";
+		
+		Date day = null;
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				// 結果を詰め替え
+				day = rs.getDate("DAY");
+			}
+			return day;
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
 }

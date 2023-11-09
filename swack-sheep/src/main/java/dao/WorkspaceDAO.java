@@ -136,4 +136,29 @@ public class WorkspaceDAO {
 		// 結果の返却（取得できなかった場合、nullが返される）
 		return workspace;
 	}
+	
+	// ワークスペースからの退会処理
+	public void removeJoin(String userId, String workspaceId) throws SwackException{
+		String sql = "DELETE FEOM JOINWORKSPACE WHERE USERID = ? AND WORKSPACEID = ?";
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			pStmt.setString(2, workspaceId);
+			
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
 }
