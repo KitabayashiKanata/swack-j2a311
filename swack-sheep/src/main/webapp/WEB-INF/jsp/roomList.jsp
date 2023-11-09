@@ -37,8 +37,8 @@
 			<c:forEach var="item" items="${roomList}">
 				<tr><td>
 					<a href="#modal" onclick="clickRoom('${item.roomName}', '${item.roomId}')" class="btn_design">
-					<button href="">ホームで開く</button>
-					<button1 href="">参加する</button1>
+					<button href="" class="color-change" style="left: 70%;">ホームで開く</button>
+					<button href="chrome://newtab/" class="color-change" style="left: 90%;">参加する</button>
 						<c:out value="${item.roomName}" />
 					</a>
 				</td></tr>

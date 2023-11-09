@@ -86,40 +86,23 @@ table.sample td {
 }
 
 table.sample td button {
+  font-weight: bold;
   display: none;
   position: absolute;
+  white-space: nowrap;
   top: 50%;
   left: 70%;
   transform: translate(-50%, -50%);
   padding: 7px 10px;
-  background-color: orangered;
-  color: #fff;
-  border: none;
+  background-color: whitesmoke;
+  color: black;
+  border: #000000 solid 1px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 table.sample td:hover button {
   display: inline-block;
-  background-color: darkorange;
-}
-
-table.sample td button1 {
-  display: none;
-  position: absolute;
-  white-space: nowrap;
-  top: 50%;
-  left: 90%;
-  transform: translate(-50%, -50%);
-  padding: 5px 10px;
-  background-color: orangered;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-table.sample td:hover button1 {
-  display: inline-block;
-  background-color: darkorange;
 }
 
 /* ▼見出しセルの装飾 */
@@ -269,4 +252,14 @@ a.widelink { display: block;
   100% {
     transform:translateX(25%);
   }
+}
+
+.color-change {
+  background-color: whitesmoke; /* 初期の背景色 */
+  color: black; /* 初期の文字色 */
+  transition: background-color 0.3s; /* 色の変更にトランジションを追加 */
+}
+
+.color-change:hover {
+  background-color: rgb(0 0 0 /5%); /* マウスホバー時の背景色 */
 }
