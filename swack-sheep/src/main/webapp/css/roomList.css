@@ -92,7 +92,7 @@ table.sample td button {
   white-space: nowrap;
   top: 50%;
   left: 70%;
-  transform: translate(-50%, -50%);
+  transform: translate(-550%, -50%);
   padding: 7px 10px;
   background-color: whitesmoke;
   color: black;
@@ -119,7 +119,8 @@ table.sample td a {
    width: 30em;
 }
 
-a.widelink { display: block;
+a.widelink {
+	display: block;
 }
 
 /* モーダルウィンドウ */

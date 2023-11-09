@@ -14,6 +14,14 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/roomList.css">
 <script src="js/list.js"></script>
+
+<style>
+     /* クリック領域を示すためのスタイル */
+     .clickable {
+         cursor: pointer;
+     }
+</style>
+
 </head>
 <body>
 <div class="bg"></div>
@@ -37,8 +45,18 @@
 			<c:forEach var="item" items="${roomList}">
 				<tr><td>
 					<a href="#modal" onclick="clickRoom('${item.roomName}', '${item.roomId}')" class="btn_design">
-					<button href="" class="color-change" style="left: 70%;">ホームで開く</button>
-					<button href="chrome://newtab/" class="color-change" style="left: 90%;">参加する</button>
+					<button href="" class="color-change" style="left: 175%;">ホームで開く</button>
+					<button onclick='location.href="https://convertio.co/ja/webp-png/"' class="color-change clickable" style="left: 168%;">参加する</button>
+					
+					<script>
+					// クリック可能な要素のクリックイベントをリンクより優先させる
+					 document.querySelector('.clickable').addEventListener('click', function(button) {
+						 // リンクのクリックを無効化
+						 event.preventDefault(button);
+						 });
+					 </script>
+					
+					
 						<c:out value="${item.roomName}" />
 					</a>
 				</td></tr>
