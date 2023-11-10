@@ -16,16 +16,16 @@ import exception.SwackException;
 import model.ChatModel;
 
 /**
- * Servlet implementation class MessageEditServlet
+ * Servlet implementation class MessageDeleteServlet
  */
-@WebServlet("/MessageEditServlet")
-public class MessageEditServlet extends HttpServlet {
+@WebServlet("/MessageDeleteServlet")
+public class MessageDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MessageEditServlet() {
+    public MessageDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,20 +42,18 @@ public class MessageEditServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		// パラメータ取得
 		String roomId = (String) session.getAttribute("nowRoomID");
-		int chatLogId = Integer.valueOf(request.getParameter("chatLogIdE"));
-		String newMessage = request.getParameter("newMessage");
-
+		int chatLogId = Integer.valueOf(request.getParameter("chatLogIdD"));
 		//ユーザーの取得
 		User user = (User) session.getAttribute("user");
 		String userId = user.getUserId();
-		
 		// 処理
 		try {
 			// TODO ユーザーの権限確認
-			new ChatModel().editMessage(chatLogId,newMessage,userId);
+			new ChatModel().deleteMessage(chatLogId,userId);
 		} catch (SwackException e) {
 			e.printStackTrace();
 			request.setAttribute("errorMsg", ERR_SYSTEM);
@@ -64,6 +62,6 @@ public class MessageEditServlet extends HttpServlet {
 		}
 
 		response.sendRedirect("MainServlet?roomId=" + roomId);
-
 	}
+
 }

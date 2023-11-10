@@ -195,7 +195,7 @@
 	      <a class="modal_body">編集メッセージを入力してください。</a>
 	      <p class="error" id="errorMsg">${errorMsg}</p>
 	      <form class="modal-form" action="MessageEditServlet" method="post">
-	      	<input type="hidden" name="chatLogId" value="" id="modalChatLogId">
+	      	<input type="hidden" name="chatLogIdE" value="" id="modalChatLogIdE">
 	      	<input type="text" name="newMessage" value="" id="editMessage">
 	      	<input type="button" name="" value="キャンセル" onclick="clickButtonClose()">
 	      	<input type="submit" value="保存">
@@ -213,7 +213,7 @@
 	      <a class="modal_body">本当に削除しますか？</a>
 	      <p class="error" id="errorMsg">${errorMsg}</p>
 	      <form class="modal-form" action="MessageDeleteServlet" method="post">
-	      	<input type="hidden" name="chatLogId" value="" id="modalChatLogId">
+	      	<input type="hidden" name="chatLogIdD" value="" id="modalChatLogIdD">
 	      	<input type="button" name="" value="キャンセル" onclick="clickButtonClose()">
 	      	<input type="submit" value="削除">
 	      </form>

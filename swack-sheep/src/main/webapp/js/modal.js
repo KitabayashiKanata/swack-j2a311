@@ -11,14 +11,14 @@ function clickRoomCreate(){
 };
 
 function clickMessageEdit(chatLogId,message){
-	document.getElementById("modalChatLogId").value = chatLogId
+	document.getElementById("modalChatLogIdE").value = chatLogId
   	document.getElementById("editMessage").value = message
 	editModal.classList.add('is-open')
 	modal = editModal;
 };
 
 function clickMessageDelete(chatLogId) {
-	document.getElementById("modalChatLogId").value = chatLogId
+	document.getElementById("modalChatLogIdD").value = chatLogId
 	deleteModal.classList.add('is-open')
 	modal = deleteModal;
 };

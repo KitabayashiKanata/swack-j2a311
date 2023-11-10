@@ -63,5 +63,10 @@ public class ChatModel {
 		ChatDAO chatDAO = new ChatDAO();
 		chatDAO.editMessage(chatLogId,newMessage,userId);
 	}
+	
+	public void deleteMessage(int chatLogId,String userId) throws SwackException {
+		ChatDAO chatDAO = new ChatDAO();
+		chatDAO.deleteMessage(chatLogId,userId);
+	}
 
 }
