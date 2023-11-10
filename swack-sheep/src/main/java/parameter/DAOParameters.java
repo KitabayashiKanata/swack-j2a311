@@ -14,3 +14,4 @@ public class DAOParameters {
 	public static final String DB_PASSWORD = "postgres";
 
 }
+ 

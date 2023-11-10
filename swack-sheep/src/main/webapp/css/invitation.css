@@ -1,20 +1,58 @@
 @charset "UTF-8";
 .design11 {
- width: 80%;
+ width: 28%;
  text-align: center;
  border-collapse: collapse;
  border-spacing: 0;
  border: solid 3px #778ca3;
- border-top-right-radius: 20px 10px;
+ border-top-right-radius: 15px 10px;
  text-align: left;
- font-size: 18px;
+ font-size: 18x;
  font-weight: bolder;
 }
 
-.item{
-	width: 10%;
-	height: 3%;
+
+.search-form-009 {
+	width: 200px;
+    display: flex;
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid #dfe1e5;
+    border-radius: 5px;
 }
+ 
+
+.search-form-009:hover {
+    box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+}
+
+.search-form-009::before {
+    width: 30px;
+    height: 15px;
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%20%3Cpath%20d%3D%22M23.7%2020.8%2019%2016.1c-.2-.2-.5-.3-.8-.3h-.8c1.3-1.7%202-3.7%202-6C19.5%204.4%2015.1%200%209.7%200S0%204.4%200%209.7s4.4%209.7%209.7%209.7c2.3%200%204.3-.8%206-2v.8c0%20.3.1.6.3.8l4.7%204.7c.4.4%201.2.4%201.6%200l1.3-1.3c.5-.5.5-1.2.1-1.6zm-14-5.1c-3.3%200-6-2.7-6-6s2.7-6%206-6%206%202.7%206%206-2.6%206-6%206z%22%20fill%3D%22%239aa0a6%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E');
+    background-position: center;
+    background-repeat: no-repeat;
+    content: '';
+}
+
+.search-form-009 input {
+    width: 180px;
+    height: 30px;
+    padding: 5px 5px 5px 0;
+    border: none;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.search-form-009 input[type="text"]{
+	display: inline-block;
+}
+
+
 
 .design11 td {
  padding: 40px;
@@ -23,15 +61,15 @@
 }
 
 .title{
-	margin-right: 70%;
+	margin-right: 50%;
 }
 
 .design11 td a {
    display: block;       /* リンクをブロックレベル化して表示 */
    padding: 1.3em 1em;   /* 内側の余白量を上下に0.6文字分＆左右に1文字分にする */
-   color: black;
+   color: rgb(255, 255, 255);
    text-decoration: none;
-   width: 30em;
+   width: 15em;
 }
 
 .design11 {
@@ -46,30 +84,20 @@ design11 th:hover{
 	background: darkgray;
 }
 
-.search_box {
-  position: relative;    /* 基準値とする */
+/* グラデーションをアニメーションで切り替え */
+.colorchangeanime_bg {
+  height: 300px;
+  margin: 30px 0;
+  background: linear-gradient(45deg, #6bb6ff 0%, #2b52ff 50%, #85e3ec 100%) 0 0 / 200% 100% repeat;
+  animation: colorchangeanimation-bg 5s infinite alternate;
 }
 
-.flex{
-	display: flex;
-	justify-content: space-evenly;
+@keyframes colorchangeanimation-bg {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
 }
 
-.flex .search_box{
-	padding: 0, 40%;
-}
-
-.search_box::before {
-  content: "";           /* 疑似要素に必須 */
-  width: 16px;           /* アイコンの横幅 */
-  height: 16px;          /* アイコンの高さ */
-  background: url(../images/icon.png) no-repeat center center / auto 100%; /* 背景にアイコン画像を配置 */
-  display: inline-block; /* 高さを持たせるためにインラインブロック要素にする */
-  position: absolute;    /* 相対位置に指定 */
-  top: 4px;              /* アイコンの位置。微調整してね */
-  left: 5px;             /* アイコンの位置。微調整してね */
-}
-
-.search_box input {
-  padding: 3px 0 3px 2em; /* アイコンを設置するため左の余白を多めに指定*/
-}
