@@ -45,8 +45,8 @@
 			<c:forEach var="item" items="${roomList}">
 				<tr><td>
 					<a href="#modal" onclick="clickRoom('${item.roomName}', '${item.roomId}')" class="btn_design">
-					<button href="" class="color-change" style="left: 175%;">ホームで開く</button>
-					<button onclick='location.href="https://convertio.co/ja/webp-png/"' class="color-change clickable" style="left: 168%;">参加する</button>
+					<button href="" class="color-change" style="left: 173%;">ホームで開く</button>
+					<button onclick='location.href="https://convertio.co/ja/webp-png/"' class="color-change clickable" style="left: 166%;">参加する</button>
 					
 					<script>
 					// クリック可能な要素のクリックイベントをリンクより優先させる
