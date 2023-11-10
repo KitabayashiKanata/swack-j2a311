@@ -365,7 +365,7 @@ public class UsersDAO {
 	}
 	
 	// アカウントロックの取得
-	public boolean getLockUser(String userId) throws SwackException{
+	public boolean lockResult(String userId) throws SwackException{
 		String sql = "SELECT DAYTIME FROM LOCKUSER WHERE USERID = ?";
 		
 		Date daytime = null;
@@ -394,6 +394,43 @@ public class UsersDAO {
 				return false;
 			}
 			return true;
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// アカウントロックされているユーザをすべて取得
+	public ArrayList<User> getLockUser() throws SwackException{
+		String sql = "SELECT T1.USERID AS USERID, USERNAME FROM LOCKUSER AS T1, USERS AS T2 WHERE T1.USERID = T2.USERID";
+		
+		ArrayList<User> userList = new ArrayList<User>();
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				// 結果を詰め替え
+				String userId = rs.getString("USERID");
+				String userName = rs.getString("USERNAME");
+				User user = new User(userId,userName);
+
+				userList.add(user);
+			}
+			
+			return userList;
 		} catch (SQLException e) {
 			// エラー発生時、独自のExceptionを発行
 			throw new SwackException(ERR_DB_PROCESS, e);

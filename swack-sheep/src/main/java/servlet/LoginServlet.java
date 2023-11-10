@@ -71,7 +71,7 @@ public class LoginServlet extends HttpServlet {
 			String userId = usersDAO.getUserId(mailAddress);
 			
 			// アカウントロック判定
-			boolean lock = usersDAO.getLockUser(userId);
+			boolean lock = usersDAO.lockResult(userId);
 			if (lock) {
 				// セッションのリセット
 				session.setAttribute("logCnt", "");
@@ -132,10 +132,11 @@ public class LoginServlet extends HttpServlet {
 				return;
 			} else {
 				// 管理者判定
-				if (user.getUserId().equals("U0000")) {
+				if (user.getUserId().equals("ADMIN")) {
 					// 認証成功(ログイン情報をセッションに保持)
 					session.setAttribute("user", user);
-					response.sendRedirect("Administrator");
+					response.sendRedirect("AdministratorServlet");
+					return;
 				}
 				
 				// 最終ログイン情報の保存
