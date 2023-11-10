@@ -116,7 +116,7 @@ table.sample td a {
    padding: 1.3em 1em;   /* 内側の余白量を上下に0.6文字分＆左右に1文字分にする */
    color: black;
    text-decoration: none;
-   width: 30em;
+   width: 31em;
 }
 
 a.widelink {
