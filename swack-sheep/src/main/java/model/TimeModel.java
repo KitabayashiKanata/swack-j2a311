@@ -10,7 +10,7 @@ public class TimeModel {
 		int mo = period.getMonths();
 		int da = period.getDays();
 		
-		if (ye <= 0 || mo <= 0 || da <= -21) {
+		if (ye <= -1 || mo <= -1 || da <= -21) {
 			return true;
 		}
 		return false;

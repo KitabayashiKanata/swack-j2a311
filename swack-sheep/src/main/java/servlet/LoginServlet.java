@@ -132,7 +132,11 @@ public class LoginServlet extends HttpServlet {
 				return;
 			} else {
 				// 管理者判定
-				
+				if (user.getUserId().equals("U0000")) {
+					// 認証成功(ログイン情報をセッションに保持)
+					session.setAttribute("user", user);
+					response.sendRedirect("Administrator");
+				}
 				
 				// 最終ログイン情報の保存
 				SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");

@@ -34,13 +34,13 @@ public class LockClearServlet extends HttpServlet {
 			UsersDAO usersDAO = new UsersDAO();
 			usersDAO.removeLockUser(userId);
 			
-			// ???.jspへ戻る
-			
+			// administrator.jspへ戻る
+			request.getRequestDispatcher("/WEB-INF/jsp/administrator.jsp").forward(request, response);
 			
 		} catch (SwackException e) {
 			e.printStackTrace();
 			request.setAttribute("errorMsg", ERR_SYSTEM);
-			request.getRequestDispatcher("/WEB-INF/jsp/???.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/jsp/administrator.jsp").forward(request, response);
 			return;
 		}
 	}
