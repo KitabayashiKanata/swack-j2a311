@@ -49,14 +49,14 @@
 				
 				<!-- モーダルウィンドウ -->
 				<center>
-					<a href="#modal-01" class="modal-button">ルーム作成</a>
+					<a href="#modal-01" class="modal-button" onclick="clickRoomCreate()">ルーム作成</a>
 				</center>
-				<div class="modal-wrapper" id="modal-01">
-				  <a href="#!" class="modal-overlay"></a>
+				<div class="modal-wrapper" id="modal-01" id="room-modal">
+				  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
 				  
 				  <div class="modal-window">
 				    <div class="modal-content">
-				    <a href="#!" class="modal-close">✕</a>
+				    <a href="#!" class="modal-close" onclick="clickButtonClose()">✕</a>
 				      <p class="modal_title">Create a channel</p>
 				      <a class="modal_body">名前</a>
 				      <p class="error" id="errorMsg">${errorMsg}</p>
@@ -155,14 +155,24 @@
 					<div class="log-area">
 						<div class="log-box">
 							<span class="log-name">${log.userName} </span>
-							<span class="log-time">[${log.createdAt}]</span><br>
+							<span class="log-time">[${log.createdAt}]</span>
+							<!-- 編集と削除はユーザに権限がある場合のみ表示(if文を使用する) -->
+							<c:set var="logUserId" value="${log.userId}"/>
+							<c:set var="nowUserId" value="${nowUser.userId}"/>
+							<c:set var="nowLogId" value="${log.chatLogId }"/>
+							<c:if test="${logUserId == nowUserId}" >
+								<span class="log-edit" id="edit" onclick="clickMessageEdit('${log.chatLogId}','${log.message}')">編集</span>
+								<span class="log-delete" id="delete" onclick="clickMessageDelete('${log.chatLogId}')">削除</span>
+								<input type="hidden" name="chatLogId" value="${log.chatLogId}"> 
+							</c:if>
+							<br>
 							${log.message}
 						</div>
 					</div>
 					</c:forEach>
 				</div>
-				<div class="contents-footer">
-					<form action="ChatServlet" method="post">
+				<div class="contents-footer" id="massegeSubmit">
+					<form action="ChatServlet" method="post" >
 						<input type="hidden" name="roomId"
 							 value="${nowRoom.roomId}">
 						<div class="form-wrap">
@@ -173,12 +183,51 @@
 				</div>
 			</div>
 		</section>
-
 	</div>
+	
+	<!-- モーダルウィンドウ -->
+	<div class="modal-wrapper" id="message-edit-modal">
+	  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
+	  <div class="modal-window">
+	    <div class="modal-content">
+	    <a href="#!" class="modal-close" onclick="clickButtonClose()">✕</a>
+	      <p class="modal_title">Edit Message</p>
+	      <a class="modal_body">編集メッセージを入力してください。</a>
+	      <p class="error" id="errorMsg">${errorMsg}</p>
+	      <form class="modal-form" action="MessageEditServlet" method="post">
+	      	<input type="hidden" name="chatLogId" value="" id="modalChatLogId">
+	      	<input type="text" name="newMessage" value="" id="editMessage">
+	      	<input type="button" name="" value="キャンセル" onclick="clickButtonClose()">
+	      	<input type="submit" value="保存">
+	      </form>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal-wrapper" id="message-delete-modal">
+	  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
+	  <div class="modal-window">
+	    <div class="modal-content">
+	    <a href="#!" class="modal-close" onclick="clickButtonClose()">✕</a>
+	      <p class="modal_title">Delete Message</p>
+	      <a class="modal_body">本当に削除しますか？</a>
+	      <p class="error" id="errorMsg">${errorMsg}</p>
+	      <form class="modal-form" action="MessageDeleteServlet" method="post">
+	      	<input type="hidden" name="chatLogId" value="" id="modalChatLogId">
+	      	<input type="button" name="" value="キャンセル" onclick="clickButtonClose()">
+	      	<input type="submit" value="削除">
+	      </form>
+	    </div>
+	  </div>
+	</div>
+	
+	
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/modaal@0.4.4/dist/js/modaal.min.js"></script>
 <script src="js/main.js"></script>
+<script src="js/modal.js"></script>
+<!-- <script src="js/messageEdit.js"></script> -->
 
 </body>
 </html>

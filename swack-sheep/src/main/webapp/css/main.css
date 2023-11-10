@@ -137,6 +137,18 @@ a {
   transition: opacity .2s, visibility .2s;
 }
 
+/*試用*/
+.modal-wrapper.is-open {
+  z-index: 999;
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-wrapper.is-open .modal{
+  opacity: 1;
+  visibility: visible;
+}
+
 .modal-wrapper::after {
   display: inline-block;
   height: 100%;

@@ -44,7 +44,7 @@ public class MessageEditServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		// パラメータ取得
-		String roomId = request.getParameter("roomId");
+		String roomId = (String) session.getAttribute("nowRoomID");
 		int chatLogId = Integer.valueOf(request.getParameter("chatLogId"));
 		String newMessage = request.getParameter("newMessage");
 
