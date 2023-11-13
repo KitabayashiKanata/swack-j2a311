@@ -41,5 +41,12 @@ public class RoomModel {
 			= userDAO.getRoomList(workspaceId,userId);
 		return list;
 	}
+	
+	public ArrayList<String> getRoomAdminList(String roomId) throws SwackException{
+		RoomDAO userDAO = new RoomDAO();
+		ArrayList<String> list
+			= userDAO.getRoomAdminList(roomId);
+		return list;
+	}
 
 }

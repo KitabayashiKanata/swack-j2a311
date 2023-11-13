@@ -151,19 +151,36 @@
 					<hr>
 				</div>
 				<div id="logArea" class="contents-area">
+					<!-- ログインしているユーザがアドミンか判定 -->
+					<c:set var="nowUserId" value="${nowUser.userId}"/>
+					<c:forEach var="adminUser" items="${roomAdminUser}">
+						<c:choose>
+							<c:when test="${nowUserId == adminUser}">
+								<c:set var="editFlag" value="True"/>
+							</c:when>
+							<c:otherwise>
+								<c:set var="editFlag" value="False"/>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 					<c:forEach var="log" items="${chatLogList}">
 					<div class="log-area">
 						<div class="log-box">
 							<span class="log-name">${log.userName} </span>
 							<span class="log-time">[${log.createdAt}]</span>
 							<!-- 編集と削除はユーザに権限がある場合のみ表示(if文を使用する) -->
-							<c:set var="logUserId" value="${log.userId}"/>
-							<c:set var="nowUserId" value="${nowUser.userId}"/>
-							<c:set var="nowLogId" value="${log.chatLogId }"/>
-							<c:if test="${logUserId == nowUserId}" >
+							<c:if test='${editFlag != "True"}'>
+								<c:set var="logUserId" value="${log.userId}"/>
+								<c:set var="nowLogId" value="${log.chatLogId }"/>
+								<c:if test="${logUserId == nowUserId}" >
+									<c:set var="editFlag" value="True"/>
+								</c:if>
+							</c:if>
+							<c:if test='${editFlag == "True"}'>
 								<span class="log-edit" id="edit" onclick="clickMessageEdit('${log.chatLogId}','${log.message}')">編集</span>
 								<span class="log-delete" id="delete" onclick="clickMessageDelete('${log.chatLogId}')">削除</span>
 								<input type="hidden" name="chatLogId" value="${log.chatLogId}"> 
+								<c:set var="editFlag" value="False"/>
 							</c:if>
 							<br>
 							${log.message}

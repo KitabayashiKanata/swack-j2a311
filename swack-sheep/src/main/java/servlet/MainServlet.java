@@ -19,6 +19,7 @@ import bean.Workspace;
 import bean.WorkspaceList;
 import exception.SwackException;
 import model.ChatModel;
+import model.RoomModel;
 import model.WorkspaceModel;
 
 /**
@@ -79,6 +80,8 @@ public class MainServlet extends LoginCheckServlet {
 				roomId = "R0000";
 			}
 			
+			session.setAttribute("nowRoomID", roomId);
+			
 			// errorMsg取得＆セット
 			String errorMsg = (String) session.getAttribute("errorMsg");
 			session.removeAttribute("errorMsg");
@@ -86,15 +89,16 @@ public class MainServlet extends LoginCheckServlet {
 				request.setAttribute("errorMsg", errorMsg);
 			}
 			
-			session.setAttribute("nowRoomID", roomId);
 
 		// 画面に必要な情報を準備する
 		
 			ChatModel chatModel = new ChatModel();
+			RoomModel roomModel = new RoomModel();
 			Room room = chatModel.getRoom(roomId, user.getUserId());
 			List<Room> roomList = chatModel.getRoomList(user.getUserId(),workspaceId); //workspaceIdを追加
 			List<Room> directList = chatModel.getDirectList(user.getUserId(),workspaceId); //workspaceIdを追加
 			List<ChatLog> chatLogList = chatModel.getChatlogList(roomId);
+			List<String> roomAdminList = roomModel.getRoomAdminList(roomId);
 			
 
 			// JSPに値を渡す
@@ -103,6 +107,7 @@ public class MainServlet extends LoginCheckServlet {
 			request.setAttribute("roomList", roomList);
 			request.setAttribute("directList", directList);
 			request.setAttribute("chatLogList", chatLogList);
+			request.setAttribute("roomAdminList", roomAdminList);
 
 		} catch (SwackException e) {
 			e.printStackTrace();

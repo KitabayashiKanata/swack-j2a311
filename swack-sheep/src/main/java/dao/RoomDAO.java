@@ -216,4 +216,31 @@ public class RoomDAO {
 		}
 		return admin;
 	}
+	
+	// roomIdに対応した管理者を返す
+	public ArrayList<String> getRoomAdminList(String roomId) throws SwackException{
+		ArrayList<String> adminList = new ArrayList<String>();
+		
+		String sql = "SELECT USERID  FROM ROOMADMIN WHERE ROOMID = ?";
+		
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, roomId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			while (rs.next()) {
+				String user = rs.getString("USERID");
+				adminList.add(user);
+			}
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		
+		return adminList;
+	}
 }
