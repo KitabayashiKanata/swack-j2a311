@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/invitation.css">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modaal@0.4.4/dist/css/modaal.min.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modaal@0.4.4/dist/css/modaal.min.css"> -->
 
 </head>
 <body>
@@ -254,13 +254,7 @@
 	  </div>
 	</div>
 	
-	
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/modaal@0.4.4/dist/js/modaal.min.js"></script>
-<script src="js/main.js"></script>
 <script src="js/modal.js"></script>
-<!-- <script src="js/messageEdit.js"></script> -->
 
 </body>
 </html>
