@@ -49,9 +49,9 @@
 				
 				<!-- モーダルウィンドウ -->
 				<center>
-					<a href="#modal-01" class="modal-button" onclick="clickRoomCreate()">ルーム作成</a>
+					<a  class="modal-button" onclick="clickRoomCreate()">ルーム作成</a>
 				</center>
-				<div class="modal-wrapper" id="modal-01" id="room-modal">
+				<div class="modal-wrapper"  id="room-modal">
 				  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
 				  
 				  <div class="modal-window">
@@ -168,6 +168,7 @@
 						<div class="log-box">
 							<span class="log-name">${log.userName} </span>
 							<span class="log-time">[${log.createdAt}]</span>
+							<span class="log-reaction" onclick="clickMessageReaction('${log.chatLogId}')">顔</span>
 							<!-- 編集と削除はユーザに権限がある場合のみ表示(if文を使用する) -->
 							<c:if test='${editFlag != "True"}'>
 								<c:set var="logUserId" value="${log.userId}"/>
@@ -233,6 +234,21 @@
 	      	<input type="hidden" name="chatLogIdD" value="" id="modalChatLogIdD">
 	      	<input type="button" name="" value="キャンセル" onclick="clickButtonClose()">
 	      	<input type="submit" value="削除">
+	      </form>
+	    </div>
+	  </div>
+	</div>
+	
+	<div class="modal-wrapper" id="message-reaction-modal">
+	  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
+	  <div class="modal-window">
+	    <div class="modal-content">
+	    <a href="#!" class="modal-close" onclick="clickButtonClose()">✕</a>
+	      <p class="modal_title">Reaction</p>
+	      <a class="modal_body"></a>
+	      <p class="error" id="errorMsg">${errorMsg}</p>
+	      <form class="modal-form" action="MessageDeleteServlet" method="post">
+	      	<input type="hidden" name="chatLogIdR" value="" id="modalChatLogIdR">
 	      </form>
 	    </div>
 	  </div>
