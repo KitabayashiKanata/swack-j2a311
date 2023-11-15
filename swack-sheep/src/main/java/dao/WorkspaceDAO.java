@@ -161,4 +161,42 @@ public class WorkspaceDAO {
 			throw new SwackException(ERR_DB_PROCESS, e);
 		}
 	}
+	
+	// ワークスペースの管理者判定
+	public ArrayList<Workspace> getAdmin(String userId) throws SwackException{
+		String sql = "SELECT USERID, WORKSPACEID FROM WORKSPACEADMIN WHERE USERID = ?";
+		ArrayList<Workspace> workspace = new ArrayList<>();
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			while (rs.next()) {
+				String workspaceID = rs.getString("WORKSPACEID");
+				String userIdW = rs.getString("WORKSPACENAME");
+				Workspace WadminUserList = new Workspace(workspaceID, userIdW);
+				workspace.add(WadminUserList);
+			}
+			
+			return workspace;
+			
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
 }
