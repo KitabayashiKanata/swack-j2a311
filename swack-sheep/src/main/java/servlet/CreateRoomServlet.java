@@ -81,7 +81,7 @@ public class CreateRoomServlet extends HttpServlet {
 		
 		// privateをboolean型に変更
 		boolean privatedB = false;
-		if(privatedS == "private") {
+		if(privatedS.compareTo("private") == 0) {
 			privatedB = true;
 		}
 		
@@ -108,6 +108,7 @@ public class CreateRoomServlet extends HttpServlet {
 			return;
 		}
 		
+		session.setAttribute("createFlag", "True");
 		//登録したルームIDをリクエストに登録しメイン画面へ遷移
 		request.setAttribute("roomId",roomId );
 //		request.getRequestDispatcher("/WEB-INF/jsp/main.jsp").forward(request, response);

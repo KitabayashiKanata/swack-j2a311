@@ -18,6 +18,8 @@ public class Room implements Serializable {
 	private boolean directed;
 	/** ワークスペースID（追加）*/
 	private String workspaceId;
+	/** プライベートか（追加） */
+	private boolean privated;
 	
 	public Room() {
 		// for JSP
@@ -48,6 +50,13 @@ public class Room implements Serializable {
 		this.workspaceId = workspaceId;
 	}
 
+	public Room(String roomId, String roomName, boolean privated, String workspaceId) {
+		this.roomId = roomId;
+		this.roomName = roomName;
+		this.privated = privated;
+		this.workspaceId = workspaceId;
+	}
+
 	public String getRoomId() {
 		return roomId;
 	}
@@ -67,11 +76,15 @@ public class Room implements Serializable {
 	public String getWorkspaceId() {
 		return workspaceId;
 	}
+	
+	public boolean isPrivated() {
+		return privated;
+	}
 
 	@Override
 	public String toString() {
 		return "Room [roomId=" + roomId + ", roomName=" + roomName + ", memberCount=" + memberCount + ", directed="
-				+ directed + "]";
+				+ directed + ",privated=" + privated +"]";
 	}
 
 }

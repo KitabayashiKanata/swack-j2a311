@@ -199,4 +199,31 @@ public class WorkspaceDAO {
 			throw new SwackException(ERR_DB_PROCESS, e);
 		}
 	}
+	
+	// 指定ワークスペースの管理者を取得
+	public ArrayList<String> getWorkspaceAdminList(String workspaceId) throws SwackException{
+		ArrayList<String> workspaceList = new ArrayList<String>();
+		
+		String sql = "SELECT USERID  FROM WORKSPACEADMIN WHERE WORKSPACEID = ?";
+		
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, workspaceId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			while (rs.next()) {
+				String user = rs.getString("USERID");
+				workspaceList.add(user);
+			}
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		
+		return workspaceList;
+	}
 }

@@ -18,8 +18,6 @@
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/invitation.css">
 
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modaal@0.4.4/dist/css/modaal.min.css"> -->
-
 </head>
 <body>
 
@@ -39,7 +37,15 @@
 					<c:forEach var="room" items="${roomList}">
 					<a class="list-name"
 						href="MainServlet?roomId=${room.roomId}">
-						# ${room.roomName}
+						<c:set var="privated" value="${room.privated}"/>
+						<c:choose>
+							<c:when test='${privated == "True"}'>
+								@ ${room.roomName}
+							</c:when>
+							<c:otherwise>
+								# ${room.roomName}
+							</c:otherwise>
+						</c:choose>
 					</a>
 					<br>
 					</c:forEach>
@@ -63,10 +69,25 @@
 				      <form class="modal-form" action="CreateRoomServlet" method="post">
 				      	<input type="text" name="roomName" placeholder="# 例:計画-予算">
 				      	<p class="radio">パブリック</p>
-				      	<input type="radio" name="privated" value="パブリック">
-				      	<p class="radio">プライベート</p>
-				      	<input type="radio" name="privated" value="プライベート">
-				      	<input type="submit" value="次へ">
+				      	<input type="radio" name="privated" value="public">
+				      	<!-- ユーザがworkspaceadminの場合のみ表示 -->
+				      	<c:set var="nowUserId" value="${nowUser.userId}"/>
+				      	<c:set var="workspaceAdminFlag" value="False"/>
+				      	<c:forEach var="workspaceAdminUser" items="${workspaceAdminList}">
+				      		<c:if test='${nowUserId == workspaceAdminUser}'>
+				      			<c:set var="workspaceAdminFlag" value="True"/>
+				      		</c:if>
+				      	</c:forEach>
+				      	<c:choose>
+				      		<c:when test='${workspaceAdminFlag == "True"}'>
+								<p class="radio">プライベート</p>
+				      		<input type="radio" name="privated" value="private">
+							</c:when>
+				      		<c:otherwise>
+				      			<p>※プライベート設定は管理者のみ可能です
+				      		</c:otherwise>
+				      	</c:choose>
+				      	<input type="submit" value="作成">
 				      </form>
 				    </div>
 				  </div>
@@ -153,7 +174,7 @@
 				<div id="logArea" class="contents-area">
 					<!-- ログインしているユーザがアドミンか判定 -->
 					<c:set var="nowUserId" value="${nowUser.userId}"/>
-					<c:forEach var="adminUser" items="${roomAdminUser}">
+					<c:forEach var="adminUser" items="${roomAdminListr}">
 						<c:choose>
 							<c:when test="${nowUserId == adminUser}">
 								<c:set var="editFlag" value="True"/>

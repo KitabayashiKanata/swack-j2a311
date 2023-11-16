@@ -132,10 +132,11 @@ public class ChatDAO {
 
 	}
 	
-	//TODO workspaceIdを追加
+	//TODO workspaceIdを追加・privatedを追加で返す
 	public ArrayList<Room> getRoomList(String userId,String workspaceId) throws SwackException {
 		// SQL
-		String sql = "SELECT R.ROOMID, R.ROOMNAME FROM JOINROOM J JOIN ROOMS2 R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = FALSE AND R.WORKSPACEID = ?";
+//		String sql = "SELECT R.ROOMID, R.ROOMNAME FROM JOINROOM J JOIN ROOMS2 R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = FALSE AND R.WORKSPACEID = ?";
+		String sql = "SELECT R.ROOMID, R.ROOMNAME, R.PRIVATED FROM JOINROOM J JOIN ROOMS2 R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = FALSE AND R.WORKSPACEID = ?";
 
 		ArrayList<Room> roomlist = new ArrayList<Room>();
 
@@ -154,8 +155,10 @@ public class ChatDAO {
 			while (rs.next()) {
 				String roomId = rs.getString("ROOMID");
 				String roomName = rs.getString("ROOMNAME");
+				boolean privated = rs.getBoolean("PRIVATED");
 
-				Room room = new Room(roomId, roomName,workspaceId);
+//				Room room = new Room(roomId, roomName,workspaceId);
+				Room room = new Room(roomId, roomName,privated,workspaceId);
 				roomlist.add(room);
 			}
 

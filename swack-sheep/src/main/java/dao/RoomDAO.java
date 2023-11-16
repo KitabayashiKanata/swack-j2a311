@@ -57,7 +57,6 @@ public class RoomDAO {
 			pStmt.setBoolean(4, directed);
 			pStmt.setBoolean(5, privated);
 			pStmt.setString(6, workspaceId);
-			
 
 			pStmt.executeUpdate();
 		}catch (SQLException e) {
@@ -65,6 +64,15 @@ public class RoomDAO {
 		}
 		
 		insertJoinRoom(roomId,createdUserId);
+		if(directed) {
+			String[] split = roomId.split(",");
+			String pairUserId= split[1];
+			insertJoinRoom(roomId,pairUserId);
+		}else {
+			insertRoomAdmin(roomId,createdUserId);
+		}
+		
+		
 		return roomId;
 	}
 	
@@ -95,9 +103,26 @@ public class RoomDAO {
 		return maxRoomId;
 	}
 	
+	// joinroomテーブルにデータ追加 TODO directの処理
 	public void insertJoinRoom(String roomId, String userId) throws SwackException {
 		
 		String sql = "INSERT INTO JOINROOM VALUES(?,?)";
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, roomId);
+			pStmt.setString(2, userId);
+
+			pStmt.executeUpdate();
+		}catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		
+	}
+	
+	// roomadminテーブルにデータ追加
+	public void insertRoomAdmin(String roomId, String userId) throws SwackException {
+		
+		String sql = "INSERT INTO ROOMADMIN VALUES(?,?)";
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, roomId);

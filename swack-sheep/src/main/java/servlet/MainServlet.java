@@ -75,7 +75,7 @@ public class MainServlet extends LoginCheckServlet {
 			String roomId = request.getParameter("roomId");
 			//TODO ルームIDが保存されてない場合roomList.jspに遷移したい
 			if (roomId == null) {
-				request.getRequestDispatcher("/RoomListServlet").forward(request, response);
+//				request.getRequestDispatcher("/RoomListServlet").forward(request, response);
 //				response.sendRedirect("/RoomListServlet");
 				roomId = "R0000";
 			}
@@ -89,16 +89,24 @@ public class MainServlet extends LoginCheckServlet {
 				request.setAttribute("errorMsg", errorMsg);
 			}
 			
+			// ルームを作成した後か判断
+			String createFlag = (String) session.getAttribute("createFlag");
+			session.removeAttribute("createFlag");
+			if (createFlag != null) {
+				request.setAttribute("createFlag", "True");
+			}
 
 		// 画面に必要な情報を準備する
 		
 			ChatModel chatModel = new ChatModel();
 			RoomModel roomModel = new RoomModel();
+			WorkspaceModel workspaceModel = new WorkspaceModel();
 			Room room = chatModel.getRoom(roomId, user.getUserId());
 			List<Room> roomList = chatModel.getRoomList(user.getUserId(),workspaceId); //workspaceIdを追加
 			List<Room> directList = chatModel.getDirectList(user.getUserId(),workspaceId); //workspaceIdを追加
 			List<ChatLog> chatLogList = chatModel.getChatlogList(roomId);
 			List<String> roomAdminList = roomModel.getRoomAdminList(roomId);
+			List<String> workspaceAdminList = workspaceModel.getWorkspaceAdminList(workspaceId);
 			
 
 			// JSPに値を渡す
@@ -108,6 +116,7 @@ public class MainServlet extends LoginCheckServlet {
 			request.setAttribute("directList", directList);
 			request.setAttribute("chatLogList", chatLogList);
 			request.setAttribute("roomAdminList", roomAdminList);
+			request.setAttribute("workspaceAdminList", workspaceAdminList);
 
 		} catch (SwackException e) {
 			e.printStackTrace();

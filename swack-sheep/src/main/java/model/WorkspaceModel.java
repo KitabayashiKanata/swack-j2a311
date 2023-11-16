@@ -20,5 +20,10 @@ public class WorkspaceModel {
 		List<WorkspaceList> workspaceList = workspaceDAO.list(userId);
 		return workspaceList;
 	}
-
+	
+	public List<String> getWorkspaceAdminList(String workspaceId) throws SwackException{
+		WorkspaceDAO workspaceDAO = new WorkspaceDAO();
+		List<String> workspaceAdminList = workspaceDAO.getWorkspaceAdminList(workspaceId);
+		return workspaceAdminList;
+	}
 }
