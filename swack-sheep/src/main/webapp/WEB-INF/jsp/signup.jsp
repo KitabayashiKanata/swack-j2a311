@@ -57,7 +57,9 @@
         <div class="border-box">
 			<a href="" class="btn_design"><img src="images/apple.png" alt="Swack" style="width: 32px; height: 25px;">Appleで続行する</a>
         </div>
-		<button onclick="history.go(reCnt()), history.go(-1)">戻る</button>
+        <div class="btn-gradient">
+		<button onclick="history.go(reCnt()), history.go(-1)"><span>　戻る　</span></button>
+		</div>
 	</div>
 </body>
 </html>

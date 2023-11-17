@@ -19,7 +19,7 @@
 </head>
 <body>
 
- <div class="bg"></div>
+<div class="bg"></div>
 <div class="bg bg2"></div>
 <div class="bg bg3"></div>
 
@@ -47,8 +47,8 @@
 				<input onclick="count(reCnt())" type="submit" value="ワークスペースに参加">
 			</form>
 		</div>
-		<div class="flex">
-			<button onclick="history.go(reCnt()), delSession()">戻る</button>
+		<div class="btn-gradient">
+			<button onclick="history.go(reCnt()), delSession()"><span>　戻る　</span></button>
 			<div class="sample_link12">
 				<a href="PasswordUserServlet">
 					<span data-text="ここをクリック">パスワード変更</span>

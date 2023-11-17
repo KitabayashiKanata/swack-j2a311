@@ -68,8 +68,9 @@
 				</div>
 			</div>
 		</div>
-		
-	<button onclick="history.go(reCnt()), delSession()">戻る</button>
+	<div class="btn-gradient">
+	<button onclick="history.go(reCnt()), delSession()"><span>　戻る　</span></button>
+	</div>
 	</div>
 </body>
 </html>
