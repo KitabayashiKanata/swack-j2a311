@@ -5,6 +5,7 @@ editModal = document.getElementById("message-edit-modal");
 deleteModal = document.getElementById("message-delete-modal");
 reactionModal = document.getElementById("message-reaction-modal");
 roomModal = document.getElementById("room-modal");
+userListModal = document.getElementById("user-list-modal");
 
 function clickRoomCreate(){
 	roomModal.classList.add('is-open');
@@ -30,6 +31,11 @@ function clickMessageReaction(chatLogId){
 	modal = reactionModal;
 };
 
+function clickUserList(){
+	userListModal.classList.add('is-open');
+	modal = userListModal;
+};
+
 function clickOverlayClose(){
 	modal.classList.remove('is-open');
 };
@@ -46,3 +52,5 @@ window.onload = function(){
 		clickRoomCreate();
 	};
 };
+
+// createRoomFlagがTrueの場合モーダルウィンドウを表示

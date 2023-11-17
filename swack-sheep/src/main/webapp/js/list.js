@@ -23,3 +23,9 @@ function clickUser(num1, num2) {
     document.getElementById("uSpan1").textContent  = document.getElementById("userName").value;
     document.getElementById("uSpan2").textContent  = document.getElementById("userID").value;
 };
+
+function clickUser2(userId) {
+	console.log(userId);
+	document.getElementById("invitationUserIdModal").value = userId;
+	document.invitationUserForm.submit();
+};

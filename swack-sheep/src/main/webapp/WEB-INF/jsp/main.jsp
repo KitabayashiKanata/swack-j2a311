@@ -169,6 +169,8 @@
 			<div class="contents">
 				<div class="contents-header">
 					<h2>${nowRoom.roomName}(${nowRoom.memberCount}人)</h2>
+					<!-- 改行させないCSS -->
+					<button onclick="clickUserList()">人+</button>
 					<hr>
 				</div>
 				<div id="logArea" class="contents-area">
@@ -225,6 +227,36 @@
 	</div>
 	
 	<!-- モーダルウィンドウ -->
+	<!-- ルームにユーザー追加 -->
+	<div class="modal-wrapper" id="user-list-modal">
+	  	<a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
+	  	<div class="modal-window">
+	    <div class="modal-content">
+	    	<a href="#!" class="modal-close" onclick="clickButtonClose()">✕</a>
+	      	<a class="modal_body">ルームにユーザーを招待する</a>
+	      	<p class="error" id="errorMsg">${errorMsg}</p>
+	      	<!-- ワークスペースに参加しているユーザー一覧を出す -->
+	      	<table class="design11">
+			<c:forEach var="item" items="${userList}">
+				<tr><td>
+				<div class="modal-open">
+					<a href="#modal" onclick="clickUser2('${item.userId}')" class="hover">
+						<c:out value="${item.userName}" />
+						<div class="right">→</div>
+					</a>
+				</div>
+				</td></tr>
+				<br>
+			</c:forEach>
+        	</table>
+        	<form name="invitationUserForm" action="InvitationRoomServlet" method="post">
+        		<input type="hidden" name="invitationUserId" value="" id="invitationUserIdModal"> 
+        	</form>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- メッセージ編集 -->
 	<div class="modal-wrapper" id="message-edit-modal">
 	  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
 	  <div class="modal-window">
@@ -243,6 +275,7 @@
 	  </div>
 	</div>
 	
+	<!-- メッセージ削除 -->
 	<div class="modal-wrapper" id="message-delete-modal">
 	  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
 	  <div class="modal-window">
@@ -260,6 +293,7 @@
 	  </div>
 	</div>
 	
+	<!-- メッセージリアクション -->
 	<div class="modal-wrapper" id="message-reaction-modal">
 	  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
 	  <div class="modal-window">
@@ -276,6 +310,7 @@
 	</div>
 	
 <script src="js/modal.js"></script>
+<script src="js/list.js"></script>
 
 </body>
 </html>

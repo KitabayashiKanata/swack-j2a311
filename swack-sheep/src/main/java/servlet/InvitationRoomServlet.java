@@ -62,16 +62,17 @@ public class InvitationRoomServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// UserIDとRoomIDを取得
-			String userID = request.getParameter("userID");
+//			String userID = request.getParameter("userID");
+			String userId = request.getParameter("invitationUserId"); 
 			HttpSession session = request.getSession();
-			String roomID = (String)session.getAttribute("nowRoomID");
+			String roomId = (String)session.getAttribute("nowRoomID");
 			
 			// joinroomテーブルにデータ追加
 			RoomDAO roomDAO = new RoomDAO();
-			roomDAO.insertJoinRoom(roomID, userID);
+			roomDAO.insertJoinRoom(roomId, userId);
 			
 			// MainServlet
-			response.sendRedirect("MainServlet?roomId=" + roomID);
+			response.sendRedirect("MainServlet?roomId=" + roomId);
 			
 		} catch (SwackException e) {
 			e.printStackTrace();
