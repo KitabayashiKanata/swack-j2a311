@@ -26,7 +26,7 @@
 
 	<div class="container">
 		<header class="header">
-			<div>ワークスペース${nowUser.userName}</div>
+			<div>${nowUser.userName}</div>
 			<form action="LogoutServlet">
 				<input type="submit" value="ログアウト">
 			</form>
@@ -35,7 +35,7 @@
 		<section class="main">
 			<div class="left">
 				<h2>Swack</h2>
-				<h3><a id="target1" class="menu-botton" onclick="clickNameCreate1()">${workspaceName}</a></h3>
+				<h3><a id="target1" class="menu-botton" onclick="clickNameCreate1()">ワークスペース${workspaceName}</a></h3>
 				<hr>
 				
 				<details open>
