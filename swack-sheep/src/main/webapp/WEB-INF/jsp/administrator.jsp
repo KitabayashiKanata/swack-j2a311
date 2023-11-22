@@ -10,11 +10,12 @@
 <link rel="shortcut icon" href="images/favicon.ico">
 
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/workspaceList.css">
+<link rel="stylesheet" href="css/administrator.css">
 <script src="js/list.js"></script>
-<script src="js/count.js"></script>
 </head>
-<body>
+
+<body class="icarus">
+
 	<div class="container">
 		<h1>管理者操作画面</h1>
 		<h2>アカウントロックの解除</h2>
@@ -24,9 +25,9 @@
 					<c:forEach var="item" items="${lockList}">
 						<tr><td>
 						<div class="modal-open">
-							<a href="#modal" onclick="clickUser('${item.userName}','${item.userId}')" class="hover">
+							<a href="#modal" onclick="clickUser('${item.userName}','${item.userId}')" class="btn_design">
 								<c:out value="${item.userName}" />
-								<div class="right">→</div>
+								<div class="right">→<img src="images/key.png" style="width: 25px; height: 25px;"></div>
 							</a>
 							</div>
 						</td></tr>
@@ -58,7 +59,10 @@
 				</div>
 			</div>
 		</div>
-		<button onclick="history.go(reCnt()), delSession()">戻る</button>
+		<div class="btn-gradient">
+		<button onclick="history.go(reCnt()), delSession()"><span>　戻る　</span></button>
+		</div>
 	</div>
 </body>
+
 </html>

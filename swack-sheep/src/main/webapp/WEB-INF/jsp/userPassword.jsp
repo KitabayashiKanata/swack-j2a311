@@ -39,7 +39,9 @@
 				<input onclick="count(reCnt())" type="submit" value="次へ">
 			</form>
 		</div>
-		<button onclick="history.go(reCnt()), delSession()">戻る</button>
+		<div class="btn-gradient">
+		<button onclick="history.go(reCnt()), delSession()">　戻る　</button>
+		</div>
 	</div>
 </body>
 </html>
