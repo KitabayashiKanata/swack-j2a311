@@ -16,13 +16,20 @@
 <body>
 	<div class="container">
 		<h1>メンバー管理</h1>
-		<table>
-			<c:forEach var="user" items="${joinUserList}">
-				<tr><td>
-					<a onclick="clickRemoveJoin('${user.userId}')" class="hover"><c:out value="${user.userName}" /></a>
-				</td></tr>
-			</c:forEach>
-		</table>
+		<c:choose>
+			<c:when test="${joinUserList != null}">
+				<table>
+					<c:forEach var="user" items="${joinUserList}">
+						<tr><td>
+							<a onclick="clickRemoveJoin('${user.userId}')" class="hover"><c:out value="${user.userName}" /></a>
+						</td></tr>
+					</c:forEach>
+				</table>
+			</c:when>
+	        <c:otherwise>
+	        	<a>参加しているユーザーは存在していません</a>
+	        </c:otherwise>
+	    </c:choose>
 		<form name="removeJoinUserForm" action="JoinWorkspaceServlet" method="post">
         		<input type="hidden" name="removeUserId" value="" id="removeJoinModal"> 
         </form>
