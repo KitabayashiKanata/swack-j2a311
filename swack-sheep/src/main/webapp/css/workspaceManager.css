@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+table {
+    border-collapse: collapse;
+    border: none;
+}
+
+table th {
+     border: 1px solid #ddd; 
+     padding: 8px; /* セルの余白を追加（オプション） */
+}
+
+ table tr:first-child th {
+    border-top: none;
+}
+
+.button-container {
+     position: absolute;
+     color: #fff;
+     top: 30px;
+     right: 30px;
+     border: none;
+     border-radius:.35em;
+     background-color: seagreen;
+     padding: 8px;
+     font-size: 16px;
+}

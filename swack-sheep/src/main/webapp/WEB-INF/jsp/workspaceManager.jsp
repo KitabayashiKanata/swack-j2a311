@@ -10,12 +10,20 @@
 <link rel="shortcut icon" href="images/favicon.ico">
 
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/workspaceManager.css"
 
 <script src="js/list.js"></script>
 </head>
 <body>
 	<div class="container">
 		<h1>メンバー管理</h1>
+		<button href="" class="button-container">メンバーを招待する</button>
+		<table border="1">
+        <tr>
+            <th>氏名</th>
+            <th>メールアドレス</th>
+        </tr>
+        </table>
 		<c:choose>
 			<c:when test="${joinUserList != null}">
 				<table>
@@ -30,6 +38,7 @@
 	        	<a>参加しているユーザーは存在していません</a>
 	        </c:otherwise>
 	    </c:choose>
+	    </table>
 		<form name="removeJoinUserForm" action="JoinWorkspaceServlet" method="post">
         		<input type="hidden" name="removeUserId" value="" id="removeJoinModal"> 
         </form>
