@@ -35,7 +35,7 @@ public class LockClearServlet extends HttpServlet {
 			usersDAO.removeLockUser(userId);
 			
 			// administrator.jspへ戻る
-			request.getRequestDispatcher("/WEB-INF/jsp/administrator.jsp").forward(request, response);
+			response.sendRedirect("AdministratorServlet");
 			
 		} catch (SwackException e) {
 			e.printStackTrace();
