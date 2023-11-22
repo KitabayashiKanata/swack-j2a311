@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/administrator.css">
 <script src="js/list.js"></script>
+<script src="js/count.js"></script>
 </head>
 
 <body class="icarus">
