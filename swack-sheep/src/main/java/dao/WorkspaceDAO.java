@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import bean.User;
 import bean.Workspace;
 import bean.WorkspaceList;
 import exception.SwackException;
@@ -59,6 +60,42 @@ public class WorkspaceDAO {
 
 		// 結果の返却（取得できなかった場合、nullが返却される）
 		return workspace;
+	}
+	
+	// workspaceNameの取得
+	public String getWorkspace(String workspaceId) throws SwackException{
+		String sql = "SELECT WORKSPACENAME FROM WORKSPACE WHERE WORKSPACEID = ?";
+		
+		String workspaceName = null;
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, workspaceId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			if (rs.next()) {
+				workspaceName = rs.getString("WORKSPACENAME");
+			}
+
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		
+		// 結果の返却（取得できなかった場合、nullが返される）
+		return workspaceName;
 	}
 	
 	public String checkWorkspace(String userID) throws SwackException{
@@ -137,9 +174,45 @@ public class WorkspaceDAO {
 		return workspace;
 	}
 	
+	// joinWorkspaceから特定のワークスペースに参加しているユーザをリストで取得
+	public List<User> joinUser(String workspaceId) throws SwackException{
+		String sql = "SELECT A.USERID AS USERID, USERNAME FROM JOINWORKSPACE AS A, USERS AS B WHERE A.USERID = B.USERID AND WORKSPACEID = ?";
+		
+		List<User> joinUserList = new ArrayList<>();
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			// TODO 自動生成された catch ブロック
+			e1.printStackTrace();
+		}
+		
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, workspaceId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			while (rs.next()) {
+				String userId = rs.getString("USERID");
+				String userName = rs.getString("USERNAME");
+				User userList = new User(userId, userName);
+				joinUserList.add(userList);
+						}
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		// 結果の返却（取得できなかった場合、nullが返される）
+		return joinUserList;
+	}
+	
 	// ワークスペースからの退会処理
 	public void removeJoin(String userId, String workspaceId) throws SwackException{
-		String sql = "DELETE FEOM JOINWORKSPACE WHERE USERID = ? AND WORKSPACEID = ?";
+		String sql = "DELETE FROM JOINWORKSPACE WHERE USERID = ? AND WORKSPACEID = ?";
 		
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -155,6 +228,9 @@ public class WorkspaceDAO {
 			 = conn.prepareStatement(sql);
 			pStmt.setString(1, userId);
 			pStmt.setString(2, workspaceId);
+			
+			// SQL実行
+			pStmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			// エラー発生時、独自のExceptionを発行
@@ -204,7 +280,7 @@ public class WorkspaceDAO {
 	public ArrayList<String> getWorkspaceAdminList(String workspaceId) throws SwackException{
 		ArrayList<String> workspaceList = new ArrayList<String>();
 		
-		String sql = "SELECT USERID  FROM WORKSPACEADMIN WHERE WORKSPACEID = ?";
+		String sql = "SELECT USERID FROM WORKSPACEADMIN WHERE WORKSPACEID = ?";
 		
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
 
@@ -225,5 +301,36 @@ public class WorkspaceDAO {
 		}
 		
 		return workspaceList;
+	}
+	
+	// あるユーザが特定のワークスペースの管理者か判定
+	public boolean adminUserCheck(String userId, String workspaceId) throws SwackException {
+		String sql = "SELECT COUNT(*) AS ADMIN FROM WORKSPACEADMIN WHERE USERID = ? AND WORKSPACEID = ?";
+		
+		int cnt = 0;
+		
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			pStmt.setString(2, workspaceId);
+
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			while (rs.next()) {
+				cnt = rs.getInt("ADMIN");
+			}
+			
+			if (cnt == 0) {
+				return false;
+			}
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		
+		return true;
 	}
 }

@@ -1,0 +1,203 @@
+@charset "UTF-8";
+#contextmenu{
+  display:none;
+  z-index: 999;
+  position: fixed;
+  width:200px;
+  height:118px;
+  background-color: white;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px 0px 10px;
+  border-radius: 10px 10px 10px 10px;
+  border: 1px solid #000;
+}
+#contextmenu li{
+    cursor:pointer;
+}
+
+#contextmenu1{
+  display:none;
+  z-index: 999;
+  position: fixed;
+  width:200px;
+  height:65px;
+  background-color: white;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px 0px 10px;
+  border-radius: 10px 10px 10px 10px;
+  border: 1px solid #000;
+}
+#contextmenu1 li{
+    cursor:pointer;
+}
+
+.menu-botton {
+	padding: 0px 5px 0px;
+}
+
+.menu-botton:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 5px 5px 5px 5px;
+}
+
+ul {
+	padding: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.menu hr {
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.menu li {
+	list-style: none;
+	width: 100%;
+}
+
+.menu li a {
+	display: block;
+	text-decoration: none;
+	padding: 10px;
+}
+
+.menu li a::after {
+	position: absolute;
+	top: 63%;
+	left: 30px;
+	transform: rotate(45deg) translateY(-50%);
+	width: 6px;
+}
+
+.menu li:hover{
+	background: royalblue;
+}
+
+.menu li a:hover{
+	color: #FFFFFF;
+}
+
+/*========= メニューモーダル表示のためのCSS ===============*/
+
+/* モーダルウィンドウを画面外のクリックで閉じる */
+.modal-overlay2 {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/*========= モーダル表示のためのCSS ===============*/
+
+.modal-wrapper2 {
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: left;
+}
+
+.modal-wrapper:not(:target) {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .2s, visibility .2s;
+}
+
+.modal-wrapper:target {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .2s, visibility .2s;
+}
+
+/*試用*/
+.modal-wrapper.is-open {
+  z-index: 999;
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-wrapper.is-open .modal{
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-wrapper::after {
+  display: inline-block;
+  height: 100%;
+  margin-left: -0.5em;
+  vertical-align: middle;
+  content: ""
+}
+
+.modal-wrapper .modal-window2 {
+  box-sizing: border-box;
+  display: inline-block;
+  z-index: 20;
+  position: relative;
+  width: 300px;
+  padding: 10px 0px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  border: 1px solid #000;
+  vertical-align: top;
+}
+
+.modal-wrapper .modal-window2 .modal-content {
+  max-height: 80vh;
+  overflow-y: auto;
+  text-align: left
+}
+
+.modal_title {
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  padding: 0 10px;
+}
+
+.nemu_body {
+  color: black;
+  font-size: 15px;
+  overflow: hidden;
+  padding: 0;
+}
+
+.modal-content p {
+  margin: 0;
+}
+
+/* モーダルウィンドウを画面外のクリックで閉じる */
+.modal-overlay {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .5)
+}
+
+
+
+/* モーダルウィンドウを×印で閉じる */
+.modal-close{
+  color: black;
+  position: absolute;
+  font-size: 20px;
+  top: 5px;
+  right: 10px;
+  text-decoration: none;
+}

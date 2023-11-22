@@ -17,6 +17,9 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/invitation.css">
+<link rel="stylesheet" href="css/menu.css">
+
+
 
 </head>
 <body>
@@ -28,12 +31,15 @@
 				<input type="submit" value="ログアウト">
 			</form>
 		</header>
+		
 		<section class="main">
 			<div class="left">
 				<h2>Swack</h2>
+				<h3><a id="target1" class="menu-botton" onclick="clickNameCreate1()">${workspaceName}</a></h3>
 				<hr>
+				
 				<details open>
-					<summary>ルーム</summary>
+					<summary><a id="target2" class="menu-botton" onContextmenu="return false;" onclick="clickNameCreate2()">ルーム</a></summary>
 					<c:forEach var="room" items="${roomList}">
 					<a class="list-name"
 						href="MainServlet?roomId=${room.roomId}">
@@ -51,12 +57,8 @@
 					</c:forEach>
 					
 				</details>
-				<a href="RoomListServlet">ルーム一覧</a>
 				
 				<!-- モーダルウィンドウ -->
-				<center>
-					<a  class="modal-button" onclick="clickRoomCreate()">ルーム作成</a>
-				</center>
 				<div class="modal-wrapper"  id="room-modal">
 				  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
 				  
@@ -94,7 +96,7 @@
 				</div>
 				
 				<details open>
-					<summary>ダイレクト</summary>
+					<summary><a id="target3" class="menu-botton" onContextmenu="return false;" onclick="clickNameCreate3()">ダイレクト</a></summary>
 					<c:forEach var="room" items="${directList}">
 					<a class="list-name"
 						href="MainServlet?roomId=${room.roomId}">
@@ -103,10 +105,6 @@
 					<br>
 					</c:forEach>
 				</details>
-				<!-- 仮設置です -->
-				<a href="UserListServlet">ダイレクトチャット開始</a>
-				<a href="WorkspaceServlet">ワークスペースに参加</a>
-				<a href="InvitationRoomServlet">ルーム招待</a>
 				
 				<!-- モーダルウィンドウ(ルーム招待) -->
 				<div class="modal-wrapper" id="modal-02">
@@ -294,7 +292,7 @@
 	</div>
 	
 	<!-- メッセージリアクション -->
-	<div class="modal-wrapper" id="message-reaction-modal">
+	<div class="modal-wrapper modal-wrapper2" id="message-reaction-modal">
 	  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
 	  <div class="modal-window">
 	    <div class="modal-content">
@@ -309,8 +307,81 @@
 	  </div>
 	</div>
 	
+	<!-- ワークスペースメニュー -->
+	<div class="modal-wrapper modal-wrapper2" id="name-modal1">
+	  <a href="#!" id="overlay1" class="modal-overlay2" onclick="clickOverlayClose()"></a>
+	  <div class="modal-window2">
+	    <div class="modal-content">
+	      <p class="modal_title">名前</p>
+	      <div class="nemu_body">
+		      <div class="nemu_body">
+				  <ul class="menu">
+					  <li><hr></li>
+					  <li><a onclick="clickButtonClose()" href="WorkspaceServlet">ワークスペースに参加</a></li>
+					  <li><a onclick="clickButtonClose()" href="">ワークスペースを切り替える</a></li>
+					  <li><a onclick="clickButtonClose()" href="JoinWorkspaceServlet">メンバー管理</a></li>
+					  <!-- <c:if test="${adminUser == true}"> -->
+					  <!-- </c:if> -->
+				  </ul>
+		  	  </div>
+		  </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- ルームメニュー -->
+	<div class="modal-wrapper modal-wrapper2" id="name-modal2">
+	  <a href="#!" id="overlay2" class="modal-overlay2" onclick="clickOverlayClose()"></a>
+	  <div class="modal-window2">
+	    <div class="modal-content">
+	      <div class="nemu_body">
+			  <ul class="menu">
+				  <li><a onclick="clickButtonClose(), clickRoomCreate()">ルーム作成</a></li>
+				  <li><hr></li>
+				  <li><a onclick="clickButtonClose()" href="RoomListServlet">ルーム一覧</a></li>
+			  </ul>
+		  </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- ルームメニュー -->
+	<div class="modal-wrapper modal-wrapper2" id="name-modal3">
+	  <a href="#!" id="overlay3" class="modal-overlay2" onclick="clickOverlayClose()"></a>
+	  <div class="modal-window2">
+	    <div class="modal-content">
+	      <div class="nemu_body">
+			  <ul class="menu">
+				  <li><a onclick="clickButtonClose()" href="UserListServlet">ダイレクトチャット開始</a></li>
+			  </ul>
+		  </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 右クリックメニュー -->
+	<div id="contextmenu">
+		<div class="nemu_body">
+		  <ul class="menu">
+			  <li><a onclick="clickButtonClose(), clickRoomCreate()">作成</a></li>
+			  <li><hr></li>
+			  <li><a onclick="clickButtonClose()" href="RoomListServlet">ルーム一覧</a></li>
+		  </ul>
+	  </div>
+  	</div>
+  	
+  	<!-- 右クリックメニュー -->
+	<div id="contextmenu1">
+		<div class="nemu_body">
+		  <ul class="menu">
+			  <li><a onclick="clickButtonClose()" href="UserListServlet">ダイレクトチャット開始</a></li>
+		  </ul>
+	  </div>
+  	</div>
+	
 <script src="js/modal.js"></script>
 <script src="js/list.js"></script>
+<script src="js/menu.js"></script>
 
 </body>
 </html>

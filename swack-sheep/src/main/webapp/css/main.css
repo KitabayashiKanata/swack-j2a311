@@ -32,6 +32,9 @@
 .left h2, details {
 	padding-left: 5px;
 }
+.left h3, details {
+	padding-left: 5px;
+}
 .left details {
 	margin-top: 10px;
 }
