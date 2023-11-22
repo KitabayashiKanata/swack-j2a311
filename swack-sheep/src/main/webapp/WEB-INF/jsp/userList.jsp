@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/workspaceList.css">
 <script src="js/list.js"></script>
+<script src="js/count.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -24,7 +25,7 @@
 			<c:forEach var="item" items="${userList}">
 				<tr><td>
 				<div class="modal-open">
-					<a href="#modal" onclick="clickUser('${item.userName}','${item.userId}')" class="hover">
+					<a onclick="clickUser('${item.userName}','${item.userId}')" class="hover">
 						<c:out value="${item.userName}" />
 						<div class="right">→</div>
 					</a>
@@ -33,28 +34,15 @@
 				<br>
 			</c:forEach>
         </table>
-        
-        <div class="modal" id="modal">
-		    <a href="#!" class="overlay"></a>
-		    <div class="modal-wrapper">
-				<div class="modal-contents">
-		        	<a href="#!" class="modal-close">✕</a>
-					<div class="modal-content">
-						<p><span id="uSpan2"></span><br>
-						<span id="uSpan1"></span></p>
-						
-						<form action="CreateRoomServlet" method="post">
-							<input type="hidden" id="userID" name="userId" />
-						 	<input type="hidden" id="userName" />
-						 	<input type="submit" value="決定" />
-						</form>
-						
-					</div>
-				</div>
-			</div>
+        <div class="btn-gradient">
+			<button onclick="history.go(reCnt()), delSession()"><span>　戻る　</span></button>
 		</div>
-
 	</div>
+	
+	<form name="userForm" action="CreateRoomServlet" method="post">
+     	<input type="hidden" name="userId" value="" id="userId">
+     	<input type="hidden" name="userName" value="" id="userName" />
+    </form>
 
 </body>
 </html>

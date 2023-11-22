@@ -34,7 +34,6 @@ public class AdministratorServlet extends HttpServlet {
 
 			// セッションに保存
 			request.setAttribute("lockList", lockList);
-			System.out.println(lockList);
 
 		} catch (SwackException e) {
 			e.printStackTrace();

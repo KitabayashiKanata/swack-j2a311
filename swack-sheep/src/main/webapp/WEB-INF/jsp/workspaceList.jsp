@@ -39,7 +39,7 @@
 			<c:forEach var="item" items="${workspaceList}">
 				<tr><td>
 				<div class="modal-open">
-					<a href="#modal" onclick="clickWorkspace('${item.workspaceName}','${item.workspaceID}'), count2(reCnt())" class="btn_design">
+					<a onclick="clickWorkspace('${item.workspaceName}','${item.workspaceID}'), count(reCnt())" class="btn_design">
 						<c:out value="${item.workspaceName}" />
 						<div class="right">→</div>
 					</a>
@@ -48,29 +48,14 @@
 				<br>
 			</c:forEach>
         </table>
-
-		<div class="modal" id="modal">
-		    <a href="#!" class="overlay"></a>
-		    <div class="modal-wrapper">
-				<div class="modal-contents">
-		        	<a href="#!" class="modal-close">✕</a>
-					<div class="modal-content">
-						<p><span id="wSpan2"></span><br>
-						<span id="wSpan1"></span></p>
-						
-						<form action="MainServlet" method="get">
-							<input type="hidden" id="workspaceID" name="workspaceId" />
-						 	<input type="hidden" id="workspaceName" />
-						 	<input type="submit" value="決定" />
-						</form>
-						
-					</div>
-				</div>
-			</div>
+		<div class="btn-gradient">
+			<button onclick="history.go(reCnt()), delSession()"><span>　戻る　</span></button>
 		</div>
-	<div class="btn-gradient">
-	<button onclick="history.go(reCnt()), delSession()"><span>　戻る　</span></button>
 	</div>
-	</div>
+	
+	<form name="workspaceForm" action="MainServlet" method="get">
+	   		<input type="hidden" name="workspaceId" value="" id="workspaceId">
+	   		<input type="hidden" name="workspaceName" value="" id="workspaceName" />
+    	</form>
 </body>
 </html>

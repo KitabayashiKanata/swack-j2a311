@@ -26,7 +26,7 @@
 					<c:forEach var="item" items="${lockList}">
 						<tr><td>
 						<div class="modal-open">
-							<a href="#modal" onclick="clickUser('${item.userName}','${item.userId}')" class="btn_design">
+							<a onclick="clickUser('${item.userName}','${item.userId}'), count(reCnt())" class="btn_design">
 								<c:out value="${item.userName}" />
 								<div class="right">→<img src="images/key.png" style="width: 25px; height: 25px;"></div>
 							</a>
@@ -41,29 +41,15 @@
 	        </c:otherwise>
         </c:choose>
         
-        <div class="modal" id="modal">
-		    <a href="#!" class="overlay"></a>
-		    <div class="modal-wrapper">
-				<div class="modal-contents">
-		        	<a href="#!" class="modal-close">✕</a>
-					<div class="modal-content">
-						<p><span id="uSpan2"></span><br>
-						<span id="uSpan1"></span></p>
-						
-						<form action="LockClearServlet" method="post">
-							<input type="hidden" id="userID" name="userId" />
-						 	<input type="hidden" id="userName" />
-						 	<input type="submit" value="決定" />
-						</form>
-						
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="btn-gradient">
-		<button onclick="history.go(reCnt()), delSession()"><span>　戻る　</span></button>
+			<button onclick="history.go(reCnt()), delSession()"><span>　戻る　</span></button>
 		</div>
 	</div>
+	
+	<form name="userForm" action="LockClearServlet" method="post">
+   		<input type="hidden" name="userId" value="" id="userId">
+   		<input type="hidden" name="userName" value="" id="userName" />
+    </form>
 </body>
 
 </html>

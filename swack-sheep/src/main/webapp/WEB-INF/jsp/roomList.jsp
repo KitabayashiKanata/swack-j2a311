@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/roomList.css">
 <script src="js/list.js"></script>
+<script src="js/count.js"></script>
 
 <style>
      /* クリック領域を示すためのスタイル */
@@ -44,18 +45,9 @@
 		<table class="sample">
 			<c:forEach var="item" items="${roomList}">
 				<tr><td>
-					<a href="#modal" onclick="clickRoom('${item.roomName}', '${item.roomId}')" class="btn_design">
+					<a onclick="clickRoom('${item.roomName}', '${item.roomId}')" class="btn_design">
 					<button href="" class="color-change" style="left: 173%;">ホームで開く</button>
-					<button onclick='location.href="https://convertio.co/ja/webp-png/"' class="color-change clickable" style="left: 166%;">参加する</button>
-					
-					<script>
-					// クリック可能な要素のクリックイベントをリンクより優先させる
-					 document.querySelector('.clickable').addEventListener('click', function(button) {
-						 // リンクのクリックを無効化
-						 event.preventDefault(button);
-						 });
-					 </script>
-					
+					<button onclick='location.href="https://convertio.co/ja/webp-png/"; event.stopPropagation()' class="color-change clickable" style="left: 166%;">参加する</button>
 					
 						<c:out value="${item.roomName}" />
 					</a>
@@ -63,28 +55,16 @@
 				<br>
 			</c:forEach>
         </table>
-        
-        <div class="modal" id="modal">
-		    <a href="#!" class="overlay"></a>
-		    <div class="modal-wrapper">
-				<div class="modal-contents">
-		        	<a href="#!" class="modal-close">✕</a>
-					<div class="modal-content">
-						<p><span id="rSpan2"></span><br>
-						<span id="rSpan1"></span></p>
-						
-						<form action="MainServlet" method="get">
-							<input type="hidden" id="roomID" name="roomId" />
-						 	<input type="hidden" id="roomName" />
-						 	<input type="submit" value="決定" />
-						</form>
-						
-					</div>
-				</div>
-			</div>
+        <div class="btn-gradient">
+			<button onclick="history.go(reCnt()), delSession()"><span>　戻る　</span></button>
 		</div>
-
-	</div>
+    </div>
+    
+    <form name="roomForm" action="MainServlet" method="get">
+   		<input type="hidden" name="roomId" value="" id="roomId">
+   		<input type="hidden" name="roomName" value="" id="roomName" />
+    </form>
+    
 
 </body>
 </html>
