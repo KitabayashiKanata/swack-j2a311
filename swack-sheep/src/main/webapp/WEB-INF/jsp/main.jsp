@@ -26,7 +26,7 @@
 
 	<div class="container">
 		<header class="header">
-			<div>${nowUser.userName}</div>
+			<div>ワークスペース${nowUser.userName}</div>
 			<form action="LogoutServlet">
 				<input type="submit" value="ログアウト">
 			</form>
