@@ -180,17 +180,6 @@ div.btn-gradient button{
   box-shadow: 0 5px 15px rgba(0, 0, 0, .6);
 }
 
-.bg_pattern {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #ffffff;
-  opacity: 0.4;
-  z-index: -1;
-}
-
 .icarus {
 	background-image: -webkit-radial-gradient(at bottom right, #B7B6BB 0%, #E8EAE9 100%);
 	background-image: radial-gradient(at bottom right, #B7B6BB 0%, #E8EAE9 100%); 
