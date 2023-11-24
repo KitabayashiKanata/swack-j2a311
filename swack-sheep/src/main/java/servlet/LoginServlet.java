@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import bean.User;
 import dao.UsersDAO;
 import exception.SwackException;
 import model.LoginModel;
+import model.SessionIdModel;
 import model.TimeModel;
 
 /**
@@ -30,7 +32,32 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+		HttpSession session = request.getSession();
+		SessionIdModel sessionIdModel = new SessionIdModel();
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null) {
+			Cookie cookie = cookies[0];
+			String sessionId = cookie.getValue();
+			User user = null;
+			session.setAttribute("cookieFlag", "0");
+			try {
+				user = sessionIdModel.connectSessionId(sessionId);
+			} catch (SwackException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+			if(user != null) {
+				session.setAttribute("sessionId",sessionId);
+				session.setAttribute("user", user);
+				session.setAttribute("cookieFlag", "1");
+				response.sendRedirect("MainServlet");
+			}else {
+				request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+			}
+		}else {
+			request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
+		}
+		
 	}
 
 	@Override

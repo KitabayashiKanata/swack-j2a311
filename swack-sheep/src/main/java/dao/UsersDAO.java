@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import bean.SessionId;
 import bean.User;
 import exception.SwackException;
 
@@ -545,6 +546,448 @@ public class UsersDAO {
 				day = rs.getDate("DAY");
 			}
 			return day;
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// ------ セッション管理 -----
+	// セッションID管理(connection)+ユーザ情報取得
+	public User connectSessionId(String sessionId)throws SwackException{
+		User user = null;
+		int count = 0;
+		String sql = "SELECT COUNT(*) AS COUNT FROM SESSIONID WHERE SESSIONID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, sessionId);
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			if (rs.next()) {
+				count = rs.getInt("COUNT");
+			}
+			
+			if (count > 0) {
+				user = getSessionIdUserId(sessionId);
+			}
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		return user;
+	}
+	
+	// ユーザID取得
+	public User getSessionIdUserId(String sessionId)throws SwackException{
+		String userId = null;
+		User user = null;
+		String sql = "SELECT USERID FROM SESSIONID WHERE SESSIONID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, sessionId);
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			if (rs.next()) {
+				userId = rs.getString("USERID");
+			}
+			
+			user = getSessionIdUser(userId);
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		return user;
+	}
+	
+	// ユーザ情報取得
+	public User getSessionIdUser(String userId)throws SwackException{
+		User user = null;
+		String sql = "SELECT USERNAME,MAILADDRESS,PASSWORD FROM USERS "
+				+ "WHERE USERID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			if (rs.next()) {
+				String userName = rs.getString("USERNAME");
+				String mailaddress = rs.getString("MAILADDRESS");
+				String password = rs.getString("PASSWORD");
+				user = new User(userId,userName,mailaddress,password);
+			}
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		return user;
+	}
+	
+	// セッションID管理(set)
+	public void setSessionId(SessionId sessionId,boolean insertFlag)throws SwackException{
+		
+		String sql = "";
+		if(insertFlag) {
+			if(checkSessionId(sessionId)) {
+				insertFlag = false;
+				setSessionId(sessionId,insertFlag);
+				return;
+			}
+			sql = "INSERT INTO SESSIONID VALUES(?,?,?)";
+			try {
+				Class.forName("org.postgresql.Driver");
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			
+			// Access DB
+			try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+				
+				// SQL作成
+				PreparedStatement pStmt
+				 = conn.prepareStatement(sql);
+				pStmt.setString(1, sessionId.getUserId());
+				pStmt.setString(2, sessionId.getWorkspaceId());
+				pStmt.setString(3, sessionId.getSessionId());
+				
+				// SQL実行
+				pStmt.executeUpdate();
+			} catch (SQLException e) {
+				// エラー発生時、独自のExceptionを発行
+				throw new SwackException(ERR_DB_PROCESS, e);
+			}
+		}else {
+			if(!checkSessionId(sessionId)) {
+				insertFlag = true;
+				setSessionId(sessionId,insertFlag);
+				return;
+			}
+			sql = "UPDATE SESSIONID SET WORKSPACEID = ?,SESSIONID = ? "
+					+ "WHERE USERID = ?";
+			try {
+				Class.forName("org.postgresql.Driver");
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			
+			// Access DB
+			try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+				
+				// SQL作成
+				PreparedStatement pStmt
+				 = conn.prepareStatement(sql);
+				pStmt.setString(1, sessionId.getWorkspaceId());
+				pStmt.setString(2, sessionId.getSessionId());
+				pStmt.setString(3, sessionId.getUserId());
+				
+				// SQL実行
+				pStmt.executeUpdate();
+			} catch (SQLException e) {
+				// エラー発生時、独自のExceptionを発行
+				throw new SwackException(ERR_DB_PROCESS, e);
+			}
+		}
+	}
+		
+	// セッションID管理(get)
+	public SessionId getSessionId(String sessionId)throws SwackException{
+		SessionId sessionIds = null;
+		String sql = "SELECT USERID,WORKSPACEID FROM SESSIONID"
+				+ " WHERE SESSIONID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, sessionId);
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			if (rs.next()) {
+				String userId = rs.getString("USERID");
+				String workspaceId = rs.getString("WORKSPACEID");
+//				String roomId = rs.getString("ROOMID");
+				
+			sessionIds = new SessionId(userId,workspaceId,sessionId);
+			}
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		return sessionIds;
+	}
+	
+	//セッションIDテーブルにデータがあるか調査 ある場合True
+	public boolean checkSessionId(SessionId sessionId) throws SwackException{
+		boolean judge = false;
+		int count = 0;
+		String sql = "SELECT COUNT(*) AS COUNT FROM SESSIONID"
+				+ " WHERE USERID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, sessionId.getUserId());
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			if (rs.next()) {
+				count = rs.getInt("COUNT");
+			}
+			if(count > 0) {
+				judge = true;
+			}
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		return judge;
+	}
+	
+	// 最終表示ワークスペース・ルーム管理(set)
+	public void setWorkspaceMemory(SessionId sessionId,String roomId,boolean insertFlag)throws SwackException{
+		
+		String sql = "";
+		if(insertFlag) {
+			// 主キーが重複する場合updateへ移行
+			if(checkWorkspaceMemory(sessionId)) {
+				insertFlag = false;
+				setWorkspaceMemory(sessionId,roomId,insertFlag);
+				return;
+			}
+			sql = "INSERT INTO WORKSPACEMEMORY VALUES(?,?,?)";
+			try {
+				Class.forName("org.postgresql.Driver");
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			
+			// Access DB
+			try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+				
+				// SQL作成
+				PreparedStatement pStmt
+				 = conn.prepareStatement(sql);
+				pStmt.setString(1, sessionId.getUserId());
+				pStmt.setString(2, sessionId.getWorkspaceId());
+				pStmt.setString(3, roomId);
+				
+				// SQL実行
+				pStmt.executeUpdate();
+			} catch (SQLException e) {
+				// エラー発生時、独自のExceptionを発行
+				throw new SwackException(ERR_DB_PROCESS, e);
+			}
+		}else {
+			// 主キーが存在しない場合insetへ移行
+			if(!checkWorkspaceMemory(sessionId)) {
+				insertFlag = true;
+				setWorkspaceMemory(sessionId,roomId,insertFlag);
+				return;
+			}
+			sql = "UPDATE WORKSPACEMEMORY SET ROOMID = ? "
+					+ "WHERE USERID = ? AND WORKSPACEID = ?";
+			try {
+				Class.forName("org.postgresql.Driver");
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			
+			// Access DB
+			try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+				
+				// SQL作成
+				PreparedStatement pStmt
+				 = conn.prepareStatement(sql);
+				pStmt.setString(1, roomId);
+				pStmt.setString(2, sessionId.getUserId());
+				pStmt.setString(3, sessionId.getWorkspaceId());
+				
+				// SQL実行
+				pStmt.executeUpdate();
+			} catch (SQLException e) {
+				// エラー発生時、独自のExceptionを発行
+				throw new SwackException(ERR_DB_PROCESS, e);
+			}
+		}
+	}
+		
+	// 最終表示ワークスペース・ルーム管理(get)
+	public String getWorkspaceMemory(SessionId sessionId)throws SwackException{
+		// workspacememoryに希望のデータがあるか判別
+		if(!checkWorkspaceMemory(sessionId)) {
+			return null;
+		}
+		String roomId = "";
+		String sql = "SELECT ROOMID FROM WORKSPACEMEMORY"
+				+ " WHERE USERID = ? AND WORKSPACEID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, sessionId.getUserId());
+			pStmt.setString(2, sessionId.getWorkspaceId());
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			if (rs.next()) {
+				roomId = rs.getString("ROOMID");
+			}
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		return roomId;
+	}
+	
+	//ワークスペースメモリーテーブルにデータがあるか調査
+	public boolean checkWorkspaceMemory(SessionId sessionId) throws SwackException{
+		boolean judge = false;
+		int count = 0;
+		String sql = "SELECT COUNT(*) AS COUNT FROM WORKSPACEMEMORY"
+				+ " WHERE USERID = ? AND WORKSPACEID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, sessionId.getUserId());
+			pStmt.setString(2, sessionId.getWorkspaceId());
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// 結果を詰め替え
+			if (rs.next()) {
+				count = rs.getInt("COUNT");
+			}
+			if(count > 0) {
+				judge = true;
+			}
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		return judge;
+	}
+	
+	// DELETE処理
+	public void deleteSessionId(String userId) throws SwackException{
+		String sql = "DELETE FROM SESSIONID WHERE USERID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			
+			// SQL実行
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	public void deleteWorkspaceMemory(String userId) throws SwackException{
+		String sql = "DELETE FROM WORKSPACEMEMORY WHERE USERID = ?";
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			
+			// SQL実行
+			pStmt.executeUpdate();
 		} catch (SQLException e) {
 			// エラー発生時、独自のExceptionを発行
 			throw new SwackException(ERR_DB_PROCESS, e);

@@ -103,6 +103,25 @@ public class RoomDAO {
 		return maxRoomId;
 	}
 	
+	// ワークスペース内で最小のルームIDを返す
+	public String getMinRoomId(String workspaceId) throws SwackException {
+		String minRoomId = "";
+		
+		String sql = "SELECT MIN(ROOMID) AS ROOMID FROM ROOMS2 WHERE WORKSPACEID = ?";
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)){
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, workspaceId);
+			ResultSet rs = pStmt.executeQuery();
+			if(rs.next()) {
+				minRoomId = rs.getString("ROOMID"); 
+			}
+		}catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+		
+		return minRoomId;
+	}
+	
 	// joinroomテーブルにデータ追加 TODO directの処理
 	public void insertJoinRoom(String roomId, String userId) throws SwackException {
 		

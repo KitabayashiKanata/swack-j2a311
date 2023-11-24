@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +15,14 @@ import javax.servlet.http.HttpSession;
 
 import bean.ChatLog;
 import bean.Room;
+import bean.SessionId;
 import bean.User;
 import bean.Workspace;
 import bean.WorkspaceList;
 import exception.SwackException;
 import model.ChatModel;
 import model.RoomModel;
+import model.SessionIdModel;
 import model.WorkspaceModel;
 
 /**
@@ -45,14 +48,34 @@ public class MainServlet extends LoginCheckServlet {
 			throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession();
+			String workspaceId = null;
+			String roomId = null;
+			
+			String cookieFlag = (String) session.getAttribute("cookieFlag");
+			//セッションIdを使用したセッション管理
+			//　保存されていた場合 userId.workspaceId,roomIdをDBから取得
+			String sessionId = (String) session.getAttribute("sessionId");
+			SessionIdModel sessionIdModel =  new SessionIdModel();
+			
+			if(cookieFlag.equals("1")){
+				// DB接続
+				SessionId sessionIds = sessionIdModel.getSessionId(sessionId);
+				workspaceId = sessionIds.getWorkspaceId();
+				roomId = sessionIdModel.getWorkspaceMemory(sessionIds);
+//				session.setAttribute("cookieFlag","2");
+				cookieFlag = "2";
+			}
 			
 			//ユーザーの取得
 			User user = (User) session.getAttribute("user");
 					
 			//ワークスペースの取得
-			String workspaceId = request.getParameter("workspaceId");
 			if(workspaceId == null) {
-				Workspace workspace = (Workspace) session.getAttribute("workspace");
+				workspaceId = request.getParameter("workspaceId");
+			}
+			Workspace workspace = null;
+			if(workspaceId == null) {
+				workspace = (Workspace) session.getAttribute("workspace");
 				if (workspace == null) {
 					request.setAttribute("errorMsg", ERR_SYSTEM);
 					request.setAttribute("nowUser", user);
@@ -65,19 +88,34 @@ public class MainServlet extends LoginCheckServlet {
 				workspaceId = workspace.getWorkspaceID();
 			}else {
 				//ワークスペースをセッションに保存
-				Workspace workspace = new Workspace(workspaceId,user.getUserId());
-				session.setAttribute("workspace",workspace);
+				workspace = new Workspace(workspaceId,user.getUserId());
+			}
+			session.setAttribute("workspace",workspace);
+			
+			if(cookieFlag.equals("3")){ // ログイン後にワークスペースを変更した場合
+				// DB接続
+				Cookie[] cookies = request.getCookies();
+				Cookie cookie = cookies[0];
+				String sessionIdC = cookie.getValue();
+				SessionId sessionIds = sessionIdModel.getSessionId(sessionIdC);
+				sessionIds = new SessionId(user.getUserId(),workspaceId,sessionIds.getSessionId());
+				roomId = sessionIdModel.getWorkspaceMemory(sessionIds);
+				cookieFlag = "2";
 			}
 			
-			
-			
 			//ルームの取得
-			String roomId = request.getParameter("roomId");
+			if(roomId == null) {
+				roomId = request.getParameter("roomId");
+			}
 			//TODO ルームIDが保存されてない場合roomList.jspに遷移したい
+			RoomModel roomModel = new RoomModel();
 			if (roomId == null) {
 //				request.getRequestDispatcher("/RoomListServlet").forward(request, response);
 //				response.sendRedirect("/RoomListServlet");
-				roomId = "R0000";
+//				roomId = "R0000";
+				// TODO ワークスペースで最小のroomIdを持つルームを表示
+				roomId = roomModel.getMinRoomId(workspaceId);
+				
 			}
 			
 			session.setAttribute("nowRoomID", roomId);
@@ -97,13 +135,33 @@ public class MainServlet extends LoginCheckServlet {
 			}
 			
 			// ユーザー招待に必要な情報を取得
-			RoomModel roomModel = new RoomModel();
+			roomModel = new RoomModel();
 			List<User> userList = roomModel.getJoinUserList(roomId,user.getUserId(), workspaceId);//データベースからユーザーIDを取得
 			StringBuilder userListErrorMsg = new StringBuilder();
 			if (userList.size() == 0 || userList == null) {
 				userListErrorMsg.append("招待可能なユーザーがいません");
-			}
+			}	
 			request.setAttribute("errorMsg", errorMsg);
+			
+			// TODO セッションIdをデータベースに保存 userId,workspaceId,roomId,sessionId
+			sessionId = session.getId();
+			Cookie cookie = new Cookie("sessionId",sessionId);
+			cookie.setMaxAge(60 * 60 * 24); // cookie保存期間1日
+			response.addCookie(cookie);
+//			cookieFlag = (String) session.getAttribute("cookieFlag");
+			SessionId nSessionId = new SessionId(user.getUserId(),workspaceId,sessionId);
+			boolean insertFlag = false;
+			if(cookieFlag.equals("1") || cookieFlag.equals("0")) { //セッション管理ID登録済みユーザか判別
+				insertFlag = true;
+				sessionIdModel.setSessionId(nSessionId,insertFlag);
+				sessionIdModel.setWorkspaceMemory(nSessionId,roomId,insertFlag);
+			}else {
+				sessionIdModel.setSessionId(nSessionId,insertFlag);
+				sessionIdModel.setWorkspaceMemory(nSessionId,roomId,insertFlag);
+			}
+			session.setAttribute("cookieFlag", "2");
+			
+			// TODO httponlyとsecure付けたい
 		
 			// 画面に必要な情報を準備する
 		
