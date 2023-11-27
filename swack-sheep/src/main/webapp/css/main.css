@@ -58,6 +58,16 @@
 	padding-left: 5px;
 }
 
+.contents-inline {
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.contents-button {
+    width: 25px;
+  	height: 25px;
+}
+
 .contents-area {
 	overflow: auto;
 	width: 100%;

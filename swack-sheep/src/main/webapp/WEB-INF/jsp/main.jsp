@@ -109,11 +109,12 @@
 			</div>
 			<div class="contents">
 				<div class="contents-header">
-					<h2>${nowRoom.roomName}(${nowRoom.memberCount}人)</h2>
+					<h2 class="contents-inline">${nowRoom.roomName}(${nowRoom.memberCount}人)</h2>
 					<!-- 改行させないCSS -->
-					<button onclick="clickUserList()">人+</button>
+					<a class="contents-inline contents-button" onclick="clickUserList()"><img src="images/plus.png" alt="人追加" style="width: 30px; height: 30px;"></a>
 					<hr>
 				</div>
+				
 				<div id="logArea" class="contents-area">
 					<!-- ログインしているユーザがアドミンか判定 -->
 					<c:set var="nowUserId" value="${nowUser.userId}"/>
