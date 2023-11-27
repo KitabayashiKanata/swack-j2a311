@@ -122,16 +122,20 @@ public class MainServlet extends LoginCheckServlet {
 			
 			// errorMsg取得＆セット
 			String errorMsg = (String) session.getAttribute("errorMsg");
+			String errorType = (String) session.getAttribute("errorType");
 			session.removeAttribute("errorMsg");
+			session.removeAttribute("errorType");
 			if (errorMsg != null) {
 				request.setAttribute("errorMsg", errorMsg);
+				request.setAttribute("errorFlag",errorType);
+				// TODO 11/24 エラータイプをフラグで管理・jsのonloadが動いていない
 			}
 			
 			// ルームを作成した後か判断
 			String createFlag = (String) session.getAttribute("createFlag");
 			session.removeAttribute("createFlag");
 			if (createFlag != null) {
-				request.setAttribute("createFlag", "True");
+				request.setAttribute("roomCreateFlag", "True");
 			}
 			
 			// ユーザー招待に必要な情報を取得

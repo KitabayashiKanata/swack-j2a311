@@ -96,6 +96,7 @@ public class CreateRoomServlet extends HttpServlet {
 				if (errorMsg.length() > 0) {
 				String nowRoomId = (String) session.getAttribute("nowRoomID");
 				session.setAttribute("errorMsg", errorMsg.toString());
+				session.setAttribute("errorType","createRoomeError");
 				response.sendRedirect("MainServlet?roomId="+nowRoomId);
 				return;
 				}

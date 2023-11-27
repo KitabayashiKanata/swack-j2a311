@@ -6,6 +6,7 @@ deleteModal = document.getElementById("message-delete-modal");
 reactionModal = document.getElementById("message-reaction-modal");
 roomModal = document.getElementById("room-modal");
 userListModal = document.getElementById("user-list-modal");
+workInvitationModal = document.getElementById("work-invitation-modal") ;
 nameModal1 = document.getElementById("name-modal1");
 nameModal2 = document.getElementById("name-modal2");
 nameModal3 = document.getElementById("name-modal3");
@@ -105,6 +106,11 @@ function clickUserList(){
 	modal = userListModal;
 };
 
+function clickInvitationWorkspace(){
+	workInvitationModal.classList.add('is-open');
+	modal = workInvitationModal
+}
+
 function clickOverlayClose(){
 	modal.classList.remove('is-open');
 };
@@ -115,11 +121,20 @@ function clickButtonClose(){
 
 // エラーメッセージがある場合読み込み時にモーダルウィンドウを表示する
 window.onload = function(){
-	var errorMsg =  document.getElementById("errorMsg").textContent;
-	console.log(errorMsg);
-	if(errorMsg != ""){
+	
+	var errorFlag =  document.getElementById("errorFlag").value;
+	console.log(errorFlag);
+	if(errorFlag == "createRoomeError"){
 		clickRoomCreate();
 	};
 };
 
 // createRoomFlagがTrueの場合モーダルウィンドウを表示
+window.onload = function(){
+	console.log("tsts");
+	var roomCreateFlag =  document.getElementById("roomCreateFlag").value;
+	console.log(roomCreateFlag);
+	if(roomCreateFlag == "True"){
+		clickUserList();
+	};
+};

@@ -106,63 +106,6 @@
 					</c:forEach>
 				</details>
 				
-				<!-- モーダルウィンドウ(ルーム招待) -->
-				<div class="modal-wrapper" id="modal-02">
-					 <a href="#!" class="modal-overlay"></a>
-					 
-					 <div class="modal-window">
-					   <div class="modal-content">
-					    <a href="#!" class="modal-close">✕</a>
-					    <p class="modal_title">#Test</p><hr><br>
-					    
-					    <p class="error" id="errorMsg">${errorMsg}</p>
-					    <div class="flex">
-						    <form class="modal-form	search_box" action="CreateRoomServlet" method="post">
-					      		<input type="text" name="userName" placeholder="メンバーを検索">
-					      	</form>
-					      	<select name="item">
-									<option value="item1">全員</option>
-									<option value="item2">チャンネルマネージャー</option>
-									<option value="item3">メンバー</option>
-									<option value="item4">ゲスト</option>
-							</select>
-						</div>
-					    <table class="design11">
-						 	<c:forEach var="item" items="${userList}">
-								<tr><td>
-								<div class="modal-open">
-									<a href="#modal" onclick="clickUser('${item.userName}','${item.userId}')" class="hover">
-										<c:out value="${item.userName}" />
-										<div class="right">→</div>
-									</a>
-									</div>
-								</td></tr>
-								<br>
-							</c:forEach>
-						</table>
-						<div class="modal" id="modal">
-						    <a href="#!" class="overlay"></a>
-						    <div class="modal-wrapper">
-								<div class="modal-contents">
-						        	<a href="#!" class="modal-close">✕</a>
-									<div class="modal-content">
-										<p><span id="uSpan2"></span><br>
-										<span id="uSpan1"></span></p>
-										
-										<form action="InvitationRoomServlet" method="post">
-											<input type="hidden" id="userID" name="userID" />
-										 	<input type="hidden" id="userName" />
-										 	<input type="submit" value="決定" />
-										</form>
-										
-									</div>
-								</div>
-							</div>
-						</div>
-					   </div>
-					</div>
-				</div>
-				
 			</div>
 			<div class="contents">
 				<div class="contents-header">
@@ -225,6 +168,61 @@
 	</div>
 	
 	<!-- モーダルウィンドウ -->
+	<!-- モーダルウィンドウ(ルーム招待) -->
+	<div class="modal-wrapper" id="modal-02">
+		 <a href="#!" class="modal-overlay"></a>
+		 
+		 <div class="modal-window">
+		   <div class="modal-content">
+		    <a href="#!" class="modal-close">✕</a>
+		    <p class="modal_title">#Test</p><hr><br>
+		    <p class="error" id="errorMsg">${errorMsg}</p>
+		    <div class="flex">
+			    <form class="modal-form	search_box" action="CreateRoomServlet" method="post">
+		      		<input type="text" name="userName" placeholder="メンバーを検索">
+		      	</form>
+		      	<select name="item">
+						<option value="item1">全員</option>
+						<option value="item2">チャンネルマネージャー</option>
+						<option value="item3">メンバー</option>
+						<option value="item4">ゲスト</option>
+				</select>
+			</div>
+		    <table class="design11">
+			 	<c:forEach var="item" items="${userList}">
+					<tr><td>
+					<div class="modal-open">
+						<a href="#modal" onclick="clickUser('${item.userName}','${item.userId}')" class="hover">
+							<c:out value="${item.userName}" />
+							<div class="right">→</div>
+						</a>
+						</div>
+					</td></tr>
+					<br>
+				</c:forEach>
+			</table>
+		   </div>
+		</div>
+	</div>
+	
+	<!-- ワークスペースにユーザー追加 -->
+	<div class="modal-wrapper" id="work-invitation-modal">
+	  	<a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
+	  	<div class="modal-window">
+	    <div class="modal-content">
+	    	<a href="#!" class="modal-close" onclick="clickButtonClose()">✕</a>
+	      	<a class="modal_body">ワークスペースにユーザーを招待する</a>
+	      	<p class="error" id="errorMsg">${errorMsg}</p>
+	      	<!-- 参加させたいユーザのメールアドレスを入力 -->
+        	<form name="invitationUserForm" action="InvitationWorkspaceServlet" method="post">
+        		<input type="email" name="invitationMailaddress" value="" id="invitationMailaddressModal"> 
+        		<input type="button" name="" value="キャンセル" onclick="clickButtonClose()">
+	      		<input type="submit" value="保存">
+        	</form>
+	    </div>
+	  </div>
+	</div>
+	
 	<!-- ルームにユーザー追加 -->
 	<div class="modal-wrapper" id="user-list-modal">
 	  	<a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
@@ -320,6 +318,7 @@
 					  <li><a onclick="clickButtonClose()" href="WorkspaceServlet">ワークスペースに参加</a></li>
 					  <li><a onclick="clickButtonClose()" href="">ワークスペースを切り替える</a></li>
 					  <li><a onclick="clickButtonClose()" href="JoinWorkspaceServlet">メンバー管理</a></li>
+					  <li><a onclick="clickButtonClose(),clickInvitationWorkspace()">メンバー追加</a></li>
 					  <!-- <c:if test="${adminUser == true}"> -->
 					  <!-- </c:if> -->
 				  </ul>
@@ -378,6 +377,12 @@
 		  </ul>
 	  </div>
   	</div>
+  	
+  	<!-- ページロード時用hiddenフィールド -->
+  	<form class="hidden/-form" action="" method="post">
+  		<input type="hidden" name="roomCreateFlag" value="${roomCreateFlag }" id="roomCreateFlag">
+  		<input type="hidden" name="errorFlag" value="${errorType }" id="errorFlag">
+    </form>
 	
 <script src="js/modal.js"></script>
 <script src="js/list.js"></script>
