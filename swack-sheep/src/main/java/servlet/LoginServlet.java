@@ -69,14 +69,8 @@ public class LoginServlet extends HttpServlet {
 
 		// パラメータチェック
 		HttpSession session = request.getSession();
-		String sCnt = (String) session.getAttribute("logCnt");
 		int cnt;
 		
-		if (sCnt == null || sCnt.length() == 0) {
-			cnt = 0;
-		}else {
-			cnt = Integer.parseInt(sCnt);
-		}
 		StringBuilder errorMsg = new StringBuilder();
 		if (mailAddress == null || mailAddress.length() == 0) {
 			errorMsg.append("メールアドレスが入っていません<br>");
@@ -97,11 +91,12 @@ public class LoginServlet extends HttpServlet {
 			UsersDAO usersDAO = new UsersDAO();
 			String userId = usersDAO.getUserId(mailAddress);
 			
+			// lockusercountテーブルの初期化(usersにのみ存在するユーザがいる場合)
+			usersDAO.setCounttable();
+			
 			// アカウントロック判定
 			boolean lock = usersDAO.lockResult(userId);
 			if (lock) {
-				// セッションのリセット
-				session.setAttribute("logCnt", "");
 				String err = "アカウントがロックされています";
 				request.setAttribute("errorMsg", err);
 				request.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(request, response);
@@ -139,13 +134,10 @@ public class LoginServlet extends HttpServlet {
 			
 			if (user == null) {
 				// 認証失敗
-				cnt += 1;
-				session.setAttribute("logCnt", String.valueOf(cnt));
+				usersDAO.lockPlus(userId);
+				cnt = usersDAO.getCount(userId);
 				
 				if (cnt >= 5) {
-					// セッションのリセット
-					session.setAttribute("logCnt", "");
-					
 					// アカウントロック操作
 					usersDAO.lockUser(userId, timestamp);
 					String err = "ログインに5回失敗したため<br>アカウントがロックされました";
@@ -165,6 +157,9 @@ public class LoginServlet extends HttpServlet {
 					response.sendRedirect("AdministratorServlet");
 					return;
 				}
+				
+				// ロックカウントの初期化
+				usersDAO.lockClear(userId);
 				
 				// 最終ログイン情報の保存
 				SimpleDateFormat d = new SimpleDateFormat("yyyy-MM-dd");

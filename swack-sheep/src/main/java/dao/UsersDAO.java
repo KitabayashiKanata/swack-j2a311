@@ -552,7 +552,176 @@ public class UsersDAO {
 		}
 	}
 	
-	// ------ セッション管理 -----
+	// lockusercountテーブルに追加されていないusersテーブルに存在するユーザーを取得
+	public ArrayList<String> checkUser() throws SwackException{
+		String sql = "SELECT T1.USERID AS USERID FROM USERS AS T1 "
+				+ "LEFT OUTER JOIN LOCKUSERCOUNT AS T2 ON T1.USERID = T2.USERID "
+				+ "WHERE T2.USERID IS NULL AND T1.USERID <> 'ADMIN'";
+		
+		ArrayList<String> userIdList = new ArrayList<>();
+		String userId = null;
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				// 結果を詰め替え
+				userId = rs.getString("USERID");
+				
+				userIdList.add(userId);
+			}
+			return userIdList;
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// lockusercountテーブルの初期化(usersテーブルを参照して追加されていないユーザを追加する)
+	public void setCounttable() throws SwackException {
+		String sql = "INSERT INTO LOCKUSERCOUNT VALUES(?,?)";
+		
+		// userIdListの取得
+		UsersDAO usersDAO = new UsersDAO();
+		ArrayList<String> userIdList = usersDAO.checkUser();
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			for(String userId : userIdList) {
+				// SQL作成
+				PreparedStatement pStmt
+				 = conn.prepareStatement(sql);
+				pStmt.setString(1, userId);
+				pStmt.setInt(2, 0);
+				
+				// SQL実行
+				pStmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// lockusercountテーブルからCNT値を取得
+	public int getCount(String userId) throws SwackException{
+		String sql = "SELECT CNT FROM LOCKUSERCOUNT WHERE USERID = ?";
+		
+		int cnt = 0;
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setString(1, userId);
+			
+			// SQL実行
+			ResultSet rs = pStmt.executeQuery();
+
+			while (rs.next()) {
+				// 結果を詰め替え
+				cnt = rs.getInt("CNT");
+			}
+			return cnt;
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// lockusercountテーブルのCNT値に+1して保存
+	public void lockPlus(String userId) throws SwackException {
+	String sql = "UPDATE LOCKUSERCOUNT SET CNT = ? WHERE USERID = ?";
+
+		UsersDAO usersDAO = new UsersDAO();
+		int cnt = usersDAO.getCount(userId);
+		
+		try {
+			Class.forName("org.postgresql.Driver");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+			
+			// カウントに1プラスする
+			cnt += 1;
+			
+			// SQL作成
+			PreparedStatement pStmt
+			 = conn.prepareStatement(sql);
+			pStmt.setInt(1, cnt);
+			pStmt.setString(2, userId);
+			
+			
+			// SQL実行
+			pStmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			// エラー発生時、独自のExceptionを発行
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
+	
+	// lockusercountテーブルのCNT値の0クリアを行う
+		public void lockClear(String userId) throws SwackException {
+		String sql = "UPDATE LOCKUSERCOUNT SET CNT = 0 WHERE USERID = ?";
+			
+			try {
+				Class.forName("org.postgresql.Driver");
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			}
+			
+			// Access DB
+			try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+				
+				// SQL作成
+				PreparedStatement pStmt
+				 = conn.prepareStatement(sql);
+				pStmt.setString(1, userId);
+				
+				
+				// SQL実行
+				pStmt.executeUpdate();
+				
+				
+			} catch (SQLException e) {
+				// エラー発生時、独自のExceptionを発行
+				throw new SwackException(ERR_DB_PROCESS, e);
+			}
+		}
+	
+	// ------------------------------------------ セッション管理  ------------------------------------------
 	// セッションID管理(connection)+ユーザ情報取得
 	public User connectSessionId(String sessionId)throws SwackException{
 		User user = null;

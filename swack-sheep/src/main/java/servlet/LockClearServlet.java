@@ -33,6 +33,7 @@ public class LockClearServlet extends HttpServlet {
 			// アカウントロックの解除
 			UsersDAO usersDAO = new UsersDAO();
 			usersDAO.removeLockUser(userId);
+			usersDAO.lockClear(userId);
 			
 			// administrator.jspへ戻る
 			response.sendRedirect("AdministratorServlet");
