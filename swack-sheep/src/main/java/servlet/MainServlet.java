@@ -136,6 +136,8 @@ public class MainServlet extends LoginCheckServlet {
 				request.setAttribute("errorMsg", errorMsg);
 				request.setAttribute("errorFlag",errorType);
 				// TODO 11/24 エラータイプをフラグで管理・jsのonloadが動いていない
+				// エラータイプでモーダル判定してメッセージ出力
+				// モーダルウィンドウを閉じた際にエラー消去
 			}
 			
 			// ルームを作成した後か判断
