@@ -71,7 +71,7 @@
 				      <form class="modal-form" action="CreateRoomServlet" method="post">
 				      	<input type="text" name="roomName" placeholder="# 例:計画-予算">
 				      	<p class="radio">パブリック</p>
-				      	<input type="radio" name="privated" value="public">
+				      	<input type="radio" name="privated" value="public" checked>
 				      	<!-- ユーザがworkspaceadminの場合のみ表示 -->
 				      	<c:set var="nowUserId" value="${nowUser.userId}"/>
 				      	<c:set var="workspaceAdminFlag" value="False"/>
