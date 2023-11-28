@@ -99,6 +99,7 @@ public class UsersDAO {
 		return userId;
 	}
 
+	// mailAddressがあるか判定 あり:false なし:true
 	public boolean exists(String mailAddress) throws SwackException {
 		// SQL
 		String sql = "SELECT COUNT(*) AS CNT FROM USERS WHERE MAILADDRESS = ?";

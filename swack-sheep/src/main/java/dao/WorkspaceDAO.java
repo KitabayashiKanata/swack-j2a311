@@ -333,4 +333,23 @@ public class WorkspaceDAO {
 		
 		return true;
 	}
+	
+	// ワークスペースにユーザを追加
+	public void insertJoinWorkspace(String userId , String workspaceId) throws SwackException {
+		String sql = "INSERT INTO JOINWORKSPACE VALUES(?,?)";
+
+		// Access DB
+		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
+
+			// SQL作成
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, workspaceId);
+			pStmt.setString(2, userId);
+
+			// SQL実行
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new SwackException(ERR_DB_PROCESS, e);
+		}
+	}
 }

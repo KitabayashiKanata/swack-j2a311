@@ -4,6 +4,7 @@ import java.util.List;
 
 import bean.Workspace;
 import bean.WorkspaceList;
+import dao.UsersDAO;
 import dao.WorkspaceDAO;
 import exception.SwackException;
 
@@ -25,5 +26,22 @@ public class WorkspaceModel {
 		WorkspaceDAO workspaceDAO = new WorkspaceDAO();
 		List<String> workspaceAdminList = workspaceDAO.getWorkspaceAdminList(workspaceId);
 		return workspaceAdminList;
+	}
+	
+	public boolean invitationMailAddressCheck(String mailAddress) throws SwackException{
+		UsersDAO usersDAO = new UsersDAO();
+		boolean judge = usersDAO.exists(mailAddress);
+		return judge;
+	}
+	
+	public String getUserId(String mailAddress) throws SwackException{
+		UsersDAO usersDAO = new UsersDAO();
+		String userId = usersDAO.getUserId(mailAddress);
+		return userId;
+	}
+	
+	public void insertJoinWorkspace(String userId,String workspaceId) throws SwackException{
+		WorkspaceDAO workspaceDAO = new WorkspaceDAO();
+		workspaceDAO.insertJoinWorkspace(userId, workspaceId);
 	}
 }

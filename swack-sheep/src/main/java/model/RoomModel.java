@@ -54,5 +54,10 @@ public class RoomModel {
 		String roomId = roomDAO.getMinRoomId(workspaceId);
 		return roomId;
 	}
+	
+	public void insertJoinRoom(String roomId,String userId) throws SwackException{
+		RoomDAO roomDAO = new RoomDAO();
+		roomDAO.insertJoinRoom(roomId,userId);
+	}
 
 }

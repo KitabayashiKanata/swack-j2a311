@@ -65,7 +65,7 @@ public class RoomDAO {
 		
 		insertJoinRoom(roomId,createdUserId);
 		if(directed) {
-			String[] split = roomId.split(",");
+			String[] split = roomName.split(",");
 			String pairUserId= split[1];
 			insertJoinRoom(roomId,pairUserId);
 		}else {
