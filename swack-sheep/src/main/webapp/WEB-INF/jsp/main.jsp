@@ -218,7 +218,7 @@
 	      	<a class="modal_body">ワークスペースにユーザーを招待する</a>
 	      	<p class="error" id="errorMsg">${errorMsg}</p>
 	      	<!-- 参加させたいユーザのメールアドレスを入力 -->
-        	<form name="invitationUserForm" action="InvitationWorkspaceServlet" method="post">
+        	<form action="InvitationWorkspaceServlet" method="post">
         		<input type="email" name="invitationMailaddress" value="" id="invitationMailaddressModal"> 
         		<input type="button" name="" value="キャンセル" onclick="clickButtonClose()">
 	      		<input type="submit" value="保存">
