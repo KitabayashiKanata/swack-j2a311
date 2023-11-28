@@ -37,8 +37,6 @@ public class ChatServlet extends LoginCheckServlet {
 		// パラメータ取得
 		String roomId = request.getParameter("roomId");
 		String message = request.getParameter("message");
-		System.out.println(roomId);
-		System.out.println(message);
 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("user");
