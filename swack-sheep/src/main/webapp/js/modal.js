@@ -120,21 +120,21 @@ function clickButtonClose(){
 };
 
 // エラーメッセージがある場合読み込み時にモーダルウィンドウを表示する
-window.onload = function(){
-	Console.log("tsts");
-	var errorFlag =  document.getElementById("errorFlag").value;
-	console.log(errorFlag);
-	if(errorFlag == "createRoomeError"){
-		clickRoomCreate();
-	};
-	
-	
-	var roomCreateFlag =  document.getElementById("roomCreateFlag").value;
-	console.log(roomCreateFlag);
-	if(roomCreateFlag == "True"){
-		clickUserList();
-	};
-};
+//window.onload = function(){
+//	console.log("tsts");
+//	var errorFlag =  document.getElementById("errorFlag").value;
+//	console.log(errorFlag);
+//	if(errorFlag == "createRoomeError"){
+//		clickRoomCreate();
+//	};
+//	
+//	
+//	var roomCreateFlag =  document.getElementById("roomCreateFlag").value;
+//	console.log(roomCreateFlag);
+//	if(roomCreateFlag == "True"){
+//		clickUserList();
+//	};
+//};
 
 // createRoomFlagがTrueの場合モーダルウィンドウを表示
 //window.onload = function(){

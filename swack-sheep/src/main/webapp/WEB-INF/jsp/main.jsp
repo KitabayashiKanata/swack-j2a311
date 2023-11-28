@@ -35,7 +35,7 @@
 		<section class="main">
 			<div class="left">
 				<h2>Swack</h2>
-				<h3><a id="target1" class="menu-botton" onclick="clickNameCreate1()">${workspaceName}</a></h3>
+				<h3><a id="target1" class="menu-botton" onclick="clickNameCreate1()">ワークスペース${workspaceName}</a></h3>
 				<hr>
 				
 				<details open>
@@ -71,7 +71,7 @@
 				      <form class="modal-form" action="CreateRoomServlet" method="post">
 				      	<input type="text" name="roomName" placeholder="# 例:計画-予算">
 				      	<p class="radio">パブリック</p>
-				      	<input type="radio" name="privated" value="public" checked>
+				      	<input type="radio" name="privated" value="public">
 				      	<!-- ユーザがworkspaceadminの場合のみ表示 -->
 				      	<c:set var="nowUserId" value="${nowUser.userId}"/>
 				      	<c:set var="workspaceAdminFlag" value="False"/>
@@ -109,12 +109,11 @@
 			</div>
 			<div class="contents">
 				<div class="contents-header">
-					<h2 class="contents-inline">${nowRoom.roomName}(${nowRoom.memberCount}人)</h2>
+					<h2>${nowRoom.roomName}(${nowRoom.memberCount}人)</h2>
 					<!-- 改行させないCSS -->
-					<a class="contents-inline contents-button" onclick="clickUserList()"><img src="images/plus.png" alt="人追加" style="width: 30px; height: 30px;"></a>
+					<button onclick="clickUserList()">人+</button>
 					<hr>
 				</div>
-				
 				<div id="logArea" class="contents-area">
 					<!-- ログインしているユーザがアドミンか判定 -->
 					<c:set var="nowUserId" value="${nowUser.userId}"/>
@@ -133,7 +132,7 @@
 						<div class="log-box">
 							<span class="log-name">${log.userName} </span>
 							<span class="log-time">[${log.createdAt}]</span>
-							<span class="log-reaction" onclick="clickMessageReaction('${log.chatLogId}')">顔</span>
+							<!-- <span class="log-reaction" onclick="clickMessageReaction('${log.chatLogId}')">顔</span> -->
 							<!-- 編集と削除はユーザに権限がある場合のみ表示(if文を使用する) -->
 							<c:if test='${editFlag != "True"}'>
 								<c:set var="logUserId" value="${log.userId}"/>
@@ -236,7 +235,7 @@
 	      	<table class="design11">
 			<c:forEach var="item" items="${userList}">
 				<tr><td>
-				<div class="modal-open colorchangeanime_bg">
+				<div class="modal-open">
 					<a href="#modal" onclick="clickUser2('${item.userId}')" class="hover">
 						<c:out value="${item.userName}" />
 						<div class="right">→</div>
@@ -318,20 +317,7 @@
 					  <li><hr></li>
 					  <li><a onclick="clickButtonClose()" href="WorkspaceServlet">ワークスペースに参加</a></li>
 					  <li><a onclick="clickButtonClose()" href="">ワークスペースを切り替える</a></li>
-					  <li><hr></li>
-					  <!-- ユーザがworkspaceadminの場合のみ表示 -->
-				      	<c:set var="nowUserId" value="${nowUser.userId}"/>
-				      	<c:set var="workspaceAdminFlag" value="False"/>
-				      	<c:forEach var="workspaceAdminUser" items="${workspaceAdminList}">
-				      		<c:if test='${nowUserId == workspaceAdminUser}'>
-				      			<c:set var="workspaceAdminFlag" value="True"/>
-				      		</c:if>
-				      	</c:forEach>
-				      	<c:choose>
-				      		<c:when test='${workspaceAdminFlag == "True"}'>
-								<li><a onclick="clickButtonClose()" href="JoinWorkspaceServlet">メンバー管理</a></li>
-							</c:when>
-				      	</c:choose>
+					  <li><a onclick="clickButtonClose()" href="JoinWorkspaceServlet">メンバー管理</a></li>
 					  <li><a onclick="clickButtonClose(),clickInvitationWorkspace()">メンバー追加</a></li>
 					  <!-- <c:if test="${adminUser == true}"> -->
 					  <!-- </c:if> -->

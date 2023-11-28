@@ -28,4 +28,4 @@ function clickUser2(userId) {
 function clickRemoveJoin(userId) {
 	document.getElementById("removeJoinModal").value = userId;
 	document.removeJoinUserForm.submit();
-}
+};

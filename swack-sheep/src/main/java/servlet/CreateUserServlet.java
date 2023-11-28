@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import bean.User;
 import dao.UsersDAO;
 import exception.SwackException;
+import model.RoomModel;
+import model.WorkspaceModel;
 
 @WebServlet("/CreateUserServlet")
 public class CreateUserServlet extends HttpServlet {
@@ -71,6 +73,12 @@ public class CreateUserServlet extends HttpServlet {
 				request.setAttribute("errorMsg", errorMsg.toString());
 				request.getRequestDispatcher("/WEB-INF/jsp/signup.jsp").forward(request, response);
 			}
+			
+			// ユーザーが作成された際にW0001とr0000へ参加
+			WorkspaceModel workspaceModel = new WorkspaceModel();
+			RoomModel roomModel = new RoomModel();
+			workspaceModel.insertJoinWorkspace(userID, "W0001");
+			roomModel.insertJoinRoom("R0000", userID);
 			
 		} catch (SwackException e) {
 			e.printStackTrace();
