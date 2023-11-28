@@ -23,13 +23,14 @@
             <th>氏名</th>
             <th>メールアドレス</th>
         </tr>
-        </table>
 		<c:choose>
 			<c:when test="${joinUserList != null}">
-				<table>
 					<c:forEach var="user" items="${joinUserList}">
 						<tr><td>
-							<a onclick="clickRemoveJoin('${user.userId}')" class="hover"><c:out value="${user.userName}" /></a>
+							<a onclick="clickRemoveJoin('${user.userId}')" class="hover" style="margin-left:5px; margin-right:5px;"><c:out value="${user.userName}" /></a>
+						</td>
+						<td>
+							<a style="margin-left:5px; margin-right:5px;"><c:out value="${user.mailAddress}" /></a>
 						</td></tr>
 					</c:forEach>
 				</table>

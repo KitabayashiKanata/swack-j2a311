@@ -97,6 +97,7 @@ public class MainServlet extends LoginCheckServlet {
 				workspaceName = workspaceDAO.getWorkspace(workspaceId);
 			}
 			session.setAttribute("workspace",workspace);
+			session.setAttribute("nowWorkspaceId", workspaceId);
 			session.setAttribute("workspaceName", workspaceName);
 			
 			if(cookieFlag.equals("3")){ // ログイン後にワークスペースを変更した場合

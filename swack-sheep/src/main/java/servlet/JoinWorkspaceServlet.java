@@ -31,12 +31,7 @@ public class JoinWorkspaceServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			WorkspaceDAO workspaceDAO = new WorkspaceDAO();
 			
-			Workspace workspace = (Workspace) request.getAttribute("workspace");
-			
-//			String workspaceId = workspace.getWorkspaceID();
-			// mainServletから持ってこれていないため一時的に設定
-			String workspaceId = "W0001";
-			session.setAttribute("workspaceId", workspaceId);
+			String workspaceId = (String) session.getAttribute("nowWorkspaceId");
 			
 			String workspaceName = workspaceDAO.getWorkspace(workspaceId);
 			session.setAttribute("workspaceName", workspaceName);

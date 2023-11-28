@@ -176,7 +176,7 @@ public class WorkspaceDAO {
 	
 	// joinWorkspaceから特定のワークスペースに参加しているユーザをリストで取得
 	public List<User> joinUser(String workspaceId) throws SwackException{
-		String sql = "SELECT A.USERID AS USERID, USERNAME FROM JOINWORKSPACE AS A, USERS AS B WHERE A.USERID = B.USERID AND WORKSPACEID = ?";
+		String sql = "SELECT A.USERID AS USERID, USERNAME, MAILADDRESS FROM JOINWORKSPACE AS A, USERS AS B WHERE A.USERID = B.USERID AND WORKSPACEID = ?";
 		
 		List<User> joinUserList = new ArrayList<>();
 		try {
@@ -199,7 +199,8 @@ public class WorkspaceDAO {
 			while (rs.next()) {
 				String userId = rs.getString("USERID");
 				String userName = rs.getString("USERNAME");
-				User userList = new User(userId, userName);
+				String mailAddress = rs.getString("MAILADDRESS");
+				User userList = new User(userId, userName, mailAddress, "******");
 				joinUserList.add(userList);
 						}
 		} catch (SQLException e) {
