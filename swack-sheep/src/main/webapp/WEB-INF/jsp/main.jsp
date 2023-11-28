@@ -70,8 +70,9 @@
 				      <p class="error" id="errorMsg">${errorMsg}</p>
 				      <form class="modal-form" action="CreateRoomServlet" method="post">
 				      	<input type="text" name="roomName" placeholder="# 例:計画-予算">
-				      	<p class="radio">パブリック</p>
+				      	<label class="radio">パブリック　
 				      	<input type="radio" name="privated" value="public" checked>
+				      	</label>
 				      	<!-- ユーザがworkspaceadminの場合のみ表示 -->
 				      	<c:set var="nowUserId" value="${nowUser.userId}"/>
 				      	<c:set var="workspaceAdminFlag" value="False"/>
@@ -80,10 +81,12 @@
 				      			<c:set var="workspaceAdminFlag" value="True"/>
 				      		</c:if>
 				      	</c:forEach>
+				      	<br>
 				      	<c:choose>
 				      		<c:when test='${workspaceAdminFlag == "True"}'>
-								<p class="radio">プライベート</p>
+						    <label class="radio">プライベート
 				      		<input type="radio" name="privated" value="private">
+				      		</label>
 							</c:when>
 				      		<c:otherwise>
 				      			<p>※プライベート設定は管理者のみ可能です
@@ -329,7 +332,7 @@
 				      	</c:forEach>
 				      	<c:choose>
 				      		<c:when test='${workspaceAdminFlag == "True"}'>
-								<li><a onclick="clickButtonClose()" href="JoinWorkspaceServlet">メンバー管理</a></li>
+								<li><a onclick="clickButtonClose()" href="JoinWorkspaceServlet" target="_blank">メンバー管理</a></li>
 							</c:when>
 				      	</c:choose>
 					  <li><a onclick="clickButtonClose(),clickInvitationWorkspace()">メンバー追加</a></li>
