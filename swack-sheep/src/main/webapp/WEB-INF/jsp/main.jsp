@@ -236,7 +236,7 @@
 	      	<table class="design11">
 			<c:forEach var="item" items="${userList}">
 				<tr><td>
-				<div class="modal-open">
+				<div class="modal-open colorchangeanime_bg">
 					<a href="#modal" onclick="clickUser2('${item.userId}')" class="hover">
 						<c:out value="${item.userName}" />
 						<div class="right">→</div>
