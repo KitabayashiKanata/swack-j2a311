@@ -35,7 +35,7 @@
 		<section class="main">
 			<div class="left">
 				<h2>Swack</h2>
-				<h3><a id="target1" class="menu-botton" onclick="clickNameCreate1()">ワークスペース${workspaceName}</a></h3>
+				<h3><a id="target1" class="menu-botton" onclick="clickNameCreate1()">${workspaceName}</a></h3>
 				<hr>
 				
 				<details open>
@@ -318,7 +318,20 @@
 					  <li><hr></li>
 					  <li><a onclick="clickButtonClose()" href="WorkspaceServlet">ワークスペースに参加</a></li>
 					  <li><a onclick="clickButtonClose()" href="">ワークスペースを切り替える</a></li>
-					  <li><a onclick="clickButtonClose()" href="JoinWorkspaceServlet">メンバー管理</a></li>
+					  <li><hr></li>
+					  <!-- ユーザがworkspaceadminの場合のみ表示 -->
+				      	<c:set var="nowUserId" value="${nowUser.userId}"/>
+				      	<c:set var="workspaceAdminFlag" value="False"/>
+				      	<c:forEach var="workspaceAdminUser" items="${workspaceAdminList}">
+				      		<c:if test='${nowUserId == workspaceAdminUser}'>
+				      			<c:set var="workspaceAdminFlag" value="True"/>
+				      		</c:if>
+				      	</c:forEach>
+				      	<c:choose>
+				      		<c:when test='${workspaceAdminFlag == "True"}'>
+								<li><a onclick="clickButtonClose()" href="JoinWorkspaceServlet">メンバー管理</a></li>
+							</c:when>
+				      	</c:choose>
 					  <li><a onclick="clickButtonClose(),clickInvitationWorkspace()">メンバー追加</a></li>
 					  <!-- <c:if test="${adminUser == true}"> -->
 					  <!-- </c:if> -->

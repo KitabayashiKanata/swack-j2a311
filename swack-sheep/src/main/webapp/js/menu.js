@@ -6,6 +6,7 @@ window.onload = function(){
 	    document.getElementById('contextmenu').style.top=e.pageY+"px";
 	    //メニューをblockで表示させる
 	    document.getElementById('contextmenu').style.display="block";
+	    document.getElementById('contextmenu1').style.display="none";
 		});
     
     document.getElementById("target3").addEventListener('contextmenu',function (e){
@@ -14,6 +15,7 @@ window.onload = function(){
 	    document.getElementById('contextmenu1').style.top=e.pageY+"px";
 	    //メニューをblockで表示させる
 	    document.getElementById('contextmenu1').style.display="block";
+	    document.getElementById('contextmenu').style.display="none";
 		});
 		
 	document.body.addEventListener('click', () => {

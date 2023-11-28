@@ -19,6 +19,7 @@ import bean.SessionId;
 import bean.User;
 import bean.Workspace;
 import bean.WorkspaceList;
+import dao.WorkspaceDAO;
 import exception.SwackException;
 import model.ChatModel;
 import model.RoomModel;
@@ -49,6 +50,7 @@ public class MainServlet extends LoginCheckServlet {
 		try {
 			HttpSession session = request.getSession();
 			String workspaceId = null;
+			String workspaceName = null;
 			String roomId = null;
 			
 			String cookieFlag = (String) session.getAttribute("cookieFlag");
@@ -70,8 +72,10 @@ public class MainServlet extends LoginCheckServlet {
 			User user = (User) session.getAttribute("user");
 					
 			//ワークスペースの取得
+			WorkspaceDAO workspaceDAO = new WorkspaceDAO();
 			if(workspaceId == null) {
 				workspaceId = request.getParameter("workspaceId");
+				workspaceName = request.getParameter("workspaceName");
 			}
 			Workspace workspace = null;
 			if(workspaceId == null) {
@@ -86,11 +90,14 @@ public class MainServlet extends LoginCheckServlet {
 					return;
 				}
 				workspaceId = workspace.getWorkspaceID();
+				workspaceName = workspaceDAO.getWorkspace(workspaceId);
 			}else {
 				//ワークスペースをセッションに保存
 				workspace = new Workspace(workspaceId,user.getUserId());
+				workspaceName = workspaceDAO.getWorkspace(workspaceId);
 			}
 			session.setAttribute("workspace",workspace);
+			session.setAttribute("workspaceName", workspaceName);
 			
 			if(cookieFlag.equals("3")){ // ログイン後にワークスペースを変更した場合
 				// DB接続
