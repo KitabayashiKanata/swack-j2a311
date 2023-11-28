@@ -251,6 +251,11 @@ a {
 
 .radio {
 	color: black;
+	display: flex;
+}
+
+input[type="radio"] {
+    width: 30%;
 }
 
 .modal-form input[type="submit"] {
