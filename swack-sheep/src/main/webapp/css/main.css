@@ -258,10 +258,19 @@ input[type="radio"] {
     width: 30%;
 }
 
-.modal-form input[type="submit"] {
+.modal-form .hozon1 {
   margin-top: 20px;
   width: 50px;
   margin-left: 85%;
   background-color: #ccc;
   color: black;
+}
+
+.hozon2 {
+  background-color: orangered;
+  color: rgb(255, 255, 255);
+}
+
+.hozon2:hover {
+  background-color: darkorange;
 }

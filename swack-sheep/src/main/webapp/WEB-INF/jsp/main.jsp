@@ -92,7 +92,7 @@
 				      			<p>※プライベート設定は管理者のみ可能です
 				      		</c:otherwise>
 				      	</c:choose>
-				      	<input type="submit" value="作成">
+				      	<input class="hozon1" type="submit" value="作成">
 				      </form>
 				    </div>
 				  </div>
@@ -219,7 +219,7 @@
 	      	<p class="error" id="errorMsg">${errorMsg}</p>
 	      	<!-- 参加させたいユーザのメールアドレスを入力 -->
         	<form action="InvitationWorkspaceServlet" method="post">
-        		<input type="email" name="invitationMailaddress" value="" id="invitationMailaddressModal"> 
+        		<input type="email" name="invitationMailaddress" value="" id="invitationMailaddressModal" placeholder="＠swack.com"> 
         		<input type="button" name="" value="キャンセル" onclick="clickButtonClose()">
 	      		<input type="submit" value="保存">
         	</form>
@@ -269,7 +269,7 @@
 	      	<input type="hidden" name="chatLogIdE" value="" id="modalChatLogIdE">
 	      	<input type="text" name="newMessage" value="" id="editMessage">
 	      	<input type="button" name="" value="キャンセル" onclick="clickButtonClose()">
-	      	<input type="submit" value="保存">
+	      	<input class="hozon2" type="submit" value="保存">
 	      </form>
 	    </div>
 	  </div>
