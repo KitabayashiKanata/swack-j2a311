@@ -72,7 +72,6 @@ public class InvitationWorkspaceServlet extends HttpServlet {
 				if(!idFlag) {
 					workspaceModel.insertJoinWorkspace(userId,workspaceId); //joinworkspaceテーブルに追加
 					// workspace最小のIDを持つテーブルにjoinする
-					// TODO 11/27 ワークスペースの参加＆参加時にeveryoneルーム作成
 					minRoomId = roomModel.getMinRoomId(workspaceId);
 					roomModel.insertJoinRoom(minRoomId, userId);
 				}

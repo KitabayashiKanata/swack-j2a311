@@ -135,7 +135,6 @@ public class ChatDAO {
 	//TODO workspaceIdを追加・privatedを追加で返す
 	public ArrayList<Room> getRoomList(String userId,String workspaceId) throws SwackException {
 		// SQL
-//		String sql = "SELECT R.ROOMID, R.ROOMNAME FROM JOINROOM J JOIN ROOMS2 R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = FALSE AND R.WORKSPACEID = ?";
 		String sql = "SELECT R.ROOMID, R.ROOMNAME, R.PRIVATED FROM JOINROOM J JOIN ROOMS2 R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = FALSE AND R.WORKSPACEID = ?";
 
 		ArrayList<Room> roomlist = new ArrayList<Room>();
@@ -241,14 +240,6 @@ public class ChatDAO {
 		
 		Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 		// TODO タイムスタンプのミリ秒を6桁にしたい
-//		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.ssssss");
-//		String datetime = df.format(createdAt);
-//		Timestamp timestamp = Timestamp.valueOf(datetime);
-//		System.out.println(createdAt);
-//		System.out.println(timestamp);
-		// テスト用に登録したデータを削除するSQL
-//		delete from chatlog where chatlogid >= 5;
-		
 		
 		String sql2 = "INSERT INTO CHATLOG VALUES(?,?,?,?,?)";
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {

@@ -64,7 +64,6 @@ public class MainServlet extends LoginCheckServlet {
 				SessionId sessionIds = sessionIdModel.getSessionId(sessionId);
 				workspaceId = sessionIds.getWorkspaceId();
 				roomId = sessionIdModel.getWorkspaceMemory(sessionIds);
-//				session.setAttribute("cookieFlag","2");
 				cookieFlag = "2";
 			}
 			
@@ -118,9 +117,6 @@ public class MainServlet extends LoginCheckServlet {
 			//TODO ルームIDが保存されてない場合roomList.jspに遷移したい
 			RoomModel roomModel = new RoomModel();
 			if (roomId == null) {
-//				request.getRequestDispatcher("/RoomListServlet").forward(request, response);
-//				response.sendRedirect("/RoomListServlet");
-//				roomId = "R0000";
 				// TODO ワークスペースで最小のroomIdを持つルームを表示
 				roomId = roomModel.getMinRoomId(workspaceId);
 				
@@ -137,8 +133,8 @@ public class MainServlet extends LoginCheckServlet {
 				request.setAttribute("errorMsg", errorMsg);
 				request.setAttribute("errorFlag",errorType);
 				// TODO 11/24 エラータイプをフラグで管理・jsのonloadが動いていない
-				// エラータイプでモーダル判定してメッセージ出力
-				// モーダルウィンドウを閉じた際にエラー消去
+				// エラータイプでモーダル判定してメッセージ出力(未完成)
+				// モーダルウィンドウを閉じた際にエラー消去(未完成)
 			}
 			
 			// ルームを作成した後か判断
@@ -157,12 +153,11 @@ public class MainServlet extends LoginCheckServlet {
 			}	
 			request.setAttribute("errorMsg", errorMsg);
 			
-			// TODO セッションIdをデータベースに保存 userId,workspaceId,roomId,sessionId
+			// セッションIdをデータベースに保存 
 			sessionId = session.getId();
 			Cookie cookie = new Cookie("sessionId",sessionId);
 			cookie.setMaxAge(60 * 60 * 24); // cookie保存期間1日
 			response.addCookie(cookie);
-//			cookieFlag = (String) session.getAttribute("cookieFlag");
 			SessionId nSessionId = new SessionId(user.getUserId(),workspaceId,sessionId);
 			boolean insertFlag = false;
 			if(cookieFlag.equals("1") || cookieFlag.equals("0")) { //セッション管理ID登録済みユーザか判別
@@ -175,12 +170,10 @@ public class MainServlet extends LoginCheckServlet {
 			}
 			session.setAttribute("cookieFlag", "2");
 			
-			// TODO httponlyとsecure付けたい
 		
 			// 画面に必要な情報を準備する
 		
 			ChatModel chatModel = new ChatModel();
-//			RoomModel roomModel = new RoomModel();
 			WorkspaceModel workspaceModel = new WorkspaceModel();
 			Room room = chatModel.getRoom(roomId, user.getUserId());
 			List<Room> roomList = chatModel.getRoomList(user.getUserId(),workspaceId); //workspaceIdを追加
