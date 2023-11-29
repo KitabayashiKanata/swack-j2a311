@@ -62,7 +62,6 @@ public class InvitationRoomServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// UserIDとRoomIDを取得
-//			String userID = request.getParameter("userID");
 			String userId = request.getParameter("invitationUserId"); 
 			HttpSession session = request.getSession();
 			String roomId = (String)session.getAttribute("nowRoomID");

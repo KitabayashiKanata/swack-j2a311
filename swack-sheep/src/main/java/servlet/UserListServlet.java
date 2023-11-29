@@ -34,7 +34,6 @@ public class UserListServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-    	// TODO 最終的にはmain.jsp風に表示する形にしたい
 		// 画面に必要な情報を準備する
 		try {
 			HttpSession session = request.getSession();
