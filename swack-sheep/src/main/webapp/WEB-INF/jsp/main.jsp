@@ -27,6 +27,7 @@
 	<div class="container">
 		<header class="header">
 			<div>${nowUser.userName}</div>
+			
 			<form action="LogoutServlet">
 				<input type="submit" value="ログアウト">
 			</form>
@@ -58,45 +59,7 @@
 					
 				</details>
 				
-				<!-- モーダルウィンドウ -->
-				<div class="modal-wrapper"  id="room-modal">
-				  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
-				  
-				  <div class="modal-window">
-				    <div class="modal-content">
-				    <a href="#!" class="modal-close" onclick="clickButtonClose()">✕</a>
-				      <p class="modal_title">Create a channel</p>
-				      <a class="modal_body">名前</a>
-				      <p class="error" id="errorMsg">${errorMsg}</p>
-				      <form class="modal-form" action="CreateRoomServlet" method="post">
-				      	<input type="text" name="roomName" placeholder="# 例:計画-予算">
-				      	<label class="radio">パブリック　
-				      	<input type="radio" name="privated" value="public" checked>
-				      	</label>
-				      	<!-- ユーザがworkspaceadminの場合のみ表示 -->
-				      	<c:set var="nowUserId" value="${nowUser.userId}"/>
-				      	<c:set var="workspaceAdminFlag" value="False"/>
-				      	<c:forEach var="workspaceAdminUser" items="${workspaceAdminList}">
-				      		<c:if test='${nowUserId == workspaceAdminUser}'>
-				      			<c:set var="workspaceAdminFlag" value="True"/>
-				      		</c:if>
-				      	</c:forEach>
-				      	<br>
-				      	<c:choose>
-				      		<c:when test='${workspaceAdminFlag == "True"}'>
-						    <label class="radio">プライベート
-				      		<input type="radio" name="privated" value="private">
-				      		</label>
-							</c:when>
-				      		<c:otherwise>
-				      			<p>※プライベート設定は管理者のみ可能です
-				      		</c:otherwise>
-				      	</c:choose>
-				      	<input class="hozon1" type="submit" value="作成">
-				      </form>
-				    </div>
-				  </div>
-				</div>
+				
 				
 				<details open>
 					<summary><a id="target3" class="menu-botton" onContextmenu="return false;" onclick="clickNameCreate3()">ダイレクト</a></summary>
@@ -108,12 +71,18 @@
 					<br>
 					</c:forEach>
 				</details>
+				<br>
+				<div class="sample_link12">
+					<a href="PasswordUserServlet">
+						<span data-text="ここをクリック">パスワード変更</span>
+					</a>
+				</div>
 				
 			</div>
 			<div class="contents">
 				<div class="contents-header">
 					<h2 class="contents-inline">${nowRoom.roomName}(${nowRoom.memberCount}人)</h2>
-					<!-- 改行させないCSS -->
+					
 					<a class="contents-inline contents-button" onclick="clickUserList()"><img src="images/plus.png" alt="人追加" style="width: 30px; height: 30px;"></a>
 					<hr>
 				</div>
@@ -136,7 +105,6 @@
 						<div class="log-box">
 							<span class="log-name">${log.userName} </span>
 							<span class="log-time">[${log.createdAt}]</span>
-							<!-- <span class="log-reaction" onclick="clickMessageReaction('${log.chatLogId}')">顔</span> -->
 							<!-- 編集と削除はユーザに権限がある場合のみ表示(if文を使用する) -->
 							<c:if test='${editFlag != "True"}'>
 								<c:set var="logUserId" value="${log.userId}"/>
@@ -171,7 +139,47 @@
 		</section>
 	</div>
 	
-	<!-- モーダルウィンドウ -->
+	<!---------------------------------- モーダルウィンドウ ------------------------------------------>
+	<!-- モーダルウィンドウ(ルーム作成) -->
+	<div class="modal-wrapper"  id="room-modal">
+	  <a href="#!" class="modal-overlay" onclick="clickOverlayClose()"></a>
+	  
+	  <div class="modal-window">
+	    <div class="modal-content">
+	    <a href="#!" class="modal-close" onclick="clickButtonClose()">✕</a>
+	      <p class="modal_title">Create a channel</p>
+	      <a class="modal_body">名前</a>
+	      <p class="error" id="errorMsg">${errorMsg}</p>
+	      <form class="modal-form" action="CreateRoomServlet" method="post">
+	      	<input type="text" name="roomName" placeholder="# 例:計画-予算">
+	      	<label class="radio">パブリック　
+	      	<input type="radio" name="privated" value="public" checked>
+	      	</label>
+	      	<!-- ユーザがworkspaceadminの場合のみ表示 -->
+	      	<c:set var="nowUserId" value="${nowUser.userId}"/>
+	      	<c:set var="workspaceAdminFlag" value="False"/>
+	      	<c:forEach var="workspaceAdminUser" items="${workspaceAdminList}">
+	      		<c:if test='${nowUserId == workspaceAdminUser}'>
+	      			<c:set var="workspaceAdminFlag" value="True"/>
+	      		</c:if>
+	      	</c:forEach>
+	      	<br>
+	      	<c:choose>
+	      		<c:when test='${workspaceAdminFlag == "True"}'>
+			    <label class="radio">プライベート
+	      		<input type="radio" name="privated" value="private">
+	      		</label>
+				</c:when>
+	      		<c:otherwise>
+	      			<p>※プライベート設定は管理者のみ可能です
+	      		</c:otherwise>
+	      	</c:choose>
+	      	<input class="hozon1" type="submit" value="作成">
+	      </form>
+	    </div>
+	  </div>
+	</div>
+	
 	<!-- モーダルウィンドウ(ルーム招待) -->
 	<div class="modal-wrapper" id="modal-02">
 		 <a href="#!" class="modal-overlay"></a>

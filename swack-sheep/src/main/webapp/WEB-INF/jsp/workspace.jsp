@@ -49,11 +49,6 @@
 		</div>
 		<div class="btn-gradient">
 			<button onclick="history.go(reCnt()), delSession()"><span>　戻る　</span></button>
-			<div class="sample_link12">
-				<a href="PasswordUserServlet">
-					<span data-text="ここをクリック">パスワード変更</span>
-				</a>
-			</div>
 		</div>
 	</div>
 </body>
