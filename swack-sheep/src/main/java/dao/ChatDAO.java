@@ -22,8 +22,8 @@ import exception.SwackException;
 public class ChatDAO {
 
 	public Room getRoom(String roomId, String userId) throws SwackException {
-		//rooms2に変更
-		String sqlGetRoom = "SELECT R.ROOMID, R.ROOMNAME, COUNT(*) AS MEMBER_COUNT, R.DIRECTED FROM ROOMS2 R JOIN JOINROOM J ON R.ROOMID = J.ROOMID WHERE R.ROOMID = ? GROUP BY R.ROOMID, R.ROOMNAME, R.DIRECTED";
+		//roomsに変更
+		String sqlGetRoom = "SELECT R.ROOMID, R.ROOMNAME, COUNT(*) AS MEMBER_COUNT, R.DIRECTED FROM ROOMS R JOIN JOINROOM J ON R.ROOMID = J.ROOMID WHERE R.ROOMID = ? GROUP BY R.ROOMID, R.ROOMNAME, R.DIRECTED";
 		String sqlGetDirectRoom = "SELECT U.USERNAME AS ROOMNAME FROM JOINROOM R JOIN USERS U ON R.USERID = U.USERID WHERE R.USERID <> ? AND R.ROOMID = ?;";
 
 		boolean directed = false;
@@ -135,7 +135,7 @@ public class ChatDAO {
 	//TODO workspaceIdを追加・privatedを追加で返す
 	public ArrayList<Room> getRoomList(String userId,String workspaceId) throws SwackException {
 		// SQL
-		String sql = "SELECT R.ROOMID, R.ROOMNAME, R.PRIVATED FROM JOINROOM J JOIN ROOMS2 R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = FALSE AND R.WORKSPACEID = ?";
+		String sql = "SELECT R.ROOMID, R.ROOMNAME, R.PRIVATED FROM JOINROOM J JOIN ROOMS R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = FALSE AND R.WORKSPACEID = ?";
 
 		ArrayList<Room> roomlist = new ArrayList<Room>();
 
@@ -172,7 +172,7 @@ public class ChatDAO {
 	//TODO workspaceIdを追加
 	public ArrayList<Room> getDirectList(String userId,String workspaceId) throws SwackException {
 		// TODO SQL
-		String sql = "SELECT R.ROOMID, U.USERNAME AS ROOMNAME FROM JOINROOM R JOIN USERS U ON R.USERID = U.USERID WHERE R.USERID <> ? AND ROOMID IN (SELECT R.ROOMID FROM JOINROOM J JOIN ROOMS2 R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = TRUE AND R.WORKSPACEID = ?) ORDER BY R.USERID";
+		String sql = "SELECT R.ROOMID, U.USERNAME AS ROOMNAME FROM JOINROOM R JOIN USERS U ON R.USERID = U.USERID WHERE R.USERID <> ? AND ROOMID IN (SELECT R.ROOMID FROM JOINROOM J JOIN ROOMS R ON J.ROOMID = R.ROOMID WHERE J.USERID = ? AND R.DIRECTED = TRUE AND R.WORKSPACEID = ?) ORDER BY R.USERID";
 
 		ArrayList<Room> roomlist = new ArrayList<Room>();
 

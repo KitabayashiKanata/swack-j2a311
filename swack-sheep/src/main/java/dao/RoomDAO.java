@@ -48,7 +48,7 @@ public class RoomDAO {
 		
 		String roomId = getMaxRoomId();
 		
-		String sql = "INSERT INTO ROOMS2 VALUES(?,?,?,?,?,?)";
+		String sql = "INSERT INTO ROOMS VALUES(?,?,?,?,?,?)";
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)) {
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, roomId);
@@ -79,7 +79,7 @@ public class RoomDAO {
 	public String getMaxRoomId() throws SwackException {
 		String maxRoomId = "";
 		
-		String sql1 = "SELECT MAX(ROOMID) AS ROOMID FROM ROOMS2";
+		String sql1 = "SELECT MAX(ROOMID) AS ROOMID FROM ROOMS";
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD);
 			PreparedStatement pStmt = conn.prepareStatement(sql1);
 			
@@ -107,7 +107,7 @@ public class RoomDAO {
 	public String getMinRoomId(String workspaceId) throws SwackException {
 		String minRoomId = "";
 		
-		String sql = "SELECT MIN(ROOMID) AS ROOMID FROM ROOMS2 WHERE WORKSPACEID = ?";
+		String sql = "SELECT MIN(ROOMID) AS ROOMID FROM ROOMS WHERE WORKSPACEID = ?";
 		try (Connection conn = DriverManager.getConnection(DB_ENDPOINT, DB_USERID, DB_PASSWORD)){
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, workspaceId);
@@ -157,7 +157,7 @@ public class RoomDAO {
 	//workspaceid追加 (これどこで使用してる?)
 	public ArrayList<Room> getRoomList(String workspaceId,String userId) throws SwackException {
 		// SQL
-		String sql = "SELECT ROOMID,ROOMNAME FROM ROOMS2 WHERE WORKSPACEID = ? AND ROOMID IN (SELECT ROOMID FROM JOINROOM WHERE USERID = ?)";
+		String sql = "SELECT ROOMID,ROOMNAME FROM ROOMS WHERE WORKSPACEID = ? AND ROOMID IN (SELECT ROOMID FROM JOINROOM WHERE USERID = ?)";
 
 		ArrayList<Room> roomlist = new ArrayList<Room>();
 
@@ -202,7 +202,7 @@ public class RoomDAO {
 	
 	public ArrayList<String> getAllRoomList(String workspaceId) throws SwackException {
 		// SQL
-		String sql = "SELECT ROOMNAME FROM ROOMS2 WHERE WORKSPACEID = ?";
+		String sql = "SELECT ROOMNAME FROM ROOMS WHERE WORKSPACEID = ?";
 
 		ArrayList<String> roomNameList = new ArrayList<String>();
 
