@@ -328,7 +328,6 @@
 				  <ul class="menu">
 					  <li><hr></li>
 					  <li><a onclick="clickButtonClose()" href="WorkspaceServlet">ワークスペースに参加</a></li>
-					  <li><a onclick="clickButtonClose()" href="">ワークスペースを切り替える</a></li>
 					  <li><hr></li>
 					  <!-- ユーザがworkspaceadminの場合のみ表示 -->
 				      	<c:set var="nowUserId" value="${nowUser.userId}"/>
