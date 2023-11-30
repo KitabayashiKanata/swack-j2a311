@@ -42,17 +42,17 @@
         </div>
         </h1>
 		<h2><span class="marker-normal">　ルームを選択　</span></h2>
+		<br>
 		<table class="sample">
 			<c:forEach var="item" items="${roomList}">
 				<tr><td>
 					<a onclick="clickRoom('${item.roomName}', '${item.roomId}')" class="btn_design">
 					<button href="" class="color-change" style="left: 173%;">ホームで開く</button>
-					<button onclick='location.href="https://convertio.co/ja/webp-png/"; event.stopPropagation()' class="color-change clickable" style="left: 166%;">参加する</button>
+					<button class="color-change clickable" style="left: 166%;">参加する</button>
 					
 						<c:out value="${item.roomName}" />
 					</a>
 				</td></tr>
-				<br>
 			</c:forEach>
         </table>
         <div class="btn-gradient">
