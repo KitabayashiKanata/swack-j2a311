@@ -78,5 +78,3 @@ INSERT INTO ROOMADMIN VALUES('R0005','U0001');
 insert into users values('ADMIN', '管理用アカウント', 'administrator@swack.com', 'admin');
 
 insert into chatlog values(1, 'R0001', 'U0001', 'ここでは学年連絡を行います。確認を忘れないようお願いします。', '2023-11-29 10:30:16');
-
-COMMIT;
