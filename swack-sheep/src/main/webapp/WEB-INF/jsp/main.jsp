@@ -295,7 +295,7 @@
 	      <form class="modal-form" action="MessageDeleteServlet" method="post">
 	      	<input type="hidden" name="chatLogIdD" value="" id="modalChatLogIdD">
 	      	<input type="button" name="" value="キャンセル" onclick="clickButtonClose()">
-	      	<input type="submit" value="削除">
+	      	<input class="hozon2" type="submit" value="削除">
 	      </form>
 	    </div>
 	  </div>
